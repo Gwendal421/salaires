@@ -83,23 +83,52 @@
       color: var(--text);
     }
 
-    .title-block p {
+    .title-block p.sync-status {
       font-size: 0.88rem;
-      color: var(--muted);
       margin-top: 4px;
     }
 
+    .title-block p.sync-status.has-data {
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    .title-block p.sync-status.no-data {
+      color: var(--muted);
+    }
+
     .header-right {
+      display: contents;
+    }
+
+    .header-actions-group {
+      flex: 0 0 100%;
+      width: 100%;
       display: flex;
-      align-items: flex-start;
-      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
       flex-wrap: wrap;
+    }
+
+    .header-actions-group > button {
+      width: 210px;
+      height: var(--input-height);
+      margin-top: 0;
+      padding: 0 12px;
+      font-size: 0.86rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-sizing: border-box;
     }
 
     .period-controls {
       display: flex;
       align-items: flex-start;
       gap: 12px;
+      margin-left: auto;
     }
 
     .field-group {
@@ -183,7 +212,7 @@
     }
 
     /* =================================================================
-       ÉCRAN D'ONBOARDING (CRÉATION DES SALARIÉS)
+       ÉCRAN D'ONBOARDING (CRÉATION DES SALARIÉS) & MODE D'EMPLOI
        ================================================================= */
     .onboarding-card {
       background: var(--surface);
@@ -195,9 +224,19 @@
     }
 
     .onboarding-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
       padding-bottom: 20px;
       margin-bottom: 24px;
       border-bottom: 1px solid var(--border);
+    }
+
+    .onboarding-header-info {
+      flex: 1;
+      min-width: 240px;
     }
 
     .onboarding-header h2 {
@@ -210,6 +249,101 @@
       font-size: 0.92rem;
       color: var(--muted);
       margin-top: 4px;
+    }
+
+    .onboarding-header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    .onboarding-header-actions .btn-outline,
+    .onboarding-header-actions .btn-save {
+      height: var(--input-height);
+      margin-top: 0;
+      padding: 0 16px;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Styles de la page Mode d'emploi / Aide */
+    .help-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .help-step-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+
+    .help-step-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .help-step-card p,
+    .help-step-card ul {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .help-step-card ul {
+      padding-left: 18px;
+      margin-top: 6px;
+    }
+
+    .help-step-card li {
+      margin-bottom: 4px;
+    }
+
+    .help-local-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 24px;
+    }
+
+    .help-local-box h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .help-local-box p,
+    .help-local-box ul {
+      font-size: 0.9rem;
+      color: #78350f;
+      line-height: 1.55;
+    }
+
+    .help-local-box ul {
+      padding-left: 20px;
+      margin-top: 8px;
+    }
+
+    .help-local-box li {
+      margin-bottom: 4px;
     }
 
     /* Grille UX alignée en haut : Nom raccourci (200px), Fonction (190px), Salaire horaire net sur 1 ligne (200px), Zone de vacances (170px) */
@@ -245,20 +379,20 @@
       margin-bottom: 14px;
     }
 
-    /* Jours affichés en ligne (1 ligne par jour) pour que le - / + s'affiche parfaitement dans le cadre */
+    /* Jours affichés en ligne de façon compacte */
     .ob-days-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      max-width: 420px;
+      gap: 8px;
+      max-width: 300px;
     }
 
     .ob-day-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      padding: 10px 16px;
+      gap: 12px;
+      padding: 8px 12px;
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 10px;
@@ -273,9 +407,9 @@
     .ob-day-check {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       font-weight: 600;
-      font-size: 0.94rem;
+      font-size: 0.92rem;
       cursor: pointer;
       user-select: none;
     }
@@ -287,7 +421,7 @@
     }
 
     .ob-day-row .stepper-box {
-      width: 148px;
+      width: 136px;
       flex-shrink: 0;
     }
 
@@ -490,10 +624,10 @@
       border: 1px solid #a7f3d0;
     }
 
-    /* GRILLE DES LIGNES DE FORMULAIRE (5 colonnes alignées en haut) */
+    /* GRILLE DES LIGNES DE FORMULAIRE (4 colonnes : Date, Heures, Net séance, Action rapide) */
     .form-grid-header {
       display: grid;
-      grid-template-columns: var(--col-date) var(--col-hours) var(--col-amount) var(--col-note) var(--col-action);
+      grid-template-columns: 1fr var(--col-hours) var(--col-amount) var(--col-action);
       gap: var(--grid-gap);
       align-items: start;
       padding: 0 16px 10px;
@@ -510,7 +644,7 @@
 
     .form-row {
       display: grid;
-      grid-template-columns: var(--col-date) var(--col-hours) var(--col-amount) var(--col-note) var(--col-action);
+      grid-template-columns: 1fr var(--col-hours) var(--col-amount) var(--col-action);
       gap: var(--grid-gap);
       align-items: start;
       padding: 16px;
@@ -687,7 +821,7 @@
 
     .extra-grid {
       display: grid;
-      grid-template-columns: var(--col-date) var(--col-hours) var(--col-amount) var(--col-note) var(--col-action);
+      grid-template-columns: 1fr var(--col-hours) var(--col-amount) var(--col-action);
       gap: var(--grid-gap);
       align-items: start;
     }
@@ -752,8 +886,17 @@
       white-space: nowrap;
     }
 
-    .btn-save:hover {
+    .btn-save:hover:not(:disabled) {
       filter: brightness(0.93);
+    }
+
+    .btn-save:disabled {
+      background: #cbd5e1 !important;
+      color: #64748b !important;
+      border: 1px solid #cbd5e1 !important;
+      opacity: 1;
+      cursor: not-allowed;
+      filter: none;
     }
 
     .btn-theme-menage { background: var(--menage); }
@@ -825,11 +968,43 @@
       .ob-main-grid {
         grid-template-columns: 1fr;
       }
-      /* En mode responsive, l'incrément d'heure par défaut passe sous le nom du jour */
+      /* Affichage compact des jours en mobile : grille 2 colonnes, espace minimal (4px) entre le nom du jour et les heures dessous */
+      .ob-days-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        max-width: 100%;
+      }
       .ob-day-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        justify-content: flex-start;
+        gap: 4px;
+        padding: 8px 10px;
+      }
+      .ob-day-row .stepper-box {
+        width: 100%;
+        height: 36px;
+      }
+      .header-actions-group {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .header-actions-group > button {
+        width: 100%;
+        max-width: 260px;
+      }
+      .ob-actions-bar {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+      .ob-actions-bar .btn-save {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
       }
     }
 
@@ -854,15 +1029,51 @@
     .toast.show {
       opacity: 1;
     }
+
+    /* MODALE DE CONFIRMATION (ANNULER / CONFIRMER) */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 10000;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16);
+    }
+
+    .modal-box p {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- BARRE SUPÉRIEURE : TITRE & PÉRIODE -->
+    <!-- BARRE SUPÉRIEURE : TITRE & PÉRIODE / ACTIONS -->
     <header class="header-bar">
       <div class="title-block">
         <h1>Salaires à domicile</h1>
-        <p id="sync-status">Fichier de données : salaires.json</p>
+        <p id="sync-status" class="sync-status no-data">Pas de fichiers de données (salaires.json)</p>
       </div>
 
       <div class="header-right" id="header-controls">
@@ -879,23 +1090,115 @@
           <button class="btn-icon" id="next-month-btn" title="Mois suivant">▶</button>
         </div>
 
-        <button type="button" class="btn-outline" id="open-onboarding-btn">
-          Gérer les salariés
-        </button>
+        <div class="header-actions-group">
+          <button type="button" class="btn-outline" id="export-csv-btn">
+            Exporter sous Excel (.csv)
+          </button>
+
+          <button type="button" class="btn-outline" id="download-json-btn">
+            Exporter les données (.json)
+          </button>
+
+          <button type="button" class="btn-outline" id="open-help-btn">
+            Aide
+          </button>
+
+          <button type="button" class="btn-save btn-theme-menage" id="open-onboarding-btn">
+            Gérer les salariés
+          </button>
+        </div>
       </div>
     </header>
+
+    <!-- =================================================================
+         VUE 0 : MODE D'EMPLOI / AIDE (AFFICHÉE EN PREMIER S'IL N'Y A PAS DE JSON)
+         ================================================================= -->
+    <section id="help-view" class="onboarding-card hidden">
+      <div class="onboarding-header">
+        <div class="onboarding-header-info">
+          <h2>Mode d'emploi</h2>
+          <p>Découvrez les principes de fonctionnement de l'outil avant de gérer vos salariés et déclarer leurs heures.</p>
+        </div>
+
+        <div class="onboarding-header-actions">
+          <button type="button" class="btn-save btn-theme-menage" id="help-go-onboarding-btn">
+            Gérer les salariés
+          </button>
+          <button type="button" class="btn-save btn-theme-success" id="help-go-declaration-btn" disabled>
+            Accéder à la déclaration
+          </button>
+        </div>
+      </div>
+
+      <div class="help-grid">
+        <div class="help-step-card">
+          <h3>1. Gérer vos salariés</h3>
+          <p>Dans <strong>« Gérer les salariés »</strong>, enregistrez chaque employé à domicile :</p>
+          <ul>
+            <li>Choisissez la <strong>Prestation</strong> (<em>Ménage</em>, <em>Garde d'enfant</em> ou <em>Autre</em>) et le <strong>salaire horaire net</strong>.</li>
+            <li>Sélectionnez la <strong>Zone de vacances</strong> (ou <em>Pas de zone</em>).</li>
+            <li>Indiquez les jours et le nombre d'heures habituellement travaillés dans la semaine.</li>
+          </ul>
+        </div>
+
+        <div class="help-step-card">
+          <h3>2. Déclarer les heures chaque mois</h3>
+          <p>Dans le tableau de déclaration mensuelle :</p>
+          <ul>
+            <li>Les séances habituelles du mois sont pré-remplies automatiquement.</li>
+            <li>Les <strong>jours fériés</strong> (et les <strong>vacances scolaires</strong> pour la garde d'enfant) sont mis à <code>0 h</code> automatiquement.</li>
+            <li>Pour <em>Garde d'enfant</em> et <em>Autre</em>, vous pouvez ajouter des <strong>extras ponctuels</strong>.</li>
+            <li>Cliquez sur <strong>« Enregistrer »</strong> en bas du tableau pour valider votre déclaration du mois.</li>
+          </ul>
+        </div>
+
+        <div class="help-step-card">
+          <h3>3. Calculs CESU &amp; suivi</h3>
+          <p>En bas de chaque fiche mensuelle, 3 compteurs sont calculés automatiquement :</p>
+          <ul>
+            <li><strong>Heures à payer</strong> : total réel des heures effectuées.</li>
+            <li><strong>Heures à déclarer</strong> : total arrondi à l'heure entière inférieure pour le CESU.</li>
+            <li><strong>Net à payer</strong> : montant exact à verser au salarié.</li>
+            <li>Cochez <strong>« Déclaré sur CESU »</strong> et <strong>« Payé »</strong> pour suivre vos démarches.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="help-local-box">
+        <h3>🔒 Stockage 100 % en local — Données non accessibles sur un autre appareil</h3>
+        <p>
+          Pour garantir votre confidentialité, <strong>toutes vos données sont enregistrées uniquement en local</strong> sur l'appareil et le navigateur que vous utilisez (via le fichier <code>salaires.json</code>). Aucune donnée n'est stockée sur un serveur en ligne : <strong>vos données ne sont donc pas accessibles automatiquement depuis un autre ordinateur, téléphone ou tablette</strong>.
+        </p>
+        <ul>
+          <li><strong>Transférer ou sauvegarder vos données :</strong> cliquez sur <strong>« Exporter les données (.json) »</strong> pour télécharger votre fichier <code>salaires.json</code>, puis utilisez <strong>« Importer les données (.json) »</strong> dans <em>Gérer les salariés</em> sur un autre appareil.</li>
+          <li><strong>Suivi sous Excel :</strong> cliquez sur <strong>« Exporter sous Excel (.csv) »</strong> pour récupérer le tableau complet de tous les mois enregistrés.</li>
+        </ul>
+      </div>
+    </section>
 
     <!-- =================================================================
          VUE 1 : GESTION DES SALARIÉS / ONBOARDING
          ================================================================= -->
     <section id="onboarding-view" class="onboarding-card hidden">
       <div class="onboarding-header">
-        <h2 id="onboarding-title">Création d'un salarié</h2>
-        <p id="onboarding-subtitle">Renseignez les informations du salarié ci-dessous.</p>
+        <div class="onboarding-header-info">
+          <h2 id="onboarding-title">Gérer les salariés</h2>
+          <p id="onboarding-subtitle">Ajoutez un salarié, modifiez un salarié existant, puis cliquez sur « Accéder à la déclaration » pour déclarer les heures.</p>
+        </div>
+
+        <div class="onboarding-header-actions">
+          <input type="file" id="import-json-input" accept=".json,application/json" class="hidden" />
+          <button type="button" class="btn-outline" id="import-json-btn">
+            Importer les données (.json)
+          </button>
+          <button type="button" class="btn-save btn-theme-success" id="ob-go-declaration-btn" disabled>
+            Accéder à la déclaration
+          </button>
+        </div>
       </div>
 
       <!-- Champs principaux alignés en haut sur la grille UX :
-           Nom raccourci (200px), Fonction (190px), Salaire horaire net sur 1 ligne (200px), Zone de vacances (170px) -->
+           Nom raccourci (200px), Prestation (190px), Salaire horaire net sur 1 ligne (200px), Zone de vacances (170px) -->
       <div class="ob-main-grid">
         <div class="field-group">
           <label class="field-label" for="ob-name">Nom du salarié</label>
@@ -903,7 +1206,7 @@
         </div>
 
         <div class="field-group">
-          <label class="field-label" for="ob-role">Fonction</label>
+          <label class="field-label" for="ob-role">Prestation</label>
           <select id="ob-role" class="input-lg">
             <option value="Ménage">🧹 Ménage</option>
             <option value="Garde d'enfant">🧸 Garde d'enfant</option>
@@ -923,24 +1226,21 @@
             <option value="Zone A">Zone A</option>
             <option value="Zone B">Zone B</option>
             <option value="Zone C" selected>Zone C</option>
+            <option value="Pas de zone">Pas de zone</option>
           </select>
         </div>
       </div>
 
-      <!-- Jours travaillés affichés en ligne (1 ligne par jour) avec compteur 0 par défaut -->
+      <!-- Jours travaillés affichés en ligne avec compteur 0 par défaut -->
       <div class="ob-days-section">
-        <div class="ob-days-title">Jours travaillés dans la semaine &amp; nombre d'heures par séance (pas de 0,5 h)</div>
+        <div class="ob-days-title">Jours travaillés dans la semaine &amp; nombre d'heures par séance</div>
         <div class="ob-days-list" id="ob-days-grid"></div>
       </div>
 
-      <!-- 2 boutons sous le formulaire : "Enregistrer le salarié" à gauche et "Accéder à la déclaration" en vert à droite -->
+      <!-- Bouton sous le formulaire : "Enregistrer le salarié" -->
       <div class="ob-actions-bar">
         <button type="button" class="btn-save btn-theme-menage" id="ob-save-emp-btn">
           Enregistrer le salarié
-        </button>
-
-        <button type="button" class="btn-save btn-theme-success" id="ob-go-declaration-btn" style="margin-left:auto;">
-          Accéder à la déclaration
         </button>
       </div>
 
@@ -968,9 +1268,8 @@
 
         <div class="form-grid-header">
           <div class="field-label">Date</div>
-          <div class="field-label">Heures (pas 0,5h)</div>
+          <div class="field-label">Heures</div>
           <div class="field-label" style="text-align:right;">Net séance</div>
-          <div class="field-label">Motif / Commentaire</div>
           <div class="field-label">Action rapide</div>
         </div>
 
@@ -991,7 +1290,7 @@
             </div>
 
             <div class="field-group">
-              <label class="field-label" for="extra-hours">Heures (pas 0,5h)</label>
+              <label class="field-label" for="extra-hours">Heures</label>
               <div class="stepper-box">
                 <button type="button" class="stepper-btn" id="extra-step-minus">−</button>
                 <input type="number" id="extra-hours" class="stepper-input" step="0.5" min="0" value="0" />
@@ -1002,11 +1301,6 @@
             <div class="field-group">
               <span class="field-label">Montant estimé</span>
               <div class="cell-amount" id="extra-preview-amount" style="width:100%;">0,00 €</div>
-            </div>
-
-            <div class="field-group">
-              <label class="field-label" for="extra-note">Commentaire</label>
-              <input type="text" id="extra-note" class="input-lg" placeholder="Ex: Soirée samedi..." />
             </div>
 
             <div class="field-group">
@@ -1061,6 +1355,21 @@
         </div>
       </section>
     </main>
+  </div>
+
+  <!-- Modale de confirmation : modifications non enregistrées sur le salarié -->
+  <div class="modal-overlay hidden" id="confirm-modal">
+    <div class="modal-box">
+      <p>Vous n'avez pas enregistré les modifications sur le salarié. Voulez vous continuer ?</p>
+      <div class="modal-actions">
+        <button type="button" class="btn-row-action" id="confirm-modal-cancel" style="width:auto;padding:0 18px;">
+          Annuler
+        </button>
+        <button type="button" class="btn-save btn-theme-menage" id="confirm-modal-ok" style="padding:0 18px;">
+          Confirmer
+        </button>
+      </div>
+    </div>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -1239,6 +1548,7 @@
     }
 
     function getVacationForDate(dateStr, zone = "Zone C") {
+      if (!zone || zone === "Pas de zone") return null;
       const list = vacationsByZone[zone] || vacationsByZone["Zone C"];
       for (const v of list) {
         if (dateStr >= v.start && dateStr < v.end) {
@@ -1259,6 +1569,42 @@
       months: {}
     };
 
+    function updateSyncStatus(hasData) {
+      const statusEl = document.getElementById("sync-status");
+      if (hasData) {
+        statusEl.textContent = "Fichier de données (salaires.json)";
+        statusEl.className = "sync-status has-data";
+      } else {
+        statusEl.textContent = "Pas de fichiers de données (salaires.json)";
+        statusEl.className = "sync-status no-data";
+      }
+      const obGoBtn = document.getElementById("ob-go-declaration-btn");
+      if (obGoBtn) obGoBtn.disabled = !hasData;
+      const helpGoBtn = document.getElementById("help-go-declaration-btn");
+      if (helpGoBtn) helpGoBtn.disabled = !hasData;
+    }
+
+    // Supprime de l'historique mensuel (months) toute entrée appartenant à un salarié qui n'existe plus
+    function purgeDeletedEmployeesFromMonths(stateObj) {
+      if (!stateObj || !stateObj.months || typeof stateObj.months !== "object") return;
+      const validIds = new Set((stateObj.employees || []).map(e => e.id));
+      for (const mKey of Object.keys(stateObj.months)) {
+        const mObj = stateObj.months[mKey];
+        if (!mObj || typeof mObj !== "object") {
+          delete stateObj.months[mKey];
+          continue;
+        }
+        for (const empId of Object.keys(mObj)) {
+          if (!validIds.has(empId)) {
+            delete mObj[empId];
+          }
+        }
+        if (Object.keys(mObj).length === 0) {
+          delete stateObj.months[mKey];
+        }
+      }
+    }
+
     function migrateIfLegacy(data) {
       if (!data || typeof data !== "object") return null;
 
@@ -1266,11 +1612,13 @@
         data.employees.forEach(emp => {
           if (!emp.vacationZone) emp.vacationZone = "Zone C";
         });
-        return {
+        const stateObj = {
           activeTab: data.activeTab || (data.employees[0] ? data.employees[0].id : null),
           employees: data.employees,
           months: data.months || {}
         };
+        purgeDeletedEmployeesFromMonths(stateObj);
+        return stateObj;
       }
 
       if (data.settings || (data.months && Object.values(data.months).some(m => m && (m.innaSessions || m.charlotteSessions)))) {
@@ -1332,7 +1680,6 @@
     }
 
     async function loadState() {
-      const statusEl = document.getElementById("sync-status");
       try {
         const res = await fetch("http://localhost:8765/api/salaires");
         if (res.ok) {
@@ -1340,18 +1687,18 @@
           if (parsed && parsed._exists === false) {
             localStorage.removeItem(STORAGE_KEY);
             appState = { activeTab: null, employees: [], months: {} };
-            statusEl.textContent = "Nouveau fichier salaires.json à créer (Onboarding)";
+            updateSyncStatus(false);
             return;
           }
           const migrated = migrateIfLegacy(parsed);
           if (migrated && migrated.employees.length > 0) {
             appState = migrated;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
-            statusEl.textContent = "✓ Connecté au fichier salaires.json";
+            updateSyncStatus(true);
             return;
           } else {
             appState = { activeTab: null, employees: [], months: {} };
-            statusEl.textContent = "Configuration initiale requise";
+            updateSyncStatus(false);
             return;
           }
         }
@@ -1363,27 +1710,30 @@
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
           const migrated = migrateIfLegacy(JSON.parse(raw));
-          if (migrated) appState = migrated;
+          if (migrated && migrated.employees.length > 0) {
+            appState = migrated;
+            updateSyncStatus(true);
+            return;
+          }
         }
       } catch (e) {
         console.error(e);
       }
+      updateSyncStatus(false);
     }
 
     async function persistToDisk() {
+      purgeDeletedEmployeesFromMonths(appState);
       const serialized = JSON.stringify(appState, null, 2);
       localStorage.setItem(STORAGE_KEY, serialized);
-      const statusEl = document.getElementById("sync-status");
+      updateSyncStatus(appState.employees && appState.employees.length > 0);
 
       try {
-        const res = await fetch("http://localhost:8765/api/salaires", {
+        await fetch("http://localhost:8765/api/salaires", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: serialized
         });
-        if (res.ok) {
-          statusEl.textContent = "✓ Connecté au fichier salaires.json";
-        }
       } catch {
         // Silencieux si hors serveur
       }
@@ -1458,15 +1808,11 @@
         const vac = isGarde ? getVacationForDate(dateStr, zone) : null;
 
         const isOff = Boolean(ferie || vac);
-        let note = "";
-        if (ferie) note = `Jour férié (${ferie})`;
-        else if (vac) note = `${vac} (${zone})`;
 
         sessions.push({
           date: dateStr,
           hours: isOff ? 0 : habitualHours,
           defaultHours: habitualHours,
-          note,
           isFerie: Boolean(ferie),
           isVacation: Boolean(vac),
           isExtra: false
@@ -1577,21 +1923,51 @@
       document.getElementById("onboarding-view").scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
+    // Détecte si des données/modifications ont été saisies dans le formulaire salarié sans avoir cliqué sur "Enregistrer le salarié"
+    function hasUnsavedOnboardingFormData() {
+      if (editingEmployeeId !== null) return true;
+      const name = document.getElementById("ob-name").value.trim();
+      const rate = roundHalf(document.getElementById("ob-rate").value);
+      let hasDay = false;
+      document.querySelectorAll(".ob-day-row").forEach(row => {
+        const cb = row.querySelector(".ob-day-toggle");
+        const hInput = row.querySelector(".ob-day-hours");
+        const h = roundHalf(hInput ? hInput.value : 0);
+        if ((cb && cb.checked) || h > 0) {
+          hasDay = true;
+        }
+      });
+      return Boolean(name !== "" || rate > 0 || hasDay);
+    }
+
     function updateOnboardingRoleHint() {
       const role = document.getElementById("ob-role").value;
       const hint = document.getElementById("ob-role-hint");
       if (role === "Garde d'enfant") {
         hint.textContent = "Vacances scolaires + fériés exclus • Extras possibles";
+      } else if (role === "Autre") {
+        hint.textContent = "Jours fériés exclus automatiquement • Extras possibles";
       } else {
         hint.textContent = "Jours fériés exclus automatiquement";
       }
     }
 
+    let hasSeenInitialHelp = false;
+
     function renderOnboardingEmployeeList() {
       const section = document.getElementById("ob-list-section");
       const list = document.getElementById("ob-emp-list");
+      const hasEmployees = appState.employees.length > 0;
+      const goBtn = document.getElementById("ob-go-declaration-btn");
+      if (goBtn) {
+        goBtn.disabled = !hasEmployees;
+      }
+      const helpGoBtn = document.getElementById("help-go-declaration-btn");
+      if (helpGoBtn) {
+        helpGoBtn.disabled = !hasEmployees;
+      }
 
-      if (appState.employees.length === 0) {
+      if (!hasEmployees) {
         section.classList.add("hidden");
         return;
       }
@@ -1701,20 +2077,29 @@
       appState.activeTab = cleanEmp.id;
     }
 
-    function openOnboardingView(isInitial = false) {
+    function openHelpView() {
+      document.getElementById("help-view").classList.remove("hidden");
+      document.getElementById("onboarding-view").classList.add("hidden");
+      document.getElementById("dashboard-view").classList.add("hidden");
+      document.getElementById("header-controls").classList.add("hidden");
+
+      const helpGoBtn = document.getElementById("help-go-declaration-btn");
+      if (helpGoBtn) {
+        helpGoBtn.disabled = appState.employees.length === 0;
+      }
+    }
+
+    function openOnboardingView() {
+      hasSeenInitialHelp = true;
+      document.getElementById("help-view").classList.add("hidden");
       document.getElementById("onboarding-view").classList.remove("hidden");
       document.getElementById("dashboard-view").classList.add("hidden");
       document.getElementById("header-controls").classList.add("hidden");
 
       const title = document.getElementById("onboarding-title");
       const sub = document.getElementById("onboarding-subtitle");
-      if (isInitial) {
-        title.textContent = "Bienvenue — Création de vos salariés";
-        sub.innerHTML = "Aucun fichier <code>salaires.json</code> existant n'a été détecté. Enregistrez vos salariés ci-dessous puis cliquez sur « Accéder à la déclaration ».";
-      } else {
-        title.textContent = "Gérer les salariés";
-        sub.textContent = "Ajoutez un salarié, modifiez un salarié existant ou cliquez sur « Accéder à la déclaration » pour revenir au tableau.";
-      }
+      title.textContent = "Gérer les salariés";
+      sub.textContent = "Ajoutez un salarié, modifiez un salarié existant, puis cliquez sur « Accéder à la déclaration » pour déclarer les heures.";
 
       resetOnboardingForm();
       renderOnboardingEmployeeList();
@@ -1722,9 +2107,9 @@
 
     function closeOnboardingView() {
       if (appState.employees.length === 0) {
-        alert("Veuillez enregistrer au moins un salarié avant d'accéder à la déclaration.");
         return;
       }
+      document.getElementById("help-view").classList.add("hidden");
       document.getElementById("onboarding-view").classList.add("hidden");
       document.getElementById("dashboard-view").classList.remove("hidden");
       document.getElementById("header-controls").classList.remove("hidden");
@@ -1733,10 +2118,15 @@
 
     function renderDashboard() {
       if (appState.employees.length === 0) {
-        openOnboardingView(true);
+        if (!hasSeenInitialHelp) {
+          openHelpView();
+        } else {
+          openOnboardingView();
+        }
         return;
       }
 
+      document.getElementById("help-view").classList.add("hidden");
       document.getElementById("onboarding-view").classList.add("hidden");
       document.getElementById("dashboard-view").classList.remove("hidden");
       document.getElementById("header-controls").classList.remove("hidden");
@@ -1770,7 +2160,10 @@
           renderDashboard();
         });
 
-        const extraSuffix = emp.role === "Garde d'enfant" ? ` • ${emp.vacationZone || "Zone C"} + Extras` : "";
+        const zone = emp.vacationZone || "Zone C";
+        const zoneLabel = emp.role === "Garde d'enfant" && zone !== "Pas de zone" ? ` • ${zone}` : "";
+        const canHaveExtras = emp.role === "Garde d'enfant" || emp.role === "Autre";
+        const extraSuffix = canHaveExtras ? `${zoneLabel} + Extras` : "";
         btn.innerHTML = `
           <div>
             <span class="tab-title">${theme.icon} ${emp.name} — ${emp.role}</span>
@@ -1788,18 +2181,19 @@
       const monthFeries = [];
       const isGarde = emp.role === "Garde d'enfant";
       const zone = emp.vacationZone || "Zone C";
+      const hasZone = isGarde && zone !== "Pas de zone";
 
       for (let d = 1; d <= daysInMonth; d++) {
         const dateStr = `${currentYear}-${String(currentMonth).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
         const f = getFerieForDate(dateStr);
-        const v = isGarde ? getVacationForDate(dateStr, zone) : null;
+        const v = hasZone ? getVacationForDate(dateStr, zone) : null;
         if (f) monthFeries.push(`${d}/${String(currentMonth).padStart(2, "0")} (${f})`);
         if (v) monthVacs.add(v);
       }
 
       const chipsEl = document.getElementById("emp-calendar-chips");
       let html = "";
-      if (isGarde) {
+      if (hasZone) {
         monthVacs.forEach(v => {
           html += `<span class="chip chip-holiday">🏖️ ${v} (${zone})</span>`;
         });
@@ -1808,7 +2202,7 @@
         html += `<span class="chip chip-ferie">🎉 Férié : ${f}</span>`;
       });
       if (!html) {
-        html = `<span class="chip chip-ok">✓ ${isGarde ? `Aucune vacance scolaire (${zone}) ni jour férié ce mois-ci` : "Aucun jour férié ce mois-ci"}</span>`;
+        html = `<span class="chip chip-ok">✓ ${hasZone ? `Aucune vacance scolaire (${zone}) ni jour férié ce mois-ci` : "Aucun jour férié ce mois-ci"}</span>`;
       }
       chipsEl.innerHTML = html;
     }
@@ -1817,12 +2211,14 @@
       const theme = getRoleTheme(emp.role);
       const mData = getEmployeeMonthData(emp);
       const isGarde = emp.role === "Garde d'enfant";
+      const canHaveExtras = emp.role === "Garde d'enfant" || emp.role === "Autre";
       const rate = Number(emp.rate) || 0;
       const zone = emp.vacationZone || "Zone C";
+      const hasZone = isGarde && zone !== "Pas de zone";
 
-      // Titre : "Prestations du mois de/d' <Nom du mois> — <Nom> (<Fonction>)"
+      // Titre : "Prestations du mois de/d' <Nom du mois> — <Nom> (<Prestation>)"
       document.getElementById("emp-panel-title").textContent = formatPrestationsMonthTitle(currentMonth, emp.name, emp.role);
-      document.getElementById("emp-panel-desc").textContent = isGarde
+      document.getElementById("emp-panel-desc").textContent = hasZone
         ? `Tarif horaire : ${formatEuro(rate)}/h • Les prestations habituelles tombant pendant les vacances scolaires (${zone}) ou un jour férié sont mises à 0 h automatiquement.`
         : `Tarif horaire : ${formatEuro(rate)}/h • Les prestations en pointillés sont proposées automatiquement jusqu'à votre clic sur « Enregistrer ».`;
 
@@ -1866,10 +2262,6 @@
             <div class="cell-amount">${formatEuro(amount)}</div>
 
             <div>
-              <input type="text" class="input-lg emp-note" data-idx="${idx}" value="${s.note || ""}" placeholder="Commentaire de l'extra..." />
-            </div>
-
-            <div>
               <button type="button" class="btn-row-action emp-del-extra" data-idx="${idx}" style="color:var(--danger);">Supprimer</button>
             </div>
           `;
@@ -1879,10 +2271,10 @@
 
         let sub = isSaved ? "Prestation validée" : "Proposition auto";
         if (s.isFerie) sub = "🎉 Jour férié";
-        else if (s.isVacation) sub = `🏖️ Vacances ${zone}`;
+        else if (s.isVacation && hasZone) sub = `🏖️ Vacances ${zone}`;
 
         const row = document.createElement("div");
-        row.className = `form-row ${hrs === 0 ? "row-zero" : ""} ${s.isVacation && hrs === 0 ? "row-holiday" : ""} ${s.isFerie && hrs === 0 ? "row-ferie" : ""}`;
+        row.className = `form-row ${hrs === 0 ? "row-zero" : ""} ${s.isVacation && hasZone && hrs === 0 ? "row-holiday" : ""} ${s.isFerie && hrs === 0 ? "row-ferie" : ""}`;
 
         row.innerHTML = `
           <div class="cell-date">
@@ -1899,23 +2291,20 @@
           <div class="cell-amount">${formatEuro(amount)}</div>
 
           <div>
-            <input type="text" class="input-lg emp-note" data-idx="${idx}" value="${s.note || ""}" placeholder="Motif, congés ou commentaire..." />
-          </div>
-
-          <div>
             <button type="button" class="btn-row-action emp-toggle-hours" data-idx="${idx}">${hrs > 0 ? "Mettre à 0 h" : `Remettre ${formatHours(defHrs)}`}</button>
           </div>
         `;
         rowsContainer.appendChild(row);
       });
 
-      // Bloc d'ajout et liste d'extras affiché uniquement si "Garde d'enfant"
+      // Bloc d'ajout et liste d'extras affiché si la prestation est "Garde d'enfant" ou "Autre"
       const extraSection = document.getElementById("emp-extra-section");
-      if (isGarde) {
+      if (canHaveExtras) {
         extraSection.classList.remove("hidden");
         document.getElementById("extra-section-title").textContent = extraCount > 0
           ? `✨ Extras ponctuels (${extraCount})`
-          : "✨ Ajouter un extra ponctuel (Garde d'enfant)";
+          : `✨ Ajouter un extra ponctuel (${emp.role})`;
+        document.getElementById("extra-add-btn").className = `btn-save btn-theme-${theme.key}`;
         const defaultExtraDate = `${currentYear}-${String(currentMonth).padStart(2, "0")}-15`;
         if (!document.getElementById("extra-date").value) {
           document.getElementById("extra-date").value = defaultExtraDate;
@@ -1977,7 +2366,11 @@
       document.getElementById("extra-date").value = defaultExtraDate;
 
       if (appState.employees.length === 0) {
-        openOnboardingView(true);
+        if (!hasSeenInitialHelp) {
+          openHelpView();
+        } else {
+          openOnboardingView();
+        }
       } else {
         renderDashboard();
       }
@@ -2043,7 +2436,162 @@
 
       // Ouverture de la gestion des salariés
       document.getElementById("open-onboarding-btn").addEventListener("click", () => {
-        openOnboardingView(false);
+        openOnboardingView();
+      });
+
+      // Ouverture de la page Mode d'emploi / Aide
+      document.getElementById("open-help-btn").addEventListener("click", () => {
+        openHelpView();
+      });
+
+      document.getElementById("help-go-onboarding-btn").addEventListener("click", () => {
+        openOnboardingView();
+      });
+
+      document.getElementById("help-go-declaration-btn").addEventListener("click", () => {
+        closeOnboardingView();
+      });
+
+      // Bouton "Exporter sous Excel (.csv)" :
+      // Ligne 1 : ;Nom Salarié 1;Fonction Salarié 1;Nom Salarié 2;Fonction Salarié 2...
+      // Ligne 2 : Date;Heures;Salaire net;Heures;Salaire net...
+      // Lignes suivantes : chaque jour du calendrier des mois enregistrés (y compris les jours non remplis)
+      document.getElementById("export-csv-btn").addEventListener("click", () => {
+        const employees = appState.employees || [];
+        if (employees.length === 0) {
+          alert("Aucun salarié enregistré.");
+          return;
+        }
+
+        // Récupérer tous les mois ayant au moins une déclaration enregistrée (saved: true)
+        const savedMonthKeys = Object.keys(appState.months || {})
+          .filter(mKey => {
+            const mObj = appState.months[mKey];
+            return mObj && employees.some(emp => mObj[emp.id]?.saved);
+          })
+          .sort();
+
+        if (savedMonthKeys.length === 0) {
+          alert("Aucune déclaration enregistrée à exporter. Veuillez d'abord cliquer sur « Enregistrer » sur au moins un mois.");
+          return;
+        }
+
+        const escCsv = (val) => {
+          const str = String(val ?? "");
+          if (str.includes(";") || str.includes('"') || str.includes("\n")) {
+            return `"${str.replace(/"/g, '""')}"`;
+          }
+          return str;
+        };
+
+        // Ligne 1 d'en-tête : cellule vide puis pour chaque salarié [Nom, Fonction]
+        const headerRow1 = [""];
+        // Ligne 2 d'en-tête : Date puis pour chaque salarié [Heures, Salaire net]
+        const headerRow2 = ["Date"];
+
+        employees.forEach(emp => {
+          headerRow1.push(emp.name, emp.role);
+          headerRow2.push("Heures", "Salaire net");
+        });
+
+        const csvLines = [
+          headerRow1.map(escCsv).join(";"),
+          headerRow2.map(escCsv).join(";")
+        ];
+
+        // Pour chaque mois enregistré, générer une ligne pour CHAQUE jour du mois (y compris les jours non remplis)
+        savedMonthKeys.forEach(mKey => {
+          const [yStr, mStr] = mKey.split("-");
+          const year = parseInt(yStr, 10);
+          const month = parseInt(mStr, 10);
+          const daysInMonth = new Date(year, month, 0).getDate();
+
+          for (let d = 1; d <= daysInMonth; d++) {
+            const dateIso = `${year}-${String(month).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+            const dateFr = `${String(d).padStart(2, "0")}/${String(month).padStart(2, "0")}/${year}`;
+            const rowCols = [dateFr];
+
+            employees.forEach(emp => {
+              const mEmp = appState.months[mKey]?.[emp.id];
+              if (mEmp && mEmp.saved) {
+                const daySessions = (mEmp.sessions || []).filter(s => s.date === dateIso && Number(s.hours) > 0);
+                if (daySessions.length > 0) {
+                  const totalDayHours = daySessions.reduce((acc, s) => acc + (Number(s.hours) || 0), 0);
+                  const totalDayNet = totalDayHours * (Number(emp.rate) || 0);
+
+                  rowCols.push(
+                    String(Number(totalDayHours)).replace(".", ","),
+                    String(Number(totalDayNet)).replace(".", ",")
+                  );
+                } else {
+                  rowCols.push("", "");
+                }
+              } else {
+                rowCols.push("", "");
+              }
+            });
+
+            csvLines.push(rowCols.map(escCsv).join(";"));
+          }
+        });
+
+        // BOM UTF-8 (\uFEFF) + séparateur point-virgule pour ouverture directe dans Excel en français
+        const csvContent = "\uFEFF" + csvLines.join("\r\n");
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "salaires.csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("Export Excel (salaires.csv) téléchargé ✓");
+      });
+
+      // Bouton "Exporter les données (.json)"
+      document.getElementById("download-json-btn").addEventListener("click", () => {
+        purgeDeletedEmployeesFromMonths(appState);
+        const serialized = JSON.stringify(appState, null, 2);
+        const blob = new Blob([serialized], { type: "application/json;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "salaires.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("Fichier salaires.json exporté ✓");
+      });
+
+      // Bouton "Importer les données (.json)" dans Gérer les salariés
+      document.getElementById("import-json-btn").addEventListener("click", () => {
+        document.getElementById("import-json-input").click();
+      });
+
+      document.getElementById("import-json-input").addEventListener("change", async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        try {
+          const text = await file.text();
+          const parsed = JSON.parse(text);
+          const migrated = migrateIfLegacy(parsed);
+          if (!migrated || !Array.isArray(migrated.employees)) {
+            alert("Le fichier JSON sélectionné n'est pas un fichier salaires.json valide.");
+            e.target.value = "";
+            return;
+          }
+          appState = migrated;
+          await persistToDisk();
+          resetOnboardingForm();
+          renderOnboardingEmployeeList();
+          showToast("Données importées avec succès ✓");
+        } catch (err) {
+          alert("Impossible de lire le fichier JSON sélectionné.");
+          console.error(err);
+        }
+        e.target.value = "";
       });
 
       document.getElementById("ob-role").addEventListener("change", () => {
@@ -2101,14 +2649,23 @@
         showToast(wasEdit ? `Salarié « ${emp.name} » modifié ✓` : `Salarié « ${emp.name} » enregistré ✓`);
       });
 
-      // Bouton 2 sous le formulaire : "Accéder à la déclaration" (retour au tableau)
-      document.getElementById("ob-go-declaration-btn").addEventListener("click", async () => {
-        const pendingEmp = readEmployeeFromOnboardingForm(true);
-        if (pendingEmp === false) return; // Champs partiellement remplis invalides
-        if (pendingEmp) {
-          upsertEmployeeInState(pendingEmp);
-          await persistToDisk();
+      // Bouton 2 sous le formulaire : "Accéder à la déclaration"
+      // Si des données non enregistrées sont présentes dans le formulaire, affiche la modale Annuler / Confirmer
+      document.getElementById("ob-go-declaration-btn").addEventListener("click", () => {
+        if (hasUnsavedOnboardingFormData()) {
+          document.getElementById("confirm-modal").classList.remove("hidden");
+          return;
         }
+        closeOnboardingView();
+      });
+
+      document.getElementById("confirm-modal-cancel").addEventListener("click", () => {
+        document.getElementById("confirm-modal").classList.add("hidden");
+      });
+
+      document.getElementById("confirm-modal-ok").addEventListener("click", () => {
+        document.getElementById("confirm-modal").classList.add("hidden");
+        resetOnboardingForm();
         closeOnboardingView();
       });
 
@@ -2124,6 +2681,7 @@
         } else if (e.target.classList.contains("ob-remove-emp")) {
           if (!confirm(`Voulez-vous vraiment retirer le salarié « ${emp.name} » ?`)) return;
           appState.employees = appState.employees.filter(x => x.id !== id);
+          purgeDeletedEmployeesFromMonths(appState);
           if (appState.activeTab === id) {
             appState.activeTab = appState.employees[0] ? appState.employees[0].id : null;
           }
@@ -2155,10 +2713,8 @@
           const defHrs = Number(s.defaultHours) || 0;
           if (s.hours > 0) {
             s.hours = 0;
-            if (!s.note) s.note = "Absente / Congés";
           } else {
             s.hours = defHrs;
-            if (s.note === "Absente / Congés") s.note = "";
           }
           mData.saved = false;
           mData.savedAt = null;
@@ -2182,8 +2738,6 @@
 
         if (e.target.classList.contains("emp-hours")) {
           s.hours = roundHalf(e.target.value);
-        } else if (e.target.classList.contains("emp-note")) {
-          s.note = e.target.value;
         }
         mData.saved = false;
         mData.savedAt = null;
@@ -2217,14 +2771,12 @@
         if (!date) return alert("Veuillez choisir une date pour l'extra.");
         const hours = roundHalf(document.getElementById("extra-hours").value);
         if (hours <= 0) return alert("Veuillez saisir un nombre d'heures supérieur à 0 pour l'extra.");
-        const note = document.getElementById("extra-note").value.trim() || "Extra";
 
         const mData = getEmployeeMonthData(emp);
         mData.sessions.push({
           date,
           hours,
           defaultHours: hours,
-          note,
           isFerie: false,
           isVacation: false,
           isExtra: true
@@ -2232,7 +2784,6 @@
         mData.saved = false;
         mData.savedAt = null;
         document.getElementById("extra-hours").value = "0";
-        document.getElementById("extra-note").value = "";
         renderDashboard();
         showToast("Extra ajouté à la liste (cliquez sur Enregistrer pour valider)");
       });
