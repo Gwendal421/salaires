@@ -958,6 +958,50 @@
     }
 
     @media (max-width: 860px) {
+      body {
+        padding: 16px 12px 40px;
+      }
+      .header-bar {
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .title-block {
+        width: 100%;
+        text-align: center;
+      }
+      .period-controls {
+        width: 100%;
+        justify-content: center;
+        gap: 6px;
+        margin-left: 0;
+      }
+      .period-controls .btn-icon {
+        width: 36px;
+        flex-shrink: 0;
+      }
+      .period-controls .field-group:first-of-type {
+        flex: 1;
+        min-width: 0;
+        max-width: 145px;
+      }
+      .period-controls .field-group:last-of-type {
+        width: 84px;
+        flex-shrink: 0;
+      }
+      .period-controls select {
+        width: 100%;
+        padding: 0 8px;
+      }
+      .onboarding-card,
+      .tab-panel {
+        padding: 18px 14px;
+      }
+      .onboarding-header,
+      .panel-top-grid {
+        padding-bottom: 14px;
+        margin-bottom: 16px;
+        gap: 12px;
+      }
       .form-grid-header {
         display: none;
       }
@@ -966,6 +1010,13 @@
       .summary-footer,
       .ob-main-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .form-row {
+        padding: 12px;
+      }
+      .summary-footer {
+        padding: 16px;
       }
       /* Affichage compact des jours en mobile : grille 2 colonnes, espace minimal (4px) entre le nom du jour et les heures dessous */
       .ob-days-list {
@@ -989,6 +1040,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: 8px;
       }
       .header-actions-group > button {
         width: 100%;
@@ -1116,7 +1168,6 @@
       <div class="onboarding-header">
         <div class="onboarding-header-info">
           <h2>Mode d'emploi</h2>
-          <p>Découvrez les principes de fonctionnement de l'outil avant de gérer vos salariés et déclarer leurs heures.</p>
         </div>
 
         <div class="onboarding-header-actions">
@@ -1131,46 +1182,46 @@
 
       <div class="help-grid">
         <div class="help-step-card">
-          <h3>1. Gérer vos salariés</h3>
-          <p>Dans <strong>« Gérer les salariés »</strong>, enregistrez chaque employé à domicile :</p>
+          <h3>1. Vos salariés</h3>
+          <p>Commencez par enregistrer les personnes qui travaillent chez vous :</p>
           <ul>
-            <li>Choisissez la <strong>Prestation</strong> (<em>Ménage</em>, <em>Garde d'enfant</em> ou <em>Autre</em>) et le <strong>salaire horaire net</strong>.</li>
-            <li>Sélectionnez la <strong>Zone de vacances</strong> (ou <em>Pas de zone</em>).</li>
-            <li>Indiquez les jours et le nombre d'heures habituellement travaillés dans la semaine.</li>
+            <li>Indiquez leur <strong>Prestation</strong> (<em>Ménage</em>, <em>Garde d'enfant</em> ou <em>Autre</em>) et leur <strong>tarif horaire net</strong>.</li>
+            <li>Choisissez votre <strong>Zone de vacances scolaires</strong> (ou <em>Pas de zone</em>).</li>
+            <li>Cochez leurs jours et heures habituels dans la semaine.</li>
           </ul>
         </div>
 
         <div class="help-step-card">
-          <h3>2. Déclarer les heures chaque mois</h3>
-          <p>Dans le tableau de déclaration mensuelle :</p>
+          <h3>2. Le pointage du mois</h3>
+          <p>Chaque mois, votre calendrier est déjà prêt :</p>
           <ul>
-            <li>Les séances habituelles du mois sont pré-remplies automatiquement.</li>
-            <li>Les <strong>jours fériés</strong> (et les <strong>vacances scolaires</strong> pour la garde d'enfant) sont mis à <code>0 h</code> automatiquement.</li>
-            <li>Pour <em>Garde d'enfant</em> et <em>Autre</em>, vous pouvez ajouter des <strong>extras ponctuels</strong>.</li>
-            <li>Cliquez sur <strong>« Enregistrer »</strong> en bas du tableau pour valider votre déclaration du mois.</li>
+            <li>Les jours habituels sont pré-remplis pour vous éviter de tout ressaisir.</li>
+            <li>Les <strong>jours fériés</strong> (et les <strong>vacances scolaires</strong> pour la garde d'enfant) passent tout seuls à <code>0 h</code>.</li>
+            <li>Un créneau en plus ? Ajoutez un <strong>extra ponctuel</strong> en bas de page (pour <em>Garde d'enfant</em> ou <em>Autre</em>).</li>
+            <li>Cliquez sur <strong>« Enregistrer »</strong> une fois le mois vérifié.</li>
           </ul>
         </div>
 
         <div class="help-step-card">
-          <h3>3. Calculs CESU &amp; suivi</h3>
-          <p>En bas de chaque fiche mensuelle, 3 compteurs sont calculés automatiquement :</p>
+          <h3>3. Paiement &amp; CESU</h3>
+          <p>En bas de page, tout est calculé pour vous :</p>
           <ul>
-            <li><strong>Heures à payer</strong> : total réel des heures effectuées.</li>
-            <li><strong>Heures à déclarer</strong> : total arrondi à l'heure entière inférieure pour le CESU.</li>
-            <li><strong>Net à payer</strong> : montant exact à verser au salarié.</li>
-            <li>Cochez <strong>« Déclaré sur CESU »</strong> et <strong>« Payé »</strong> pour suivre vos démarches.</li>
+            <li><strong>Heures à payer</strong> : le total exact des heures faites dans le mois.</li>
+            <li><strong>Heures à déclarer</strong> : le total arrondi à l'heure inférieure pour votre déclaration CESU.</li>
+            <li><strong>Net à payer</strong> : la somme exacte à régler à votre salarié.</li>
+            <li>Deux petites cases à cocher vous permettent de noter quand c'est déclaré sur le CESU et quand c'est payé.</li>
           </ul>
         </div>
       </div>
 
       <div class="help-local-box">
-        <h3>🔒 Stockage 100 % en local — Données non accessibles sur un autre appareil</h3>
+        <h3>🔒 Vos données restent sur cet appareil</h3>
         <p>
-          Pour garantir votre confidentialité, <strong>toutes vos données sont enregistrées uniquement en local</strong> sur l'appareil et le navigateur que vous utilisez (via le fichier <code>salaires.json</code>). Aucune donnée n'est stockée sur un serveur en ligne : <strong>vos données ne sont donc pas accessibles automatiquement depuis un autre ordinateur, téléphone ou tablette</strong>.
+          Rien n'est envoyé sur Internet : <strong>tout est enregistré directement sur l'appareil que vous utilisez</strong> (dans le fichier <code>salaires.json</code>). En contrepartie, <strong>vous ne retrouverez pas automatiquement vos saisies si vous ouvrez l'outil sur un autre ordinateur ou sur votre téléphone</strong>.
         </p>
         <ul>
-          <li><strong>Transférer ou sauvegarder vos données :</strong> cliquez sur <strong>« Exporter les données (.json) »</strong> pour télécharger votre fichier <code>salaires.json</code>, puis utilisez <strong>« Importer les données (.json) »</strong> dans <em>Gérer les salariés</em> sur un autre appareil.</li>
-          <li><strong>Suivi sous Excel :</strong> cliquez sur <strong>« Exporter sous Excel (.csv) »</strong> pour récupérer le tableau complet de tous les mois enregistrés.</li>
+          <li><strong>Pour passer d'un appareil à un autre (ou garder une copie) :</strong> cliquez sur <strong>« Exporter les données (.json) »</strong> pour enregistrer votre fichier <code>salaires.json</code>, puis sur l'autre appareil, cliquez sur <strong>« Importer les données (.json) »</strong> dans <em>Gérer les salariés</em>.</li>
+          <li><strong>Pour ouvrir vos comptes dans Excel :</strong> cliquez sur <strong>« Exporter sous Excel (.csv) »</strong> pour télécharger le tableau de vos mois enregistrés.</li>
         </ul>
       </div>
     </section>
