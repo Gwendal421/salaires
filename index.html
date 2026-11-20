@@ -35,9 +35,8 @@
 
       /* Grille UX standardisée (Petite / Moyenne / Grande longueur) */
       --col-date: 200px;     /* Moyenne longueur : Jour + Date */
-      --col-hours: 140px;    /* Petite longueur : Heures (pas de 0.5) */
+      --col-hours: 140px;    /* Petite longueur : Heures */
       --col-amount: 110px;   /* Petite longueur : Net (€) */
-      --col-note: 1fr;       /* Grande longueur : Motif / Note */
       --col-action: 130px;   /* Petite longueur : Action rapide */
       --grid-gap: 20px;      /* Espacement horizontal constant */
       --input-height: 40px;  /* Hauteur uniforme de tous les contrôles */
@@ -1202,7 +1201,7 @@
       <div class="ob-main-grid">
         <div class="field-group">
           <label class="field-label" for="ob-name">Nom du salarié</label>
-          <input type="text" id="ob-name" class="input-lg" placeholder="Ex : Inna, Charlotte..." />
+          <input type="text" id="ob-name" class="input-lg" placeholder="Ex : Marie, Thomas..." />
         </div>
 
         <div class="field-group">
@@ -1621,89 +1620,42 @@
         return stateObj;
       }
 
-      if (data.settings || (data.months && Object.values(data.months).some(m => m && (m.innaSessions || m.charlotteSessions)))) {
-        const innaRate = Number(data.settings?.innaRate) || 16;
-        const charlotteRate = Number(data.settings?.charlotteRate) || 11;
-
-        const employees = [
-          {
-            id: "inna",
-            name: "Inna",
-            role: "Ménage",
-            rate: innaRate,
-            vacationZone: "Zone C",
-            schedule: { "4": 3.5 }
-          },
-          {
-            id: "charlotte",
-            name: "Charlotte",
-            role: "Garde d'enfant",
-            rate: charlotteRate,
-            vacationZone: "Zone C",
-            schedule: { "3": 2.5 }
-          }
-        ];
-
-        const migratedMonths = {};
-        for (const [mKey, mVal] of Object.entries(data.months || {})) {
-          if (!mVal || typeof mVal !== "object") continue;
-          if (mVal.inna && mVal.inna.sessions) {
-            migratedMonths[mKey] = mVal;
-            continue;
-          }
-          migratedMonths[mKey] = {
-            inna: {
-              sessions: Array.isArray(mVal.innaSessions) ? mVal.innaSessions : [],
-              declared: Boolean(mVal.innaDeclared),
-              paid: Boolean(mVal.innaPaid),
-              saved: Boolean(mVal.innaSaved || mVal.innaSavedAt),
-              savedAt: mVal.innaSavedAt || null
-            },
-            charlotte: {
-              sessions: Array.isArray(mVal.charlotteSessions) ? mVal.charlotteSessions : [],
-              declared: Boolean(mVal.charlotteDeclared),
-              paid: Boolean(mVal.charlottePaid),
-              saved: Boolean(mVal.charlotteSaved || mVal.charlotteSavedAt),
-              savedAt: mVal.charlotteSavedAt || null
-            }
-          };
-        }
-
-        return {
-          activeTab: data.activeTab || "inna",
-          employees,
-          months: migratedMonths
-        };
-      }
-
       return null;
     }
 
+    // N'interroge le serveur local PowerShell que si la page tourne elle-même sur localhost / 127.0.0.1.
+    // Cela évite la popup de sécurité Chrome ("Accéder à d'autres applis et services sur cet appareil") sur GitHub Pages.
+    const IS_LOCAL_SERVER =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+
     async function loadState() {
-      try {
-        const res = await fetch("http://localhost:8765/api/salaires");
-        if (res.ok) {
-          const parsed = await res.json();
-          if (parsed && parsed._exists === false) {
-            localStorage.removeItem(STORAGE_KEY);
-            appState = { activeTab: null, employees: [], months: {} };
-            updateSyncStatus(false);
-            return;
+      if (IS_LOCAL_SERVER) {
+        try {
+          const res = await fetch("/api/salaires");
+          if (res.ok) {
+            const parsed = await res.json();
+            if (parsed && parsed._exists === false) {
+              localStorage.removeItem(STORAGE_KEY);
+              appState = { activeTab: null, employees: [], months: {} };
+              updateSyncStatus(false);
+              return;
+            }
+            const migrated = migrateIfLegacy(parsed);
+            if (migrated && migrated.employees.length > 0) {
+              appState = migrated;
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+              updateSyncStatus(true);
+              return;
+            } else {
+              appState = { activeTab: null, employees: [], months: {} };
+              updateSyncStatus(false);
+              return;
+            }
           }
-          const migrated = migrateIfLegacy(parsed);
-          if (migrated && migrated.employees.length > 0) {
-            appState = migrated;
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
-            updateSyncStatus(true);
-            return;
-          } else {
-            appState = { activeTab: null, employees: [], months: {} };
-            updateSyncStatus(false);
-            return;
-          }
+        } catch {
+          // Fallback hors serveur PowerShell : localStorage
         }
-      } catch {
-        // Fallback hors serveur PowerShell : localStorage
       }
 
       try {
@@ -1728,14 +1680,16 @@
       localStorage.setItem(STORAGE_KEY, serialized);
       updateSyncStatus(appState.employees && appState.employees.length > 0);
 
-      try {
-        await fetch("http://localhost:8765/api/salaires", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: serialized
-        });
-      } catch {
-        // Silencieux si hors serveur
+      if (IS_LOCAL_SERVER) {
+        try {
+          await fetch("/api/salaires", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: serialized
+          });
+        } catch {
+          // Silencieux si hors serveur
+        }
       }
     }
 
