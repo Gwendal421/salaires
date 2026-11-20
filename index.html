@@ -1,0 +1,2275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salaires à Domicile</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --border-focus: #3b82f6;
+
+      --menage: #2563eb;
+      --menage-soft: #eff6ff;
+      --garde: #7c3aed;
+      --garde-soft: #f5f3ff;
+      --autre: #0d9488;
+      --autre-soft: #f0fdfa;
+
+      --holiday-bg: #fff7ed;
+      --holiday-border: #fed7aa;
+      --holiday-text: #c2410c;
+
+      --ferie-bg: #fef2f2;
+      --ferie-border: #fecaca;
+      --ferie-text: #b91c1c;
+
+      --success: #059669;
+      --success-bg: #ecfdf5;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+
+      /* Grille UX standardisée (Petite / Moyenne / Grande longueur) */
+      --col-date: 200px;     /* Moyenne longueur : Jour + Date */
+      --col-hours: 140px;    /* Petite longueur : Heures (pas de 0.5) */
+      --col-amount: 110px;   /* Petite longueur : Net (€) */
+      --col-note: 1fr;       /* Grande longueur : Motif / Note */
+      --col-action: 130px;   /* Petite longueur : Action rapide */
+      --grid-gap: 20px;      /* Espacement horizontal constant */
+      --input-height: 40px;  /* Hauteur uniforme de tous les contrôles */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 32px 20px 60px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* EN-TÊTE & SÉLECTEUR DE MOIS */
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .title-block h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .title-block p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .period-controls {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .field-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 6px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .input-sm { width: 110px; }
+    .input-md { width: 160px; }
+    .input-lg { width: 100%; }
+
+    select,
+    input[type="number"],
+    input[type="text"],
+    input[type="date"] {
+      height: var(--input-height);
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      font-size: 0.92rem;
+      color: var(--text);
+      font-family: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    select:focus,
+    input:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+    }
+
+    .btn-icon {
+      height: var(--input-height);
+      width: 40px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 21px;
+      transition: background 0.15s;
+    }
+
+    .btn-icon:hover {
+      background: #f1f5f9;
+    }
+
+    .btn-outline {
+      height: var(--input-height);
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      margin-top: 21px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-outline:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    /* =================================================================
+       ÉCRAN D'ONBOARDING (CRÉATION DES SALARIÉS)
+       ================================================================= */
+    .onboarding-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+      margin-bottom: 28px;
+    }
+
+    .onboarding-header {
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .onboarding-header h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .onboarding-header p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Grille UX alignée en haut : Nom raccourci (200px), Fonction (190px), Salaire horaire net sur 1 ligne (200px), Zone de vacances (170px) */
+    .ob-main-grid {
+      display: grid;
+      grid-template-columns: 200px 190px 200px 170px;
+      gap: var(--grid-gap);
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .ob-role-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.3;
+    }
+
+    .ob-days-section {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .ob-days-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    /* Jours affichés en ligne (1 ligne par jour) pour que le - / + s'affiche parfaitement dans le cadre */
+    .ob-days-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 420px;
+    }
+
+    .ob-day-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 10px 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .ob-day-row.active {
+      border-color: var(--menage);
+      background: #f8fbff;
+    }
+
+    .ob-day-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 0.94rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .ob-day-check input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .ob-day-row .stepper-box {
+      width: 148px;
+      flex-shrink: 0;
+    }
+
+    .ob-day-row:not(.active) .stepper-box {
+      opacity: 0.55;
+    }
+
+    .ob-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-top: 4px;
+    }
+
+    .ob-list-section {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .ob-list-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .ob-emp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ob-emp-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ob-emp-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ob-emp-info strong {
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .ob-emp-info span {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* =================================================================
+       ONGLETS DYNAMIQUES DES SALARIÉS
+       ================================================================= */
+    .tabs-nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .tab-btn:hover {
+      border-color: #cbd5e1;
+    }
+
+    .tab-btn.active-menage {
+      border-color: var(--menage);
+      background: var(--menage-soft);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+    }
+
+    .tab-btn.active-garde {
+      border-color: var(--garde);
+      background: var(--garde-soft);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.08);
+    }
+
+    .tab-btn.active-autre {
+      border-color: var(--autre);
+      background: var(--autre-soft);
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08);
+    }
+
+    .tab-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+    }
+
+    .tab-sub {
+      font-size: 0.83rem;
+      color: var(--muted);
+      margin-top: 4px;
+      display: block;
+    }
+
+    .tab-total-pill {
+      font-size: 1.02rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    /* PANNEAU D'ONGLET */
+    .tab-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+    }
+
+    /* EN-TÊTE DU TABLEAU DE DÉCLARATION */
+    .panel-top-grid {
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-Context h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-Context p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .vacation-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .chip-holiday {
+      background: var(--holiday-bg);
+      color: var(--holiday-text);
+      border: 1px solid var(--holiday-border);
+    }
+
+    .chip-ferie {
+      background: var(--ferie-bg);
+      color: var(--ferie-text);
+      border: 1px solid var(--ferie-border);
+    }
+
+    .chip-ok {
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid #a7f3d0;
+    }
+
+    /* GRILLE DES LIGNES DE FORMULAIRE (5 colonnes alignées en haut) */
+    .form-grid-header {
+      display: grid;
+      grid-template-columns: var(--col-date) var(--col-hours) var(--col-amount) var(--col-note) var(--col-action);
+      gap: var(--grid-gap);
+      align-items: start;
+      padding: 0 16px 10px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .form-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: var(--col-date) var(--col-hours) var(--col-amount) var(--col-note) var(--col-action);
+      gap: var(--grid-gap);
+      align-items: start;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .form-rows.is-proposed .form-row {
+      border-style: dashed;
+      border-color: #94a3b8;
+      background: #fcfdff;
+    }
+
+    .form-rows.is-saved .form-row {
+      border-style: solid;
+      border-color: #a7f3d0;
+      background: #ffffff;
+    }
+
+    .form-row.row-zero {
+      background: #f8fafc !important;
+      color: var(--muted);
+    }
+
+    .form-row.row-holiday {
+      background: var(--holiday-bg) !important;
+      border-color: var(--holiday-border) !important;
+    }
+
+    .form-row.row-ferie {
+      background: var(--ferie-bg) !important;
+      border-color: var(--ferie-border) !important;
+    }
+
+    .cell-date {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-top: 2px;
+    }
+
+    .date-main {
+      font-weight: 700;
+      font-size: 0.96rem;
+      color: var(--text);
+    }
+
+    .date-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Contrôle d'heures en pas de 0.5h */
+    .stepper-box {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: var(--input-height);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .stepper-btn {
+      width: 36px;
+      flex-shrink: 0;
+      height: 100%;
+      border: none;
+      background: #f8fafc;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stepper-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .stepper-input {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      height: 100%;
+      border: none !important;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0 4px !important;
+      -moz-appearance: textfield;
+    }
+
+    .stepper-input::-webkit-outer-spin-button,
+    .stepper-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .cell-amount {
+      height: var(--input-height);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .btn-row-action {
+      width: 100%;
+      height: var(--input-height);
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-row-action:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    /* BLOC LISTE & AJOUT D'EXTRAS (Garde d'enfant) */
+    .extra-adder {
+      background: #faf5ff;
+      border: 1px dashed #c4b5fd;
+      border-radius: 12px;
+      padding: 18px 16px;
+      margin-bottom: 28px;
+    }
+
+    .extra-adder-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--garde);
+      margin-bottom: 12px;
+    }
+
+    .extra-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .extra-list:empty {
+      display: none;
+    }
+
+    .extra-list .form-row {
+      background: #ffffff;
+      border: 1px solid #ddd6fe;
+    }
+
+    .extra-grid {
+      display: grid;
+      grid-template-columns: var(--col-date) var(--col-hours) var(--col-amount) var(--col-note) var(--col-action);
+      gap: var(--grid-gap);
+      align-items: start;
+    }
+
+    /* ZONE RÉCAPITULATIF MENSUEL (3 COMPTEURS : HEURES À PAYER, HEURES À DÉCLARER, NET À PAYER) */
+    .summary-footer {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 155px 175px 165px 1fr;
+      gap: var(--grid-gap);
+      align-items: start;
+    }
+
+    .summary-stat {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .summary-stat .stat-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-top: 4px;
+      line-height: 1.1;
+    }
+
+    .summary-stat .stat-sub {
+      font-size: 0.74rem;
+      color: var(--muted);
+      margin-top: 4px;
+      display: block;
+    }
+
+    .summary-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .save-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-save {
+      height: var(--input-height);
+      padding: 0 22px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: filter 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-save:hover {
+      filter: brightness(0.93);
+    }
+
+    .btn-theme-menage { background: var(--menage); }
+    .btn-theme-garde { background: var(--garde); }
+    .btn-theme-autre { background: var(--autre); }
+    .btn-theme-success { background: var(--success); }
+
+    .save-status {
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .save-status.unsaved {
+      color: var(--danger);
+      background: var(--danger-bg);
+      border: 1px solid #fecaca;
+    }
+
+    .save-status.saved {
+      color: var(--success);
+      background: var(--success-bg);
+      border: 1px solid #a7f3d0;
+    }
+
+    .check-line {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .check-line label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .check-line input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .check-line a {
+      color: var(--menage);
+      text-decoration: underline;
+      font-weight: 700;
+    }
+
+    .check-line a:hover {
+      color: #1d4ed8;
+    }
+
+    @media (max-width: 860px) {
+      .form-grid-header {
+        display: none;
+      }
+      .form-row,
+      .extra-grid,
+      .summary-footer,
+      .ob-main-grid {
+        grid-template-columns: 1fr;
+      }
+      /* En mode responsive, l'incrément d'heure par défaut passe sous le nom du jour */
+      .ob-day-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+      z-index: 9999;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- BARRE SUPÉRIEURE : TITRE & PÉRIODE -->
+    <header class="header-bar">
+      <div class="title-block">
+        <h1>Salaires à domicile</h1>
+        <p id="sync-status">Fichier de données : salaires.json</p>
+      </div>
+
+      <div class="header-right" id="header-controls">
+        <div class="period-controls">
+          <button class="btn-icon" id="prev-month-btn" title="Mois précédent">◀</button>
+          <div class="field-group">
+            <label class="field-label" for="month-select">Mois</label>
+            <select id="month-select" class="input-md"></select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="year-select">Année</label>
+            <select id="year-select" class="input-sm"></select>
+          </div>
+          <button class="btn-icon" id="next-month-btn" title="Mois suivant">▶</button>
+        </div>
+
+        <button type="button" class="btn-outline" id="open-onboarding-btn">
+          Gérer les salariés
+        </button>
+      </div>
+    </header>
+
+    <!-- =================================================================
+         VUE 1 : GESTION DES SALARIÉS / ONBOARDING
+         ================================================================= -->
+    <section id="onboarding-view" class="onboarding-card hidden">
+      <div class="onboarding-header">
+        <h2 id="onboarding-title">Création d'un salarié</h2>
+        <p id="onboarding-subtitle">Renseignez les informations du salarié ci-dessous.</p>
+      </div>
+
+      <!-- Champs principaux alignés en haut sur la grille UX :
+           Nom raccourci (200px), Fonction (190px), Salaire horaire net sur 1 ligne (200px), Zone de vacances (170px) -->
+      <div class="ob-main-grid">
+        <div class="field-group">
+          <label class="field-label" for="ob-name">Nom du salarié</label>
+          <input type="text" id="ob-name" class="input-lg" placeholder="Ex : Inna, Charlotte..." />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="ob-role">Fonction</label>
+          <select id="ob-role" class="input-lg">
+            <option value="Ménage">🧹 Ménage</option>
+            <option value="Garde d'enfant">🧸 Garde d'enfant</option>
+            <option value="Autre">💼 Autre</option>
+          </select>
+          <span class="ob-role-hint" id="ob-role-hint">Jours fériés exclus automatiquement</span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="ob-rate">Salaire horaire net (€/h)</label>
+          <input type="number" id="ob-rate" class="input-sm" step="0.5" min="0" value="0" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="ob-zone">Zone de vacances</label>
+          <select id="ob-zone" class="input-lg">
+            <option value="Zone A">Zone A</option>
+            <option value="Zone B">Zone B</option>
+            <option value="Zone C" selected>Zone C</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Jours travaillés affichés en ligne (1 ligne par jour) avec compteur 0 par défaut -->
+      <div class="ob-days-section">
+        <div class="ob-days-title">Jours travaillés dans la semaine &amp; nombre d'heures par séance (pas de 0,5 h)</div>
+        <div class="ob-days-list" id="ob-days-grid"></div>
+      </div>
+
+      <!-- 2 boutons sous le formulaire : "Enregistrer le salarié" à gauche et "Accéder à la déclaration" en vert à droite -->
+      <div class="ob-actions-bar">
+        <button type="button" class="btn-save btn-theme-menage" id="ob-save-emp-btn">
+          Enregistrer le salarié
+        </button>
+
+        <button type="button" class="btn-save btn-theme-success" id="ob-go-declaration-btn" style="margin-left:auto;">
+          Accéder à la déclaration
+        </button>
+      </div>
+
+      <!-- Liste des salariés déjà enregistrés -->
+      <div class="ob-list-section hidden" id="ob-list-section">
+        <div class="ob-list-title">Salariés enregistrés</div>
+        <div class="ob-emp-list" id="ob-emp-list"></div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         VUE 2 : TABLEAU DE DÉCLARATION (ONGLETS + GRILLE MENSUELLE)
+         ================================================================= -->
+    <main id="dashboard-view" class="hidden">
+      <nav class="tabs-nav" id="tabs-nav"></nav>
+
+      <section class="tab-panel" id="active-emp-panel">
+        <div class="panel-top-grid">
+          <div class="panel-Context">
+            <h2 id="emp-panel-title">Prestations du mois</h2>
+            <p id="emp-panel-desc"></p>
+            <div class="vacation-chips" id="emp-calendar-chips"></div>
+          </div>
+        </div>
+
+        <div class="form-grid-header">
+          <div class="field-label">Date</div>
+          <div class="field-label">Heures (pas 0,5h)</div>
+          <div class="field-label" style="text-align:right;">Net séance</div>
+          <div class="field-label">Motif / Commentaire</div>
+          <div class="field-label">Action rapide</div>
+        </div>
+
+        <div class="form-rows is-proposed" id="emp-rows"></div>
+
+        <!-- Bloc Extras affiché uniquement si la fonction est "Garde d'enfant" -->
+        <div class="extra-adder hidden" id="emp-extra-section">
+          <div class="extra-adder-title" id="extra-section-title">✨ Extras ponctuels (Garde d'enfant)</div>
+
+          <!-- Liste des extras saisis qui s'incrémente à chaque nouvel extra -->
+          <div class="extra-list" id="emp-extra-rows"></div>
+
+          <!-- Ligne de saisie d'un nouvel extra -->
+          <div class="extra-grid">
+            <div class="field-group">
+              <label class="field-label" for="extra-date">Date de l'extra</label>
+              <input type="date" id="extra-date" class="input-lg" />
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="extra-hours">Heures (pas 0,5h)</label>
+              <div class="stepper-box">
+                <button type="button" class="stepper-btn" id="extra-step-minus">−</button>
+                <input type="number" id="extra-hours" class="stepper-input" step="0.5" min="0" value="0" />
+                <button type="button" class="stepper-btn" id="extra-step-plus">+</button>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <span class="field-label">Montant estimé</span>
+              <div class="cell-amount" id="extra-preview-amount" style="width:100%;">0,00 €</div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="extra-note">Commentaire</label>
+              <input type="text" id="extra-note" class="input-lg" placeholder="Ex: Soirée samedi..." />
+            </div>
+
+            <div class="field-group">
+              <span class="field-label">&nbsp;</span>
+              <button type="button" class="btn-save btn-theme-garde" id="extra-add-btn" style="width:100%;font-size:0.86rem;padding:0 12px;">
+                + Ajouter
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Récapitulatif mensuel : Heures à payer (réel), Heures à déclarer (arrondi inf.), Net à payer -->
+        <div class="summary-footer">
+          <div class="summary-stat">
+            <div class="field-label">Heures à payer</div>
+            <div class="stat-val" id="emp-hours-to-pay">0 h</div>
+            <span class="stat-sub">Total réel effectué</span>
+          </div>
+
+          <div class="summary-stat">
+            <div class="field-label">Heures à déclarer</div>
+            <div class="stat-val" id="emp-hours-to-declare">0 h</div>
+            <span class="stat-sub">Arrondi à l'heure inférieure</span>
+          </div>
+
+          <div class="summary-stat">
+            <div class="field-label">Net à payer</div>
+            <div class="stat-val" id="emp-total-net" style="color:var(--success);">0,00 €</div>
+            <span class="stat-sub" id="emp-net-sub">Heures à payer × Tarif</span>
+          </div>
+
+          <div class="summary-actions">
+            <div class="save-row">
+              <button type="button" class="btn-save btn-theme-menage" id="emp-save-btn">
+                Enregistrer
+              </button>
+              <span class="save-status unsaved" id="emp-save-status">Non enregistré</span>
+            </div>
+
+            <div class="check-line">
+              <label>
+                <input type="checkbox" id="emp-declared-check" />
+                <span>Déclaré sur <a href="https://www.cesu.urssaf.fr/info/accueil.html" target="_blank" rel="noopener">CESU</a> ce mois-ci</span>
+              </label>
+
+              <label>
+                <input type="checkbox" id="emp-paid-check" />
+                <span id="emp-paid-label">Payé ce mois-ci</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /**********************************************************************
+     * 1. CALENDRIER OFFICIEL : JOURS FÉRIÉS & VACANCES SCOLAIRES (ZONES A, B, C)
+     **********************************************************************/
+    const MONTHS_FR = [
+      "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+      "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ];
+    const DAYS_FR = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+    const WEEKDAYS_ORDER = [
+      { dow: 1, label: "Lundi" },
+      { dow: 2, label: "Mardi" },
+      { dow: 3, label: "Mercredi" },
+      { dow: 4, label: "Jeudi" },
+      { dow: 5, label: "Vendredi" },
+      { dow: 6, label: "Samedi" },
+      { dow: 0, label: "Dimanche" }
+    ];
+
+    // Libellé dynamique avec élision française : "Prestations du mois de Janvier" / "Prestations du mois d'Octobre"
+    function formatPrestationsMonthTitle(monthNumber, empName, empRole) {
+      const monthName = MONTHS_FR[monthNumber - 1] || "";
+      const startsWithVowel = /^[AEIOUÉÈÊÀÂ]/i.test(monthName);
+      const prefix = startsWithVowel ? `Prestations du mois d'${monthName}` : `Prestations du mois de ${monthName}`;
+      return `${prefix} — ${empName} (${empRole})`;
+    }
+
+    const FALLBACK_VACATIONS_BY_ZONE = {
+      "Zone A": [
+        { start: "2025-10-18", end: "2025-11-03", title: "Vacances de la Toussaint" },
+        { start: "2025-12-20", end: "2026-01-05", title: "Vacances de Noël" },
+        { start: "2026-02-07", end: "2026-02-23", title: "Vacances d'Hiver" },
+        { start: "2026-04-04", end: "2026-04-20", title: "Vacances de Printemps" },
+        { start: "2026-05-14", end: "2026-05-18", title: "Pont de l'Ascension" },
+        { start: "2026-07-04", end: "2026-09-01", title: "Vacances d'Été" },
+        { start: "2026-10-17", end: "2026-11-02", title: "Vacances de la Toussaint" },
+        { start: "2026-12-19", end: "2027-01-04", title: "Vacances de Noël" },
+        { start: "2027-02-13", end: "2027-03-01", title: "Vacances d'Hiver" },
+        { start: "2027-04-10", end: "2027-04-26", title: "Vacances de Printemps" },
+        { start: "2027-05-06", end: "2027-05-10", title: "Pont de l'Ascension" },
+        { start: "2027-07-03", end: "2027-09-01", title: "Vacances d'Été" }
+      ],
+      "Zone B": [
+        { start: "2025-10-18", end: "2025-11-03", title: "Vacances de la Toussaint" },
+        { start: "2025-12-20", end: "2026-01-05", title: "Vacances de Noël" },
+        { start: "2026-02-14", end: "2026-03-02", title: "Vacances d'Hiver" },
+        { start: "2026-04-11", end: "2026-04-27", title: "Vacances de Printemps" },
+        { start: "2026-05-14", end: "2026-05-18", title: "Pont de l'Ascension" },
+        { start: "2026-07-04", end: "2026-09-01", title: "Vacances d'Été" },
+        { start: "2026-10-17", end: "2026-11-02", title: "Vacances de la Toussaint" },
+        { start: "2026-12-19", end: "2027-01-04", title: "Vacances de Noël" },
+        { start: "2027-02-20", end: "2027-03-08", title: "Vacances d'Hiver" },
+        { start: "2027-04-17", end: "2027-05-03", title: "Vacances de Printemps" },
+        { start: "2027-05-06", end: "2027-05-10", title: "Pont de l'Ascension" },
+        { start: "2027-07-03", end: "2027-09-01", title: "Vacances d'Été" }
+      ],
+      "Zone C": [
+        { start: "2025-10-18", end: "2025-11-03", title: "Vacances de la Toussaint" },
+        { start: "2025-12-20", end: "2026-01-05", title: "Vacances de Noël" },
+        { start: "2026-02-21", end: "2026-03-09", title: "Vacances d'Hiver" },
+        { start: "2026-04-18", end: "2026-05-04", title: "Vacances de Printemps" },
+        { start: "2026-05-14", end: "2026-05-18", title: "Pont de l'Ascension" },
+        { start: "2026-07-04", end: "2026-09-01", title: "Vacances d'Été" },
+        { start: "2026-10-17", end: "2026-11-02", title: "Vacances de la Toussaint" },
+        { start: "2026-12-19", end: "2027-01-04", title: "Vacances de Noël" },
+        { start: "2027-02-06", end: "2027-02-22", title: "Vacances d'Hiver" },
+        { start: "2027-04-03", end: "2027-04-19", title: "Vacances de Printemps" },
+        { start: "2027-05-06", end: "2027-05-10", title: "Pont de l'Ascension" },
+        { start: "2027-07-03", end: "2027-09-01", title: "Vacances d'Été" }
+      ]
+    };
+
+    const FALLBACK_FERIES = {
+      "2025-01-01": "Jour de l'An",
+      "2025-04-21": "Lundi de Pâques",
+      "2025-05-01": "Fête du Travail",
+      "2025-05-08": "Victoire 1945",
+      "2025-05-29": "Ascension",
+      "2025-06-09": "Lundi de Pentecôte",
+      "2025-07-14": "Fête Nationale",
+      "2025-08-15": "Assomption",
+      "2025-11-01": "Toussaint",
+      "2025-11-11": "Armistice",
+      "2025-12-25": "Noël",
+      "2026-01-01": "Jour de l'An",
+      "2026-04-06": "Lundi de Pâques",
+      "2026-05-01": "Fête du Travail",
+      "2026-05-08": "Victoire 1945",
+      "2026-05-14": "Ascension",
+      "2026-05-25": "Lundi de Pentecôte",
+      "2026-07-14": "Fête Nationale",
+      "2026-08-15": "Assomption",
+      "2026-11-01": "Toussaint",
+      "2026-11-11": "Armistice",
+      "2026-12-25": "Noël",
+      "2027-01-01": "Jour de l'An",
+      "2027-03-29": "Lundi de Pâques",
+      "2027-05-01": "Fête du Travail",
+      "2027-05-06": "Ascension",
+      "2027-05-08": "Victoire 1945",
+      "2027-05-17": "Lundi de Pentecôte",
+      "2027-07-14": "Fête Nationale",
+      "2027-08-15": "Assomption",
+      "2027-11-01": "Toussaint",
+      "2027-11-11": "Armistice",
+      "2027-12-25": "Noël"
+    };
+
+    let feriesMap = { ...FALLBACK_FERIES };
+    let vacationsByZone = {
+      "Zone A": [...FALLBACK_VACATIONS_BY_ZONE["Zone A"]],
+      "Zone B": [...FALLBACK_VACATIONS_BY_ZONE["Zone B"]],
+      "Zone C": [...FALLBACK_VACATIONS_BY_ZONE["Zone C"]]
+    };
+    let apiLoadedYears = new Set();
+
+    function toParisDateString(isoStr) {
+      const d = new Date(isoStr);
+      const parts = new Intl.DateTimeFormat("fr-CA", {
+        timeZone: "Europe/Paris",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).formatToParts(d);
+      const y = parts.find(p => p.type === "year").value;
+      const m = parts.find(p => p.type === "month").value;
+      const day = parts.find(p => p.type === "day").value;
+      return `${y}-${m}-${day}`;
+    }
+
+    async function ensureCalendarData(year) {
+      if (apiLoadedYears.has(year)) return;
+      try {
+        const fRes = await fetch(`https://calendrier.api.gouv.fr/jours-feries/metropole/${year}.json`);
+        if (fRes.ok) {
+          const fJson = await fRes.json();
+          Object.assign(feriesMap, fJson);
+        }
+        const schoolYear1 = `${year - 1}-${year}`;
+        const schoolYear2 = `${year}-${year + 1}`;
+        const where = encodeURIComponent(`zones in ("Zone A","Zone B","Zone C") and annee_scolaire in ("${schoolYear1}","${schoolYear2}")`);
+        const vUrl = `https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-calendrier-scolaire/records?where=${where}&limit=100`;
+        const vRes = await fetch(vUrl);
+        if (vRes.ok) {
+          const vJson = await vRes.json();
+          if (vJson.results) {
+            vJson.results.forEach(r => {
+              if (r.population === "Enseignants") return;
+              const z = r.zones;
+              if (!vacationsByZone[z]) return;
+              const start = toParisDateString(r.start_date);
+              let end = toParisDateString(r.end_date);
+              if (start === end) {
+                const nextDay = new Date(start + "T12:00:00");
+                nextDay.setDate(nextDay.getDate() + 2);
+                end = nextDay.toISOString().slice(0, 10);
+              }
+              if (!vacationsByZone[z].some(v => v.start === start && v.end === end)) {
+                vacationsByZone[z].push({ start, end, title: r.description });
+              }
+            });
+          }
+        }
+        apiLoadedYears.add(year);
+      } catch {
+        // Fallback offline déjà chargé
+      }
+    }
+
+    function getFerieForDate(dateStr) {
+      return feriesMap[dateStr] || null;
+    }
+
+    function getVacationForDate(dateStr, zone = "Zone C") {
+      const list = vacationsByZone[zone] || vacationsByZone["Zone C"];
+      for (const v of list) {
+        if (dateStr >= v.start && dateStr < v.end) {
+          return v.title;
+        }
+      }
+      return null;
+    }
+
+    /**********************************************************************
+     * 2. ÉTAT DYNAMIQUE, MIGRATION & CONNEXION À salaires.json
+     **********************************************************************/
+    const STORAGE_KEY = "salaires_domicile_v3_dynamic";
+
+    let appState = {
+      activeTab: null,
+      employees: [],
+      months: {}
+    };
+
+    function migrateIfLegacy(data) {
+      if (!data || typeof data !== "object") return null;
+
+      if (Array.isArray(data.employees)) {
+        data.employees.forEach(emp => {
+          if (!emp.vacationZone) emp.vacationZone = "Zone C";
+        });
+        return {
+          activeTab: data.activeTab || (data.employees[0] ? data.employees[0].id : null),
+          employees: data.employees,
+          months: data.months || {}
+        };
+      }
+
+      if (data.settings || (data.months && Object.values(data.months).some(m => m && (m.innaSessions || m.charlotteSessions)))) {
+        const innaRate = Number(data.settings?.innaRate) || 16;
+        const charlotteRate = Number(data.settings?.charlotteRate) || 11;
+
+        const employees = [
+          {
+            id: "inna",
+            name: "Inna",
+            role: "Ménage",
+            rate: innaRate,
+            vacationZone: "Zone C",
+            schedule: { "4": 3.5 }
+          },
+          {
+            id: "charlotte",
+            name: "Charlotte",
+            role: "Garde d'enfant",
+            rate: charlotteRate,
+            vacationZone: "Zone C",
+            schedule: { "3": 2.5 }
+          }
+        ];
+
+        const migratedMonths = {};
+        for (const [mKey, mVal] of Object.entries(data.months || {})) {
+          if (!mVal || typeof mVal !== "object") continue;
+          if (mVal.inna && mVal.inna.sessions) {
+            migratedMonths[mKey] = mVal;
+            continue;
+          }
+          migratedMonths[mKey] = {
+            inna: {
+              sessions: Array.isArray(mVal.innaSessions) ? mVal.innaSessions : [],
+              declared: Boolean(mVal.innaDeclared),
+              paid: Boolean(mVal.innaPaid),
+              saved: Boolean(mVal.innaSaved || mVal.innaSavedAt),
+              savedAt: mVal.innaSavedAt || null
+            },
+            charlotte: {
+              sessions: Array.isArray(mVal.charlotteSessions) ? mVal.charlotteSessions : [],
+              declared: Boolean(mVal.charlotteDeclared),
+              paid: Boolean(mVal.charlottePaid),
+              saved: Boolean(mVal.charlotteSaved || mVal.charlotteSavedAt),
+              savedAt: mVal.charlotteSavedAt || null
+            }
+          };
+        }
+
+        return {
+          activeTab: data.activeTab || "inna",
+          employees,
+          months: migratedMonths
+        };
+      }
+
+      return null;
+    }
+
+    async function loadState() {
+      const statusEl = document.getElementById("sync-status");
+      try {
+        const res = await fetch("http://localhost:8765/api/salaires");
+        if (res.ok) {
+          const parsed = await res.json();
+          if (parsed && parsed._exists === false) {
+            localStorage.removeItem(STORAGE_KEY);
+            appState = { activeTab: null, employees: [], months: {} };
+            statusEl.textContent = "Nouveau fichier salaires.json à créer (Onboarding)";
+            return;
+          }
+          const migrated = migrateIfLegacy(parsed);
+          if (migrated && migrated.employees.length > 0) {
+            appState = migrated;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+            statusEl.textContent = "✓ Connecté au fichier salaires.json";
+            return;
+          } else {
+            appState = { activeTab: null, employees: [], months: {} };
+            statusEl.textContent = "Configuration initiale requise";
+            return;
+          }
+        }
+      } catch {
+        // Fallback hors serveur PowerShell : localStorage
+      }
+
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const migrated = migrateIfLegacy(JSON.parse(raw));
+          if (migrated) appState = migrated;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function persistToDisk() {
+      const serialized = JSON.stringify(appState, null, 2);
+      localStorage.setItem(STORAGE_KEY, serialized);
+      const statusEl = document.getElementById("sync-status");
+
+      try {
+        const res = await fetch("http://localhost:8765/api/salaires", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: serialized
+        });
+        if (res.ok) {
+          statusEl.textContent = "✓ Connecté au fichier salaires.json";
+        }
+      } catch {
+        // Silencieux si hors serveur
+      }
+    }
+
+    /**********************************************************************
+     * 3. FONCTIONS UTILITAIRES & GÉNÉRATION MENSUELLE DYNAMIQUE
+     **********************************************************************/
+    function getTodayFr() {
+      const now = new Date();
+      const d = String(now.getDate()).padStart(2, "0");
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const y = now.getFullYear();
+      return `${d}/${m}/${y}`;
+    }
+
+    function roundHalf(val) {
+      const n = parseFloat(val);
+      if (isNaN(n) || n < 0) return 0;
+      return Math.round(n * 2) / 2;
+    }
+
+    function formatDateFr(dateStr) {
+      const [y, m, d] = dateStr.split("-").map(Number);
+      const dt = new Date(y, m - 1, d);
+      return `${DAYS_FR[dt.getDay()]} ${String(d).padStart(2, "0")}/${String(m).padStart(2, "0")}`;
+    }
+
+    function formatEuro(val) {
+      return Number(val).toFixed(2).replace(".", ",") + " €";
+    }
+
+    function formatHours(val) {
+      return String(Number(val)).replace(".", ",") + " h";
+    }
+
+    function getRoleTheme(role) {
+      if (role === "Garde d'enfant") {
+        return { key: "garde", icon: "🧸", color: "var(--garde)" };
+      }
+      if (role === "Autre") {
+        return { key: "autre", icon: "💼", color: "var(--autre)" };
+      }
+      return { key: "menage", icon: "🧹", color: "var(--menage)" };
+    }
+
+    function formatScheduleSummary(schedule) {
+      const parts = [];
+      WEEKDAYS_ORDER.forEach(({ dow, label }) => {
+        const h = Number(schedule?.[dow]);
+        if (h > 0) {
+          parts.push(`${label} (${formatHours(h)})`);
+        }
+      });
+      return parts.length > 0 ? parts.join(", ") : "Aucun jour fixe";
+    }
+
+    function generateDefaultEmployeeMonth(emp, year, month) {
+      const sessions = [];
+      const daysInMonth = new Date(year, month, 0).getDate();
+      const isGarde = emp.role === "Garde d'enfant";
+      const zone = emp.vacationZone || "Zone C";
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dt = new Date(year, month - 1, d);
+        const dow = dt.getDay();
+        const habitualHours = Number(emp.schedule?.[dow]) || 0;
+        if (habitualHours <= 0) continue;
+
+        const dateStr = `${year}-${String(month).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+        const ferie = getFerieForDate(dateStr);
+        const vac = isGarde ? getVacationForDate(dateStr, zone) : null;
+
+        const isOff = Boolean(ferie || vac);
+        let note = "";
+        if (ferie) note = `Jour férié (${ferie})`;
+        else if (vac) note = `${vac} (${zone})`;
+
+        sessions.push({
+          date: dateStr,
+          hours: isOff ? 0 : habitualHours,
+          defaultHours: habitualHours,
+          note,
+          isFerie: Boolean(ferie),
+          isVacation: Boolean(vac),
+          isExtra: false
+        });
+      }
+
+      return {
+        sessions,
+        declared: false,
+        paid: false,
+        saved: false,
+        savedAt: null
+      };
+    }
+
+    /**********************************************************************
+     * 4. RENDU DE L'ONBOARDING & DU TABLEAU DE BORD
+     **********************************************************************/
+    let currentYear = new Date().getFullYear();
+    let currentMonth = new Date().getMonth() + 1;
+
+    function getMonthKey() {
+      return `${currentYear}-${String(currentMonth).padStart(2, "0")}`;
+    }
+
+    function getEmployeeMonthData(emp) {
+      const key = getMonthKey();
+      if (!appState.months[key]) {
+        appState.months[key] = {};
+      }
+      if (!appState.months[key][emp.id]) {
+        appState.months[key][emp.id] = generateDefaultEmployeeMonth(emp, currentYear, currentMonth);
+      }
+      return appState.months[key][emp.id];
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2600);
+    }
+
+    // Construit les 7 jours de la semaine en ligne avec 0 heure par défaut
+    function buildOnboardingDaysGrid() {
+      const grid = document.getElementById("ob-days-grid");
+      grid.innerHTML = "";
+
+      WEEKDAYS_ORDER.forEach(({ dow, label }) => {
+        const row = document.createElement("div");
+        row.className = "ob-day-row";
+        row.setAttribute("data-dow", dow);
+
+        row.innerHTML = `
+          <label class="ob-day-check">
+            <input type="checkbox" class="ob-day-toggle" data-dow="${dow}" />
+            <span>${label}</span>
+          </label>
+
+          <div class="stepper-box">
+            <button type="button" class="stepper-btn ob-day-step" data-dow="${dow}" data-delta="-0.5">−</button>
+            <input type="number" class="stepper-input ob-day-hours" data-dow="${dow}" step="0.5" min="0" value="0" />
+            <button type="button" class="stepper-btn ob-day-step" data-dow="${dow}" data-delta="0.5">+</button>
+          </div>
+        `;
+        grid.appendChild(row);
+      });
+    }
+
+    let editingEmployeeId = null;
+
+    function resetOnboardingForm() {
+      editingEmployeeId = null;
+      document.getElementById("ob-name").value = "";
+      document.getElementById("ob-role").value = "Ménage";
+      document.getElementById("ob-rate").value = "0";
+      document.getElementById("ob-zone").value = "Zone C";
+      updateOnboardingRoleHint();
+
+      document.querySelectorAll(".ob-day-row").forEach(row => {
+        row.classList.remove("active");
+        const cb = row.querySelector(".ob-day-toggle");
+        const inp = row.querySelector(".ob-day-hours");
+        if (cb) cb.checked = false;
+        if (inp) inp.value = "0";
+      });
+    }
+
+    function loadEmployeeIntoOnboardingForm(emp) {
+      editingEmployeeId = emp.id;
+      document.getElementById("ob-name").value = emp.name || "";
+      document.getElementById("ob-role").value = emp.role || "Ménage";
+      document.getElementById("ob-rate").value = Number(emp.rate) || 0;
+      document.getElementById("ob-zone").value = emp.vacationZone || "Zone C";
+      updateOnboardingRoleHint();
+
+      document.querySelectorAll(".ob-day-row").forEach(row => {
+        const dow = row.getAttribute("data-dow");
+        const h = Number(emp.schedule?.[dow]) || 0;
+        const cb = row.querySelector(".ob-day-toggle");
+        const inp = row.querySelector(".ob-day-hours");
+        if (cb) cb.checked = h > 0;
+        if (inp) inp.value = h;
+        row.classList.toggle("active", h > 0);
+      });
+
+      document.getElementById("onboarding-title").textContent = `Modification du salarié — ${emp.name}`;
+      document.getElementById("onboarding-view").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function updateOnboardingRoleHint() {
+      const role = document.getElementById("ob-role").value;
+      const hint = document.getElementById("ob-role-hint");
+      if (role === "Garde d'enfant") {
+        hint.textContent = "Vacances scolaires + fériés exclus • Extras possibles";
+      } else {
+        hint.textContent = "Jours fériés exclus automatiquement";
+      }
+    }
+
+    function renderOnboardingEmployeeList() {
+      const section = document.getElementById("ob-list-section");
+      const list = document.getElementById("ob-emp-list");
+
+      if (appState.employees.length === 0) {
+        section.classList.add("hidden");
+        return;
+      }
+
+      section.classList.remove("hidden");
+      list.innerHTML = "";
+
+      appState.employees.forEach(emp => {
+        const theme = getRoleTheme(emp.role);
+        const zoneInfo = emp.role === "Garde d'enfant" ? ` • ${emp.vacationZone || "Zone C"}` : "";
+        const item = document.createElement("div");
+        item.className = "ob-emp-item";
+        item.innerHTML = `
+          <div class="ob-emp-info">
+            <strong>${theme.icon} ${emp.name} — ${emp.role}</strong>
+            <span>${formatScheduleSummary(emp.schedule)}${zoneInfo} • Tarif : ${formatEuro(emp.rate)}/h</span>
+          </div>
+          <div class="ob-emp-actions">
+            <button type="button" class="btn-row-action ob-edit-emp" data-id="${emp.id}" style="width:auto;padding:0 14px;">
+              Modifier
+            </button>
+            <button type="button" class="btn-row-action ob-remove-emp" data-id="${emp.id}" style="width:auto;padding:0 14px;color:var(--danger);">
+              Retirer
+            </button>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function readEmployeeFromOnboardingForm(silentIfEmpty = false) {
+      const name = document.getElementById("ob-name").value.trim();
+      const role = document.getElementById("ob-role").value;
+      const rate = roundHalf(document.getElementById("ob-rate").value);
+      const vacationZone = document.getElementById("ob-zone").value || "Zone C";
+
+      const schedule = {};
+      let hasDay = false;
+      document.querySelectorAll(".ob-day-row").forEach(row => {
+        const dow = row.getAttribute("data-dow");
+        const cb = row.querySelector(".ob-day-toggle");
+        const hInput = row.querySelector(".ob-day-hours");
+        const h = roundHalf(hInput ? hInput.value : 0);
+        if ((cb && cb.checked && h > 0) || h > 0) {
+          schedule[dow] = h;
+          hasDay = true;
+        }
+      });
+
+      if (!name && !hasDay && silentIfEmpty) {
+        return null;
+      }
+      if (!name) {
+        alert("Veuillez saisir le nom du salarié.");
+        return false;
+      }
+      if (!hasDay) {
+        alert("Veuillez définir un nombre d'heures supérieur à 0 pour au moins un jour travaillé dans la semaine.");
+        return false;
+      }
+      if (rate <= 0) {
+        alert("Veuillez saisir un salaire horaire net supérieur à 0 €/h.");
+        return false;
+      }
+
+      if (editingEmployeeId) {
+        return { id: editingEmployeeId, name, role, rate, vacationZone, schedule, _isEdit: true };
+      }
+
+      const slug = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-") || "salarie";
+      let id = slug;
+      let counter = 2;
+      while (appState.employees.some(e => e.id === id)) {
+        id = `${slug}-${counter++}`;
+      }
+
+      return { id, name, role, rate, vacationZone, schedule, _isEdit: false };
+    }
+
+    function upsertEmployeeInState(empObj) {
+      const { _isEdit, ...cleanEmp } = empObj;
+      if (_isEdit) {
+        const idx = appState.employees.findIndex(e => e.id === cleanEmp.id);
+        if (idx !== -1) {
+          appState.employees[idx] = cleanEmp;
+        } else {
+          appState.employees.push(cleanEmp);
+        }
+        // Mettre à jour les mois non enregistrés de ce salarié avec ses nouveaux horaires / zone
+        for (const [mKey, mAll] of Object.entries(appState.months)) {
+          const mEmp = mAll?.[cleanEmp.id];
+          if (mEmp && !mEmp.saved) {
+            const [yStr, mStr] = mKey.split("-");
+            const y = parseInt(yStr, 10);
+            const m = parseInt(mStr, 10);
+            const extras = (mEmp.sessions || []).filter(s => s.isExtra);
+            const regen = generateDefaultEmployeeMonth(cleanEmp, y, m);
+            regen.sessions.push(...extras);
+            regen.declared = Boolean(mEmp.declared);
+            regen.paid = Boolean(mEmp.paid);
+            mAll[cleanEmp.id] = regen;
+          }
+        }
+      } else {
+        appState.employees.push(cleanEmp);
+      }
+      appState.activeTab = cleanEmp.id;
+    }
+
+    function openOnboardingView(isInitial = false) {
+      document.getElementById("onboarding-view").classList.remove("hidden");
+      document.getElementById("dashboard-view").classList.add("hidden");
+      document.getElementById("header-controls").classList.add("hidden");
+
+      const title = document.getElementById("onboarding-title");
+      const sub = document.getElementById("onboarding-subtitle");
+      if (isInitial) {
+        title.textContent = "Bienvenue — Création de vos salariés";
+        sub.innerHTML = "Aucun fichier <code>salaires.json</code> existant n'a été détecté. Enregistrez vos salariés ci-dessous puis cliquez sur « Accéder à la déclaration ».";
+      } else {
+        title.textContent = "Gérer les salariés";
+        sub.textContent = "Ajoutez un salarié, modifiez un salarié existant ou cliquez sur « Accéder à la déclaration » pour revenir au tableau.";
+      }
+
+      resetOnboardingForm();
+      renderOnboardingEmployeeList();
+    }
+
+    function closeOnboardingView() {
+      if (appState.employees.length === 0) {
+        alert("Veuillez enregistrer au moins un salarié avant d'accéder à la déclaration.");
+        return;
+      }
+      document.getElementById("onboarding-view").classList.add("hidden");
+      document.getElementById("dashboard-view").classList.remove("hidden");
+      document.getElementById("header-controls").classList.remove("hidden");
+      renderDashboard();
+    }
+
+    function renderDashboard() {
+      if (appState.employees.length === 0) {
+        openOnboardingView(true);
+        return;
+      }
+
+      document.getElementById("onboarding-view").classList.add("hidden");
+      document.getElementById("dashboard-view").classList.remove("hidden");
+      document.getElementById("header-controls").classList.remove("hidden");
+
+      if (!appState.activeTab || !appState.employees.some(e => e.id === appState.activeTab)) {
+        appState.activeTab = appState.employees[0].id;
+      }
+
+      renderTabsNav();
+      const activeEmp = appState.employees.find(e => e.id === appState.activeTab) || appState.employees[0];
+      renderActiveEmployeePanel(activeEmp);
+    }
+
+    function renderTabsNav() {
+      const nav = document.getElementById("tabs-nav");
+      nav.innerHTML = "";
+
+      appState.employees.forEach(emp => {
+        const theme = getRoleTheme(emp.role);
+        const mData = getEmployeeMonthData(emp);
+        const totalHours = mData.sessions.reduce((acc, s) => acc + (Number(s.hours) || 0), 0);
+        const totalNet = totalHours * (Number(emp.rate) || 0);
+        const isActive = emp.id === appState.activeTab;
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `tab-btn ${isActive ? `active-${theme.key}` : ""}`;
+        btn.addEventListener("click", () => {
+          appState.activeTab = emp.id;
+          persistToDisk();
+          renderDashboard();
+        });
+
+        const extraSuffix = emp.role === "Garde d'enfant" ? ` • ${emp.vacationZone || "Zone C"} + Extras` : "";
+        btn.innerHTML = `
+          <div>
+            <span class="tab-title">${theme.icon} ${emp.name} — ${emp.role}</span>
+            <span class="tab-sub">${formatScheduleSummary(emp.schedule)}${extraSuffix} • ${formatEuro(emp.rate)}/h</span>
+          </div>
+          <span class="tab-total-pill">${formatEuro(totalNet)}</span>
+        `;
+        nav.appendChild(btn);
+      });
+    }
+
+    function renderChipsForEmployee(emp) {
+      const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+      const monthVacs = new Set();
+      const monthFeries = [];
+      const isGarde = emp.role === "Garde d'enfant";
+      const zone = emp.vacationZone || "Zone C";
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = `${currentYear}-${String(currentMonth).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+        const f = getFerieForDate(dateStr);
+        const v = isGarde ? getVacationForDate(dateStr, zone) : null;
+        if (f) monthFeries.push(`${d}/${String(currentMonth).padStart(2, "0")} (${f})`);
+        if (v) monthVacs.add(v);
+      }
+
+      const chipsEl = document.getElementById("emp-calendar-chips");
+      let html = "";
+      if (isGarde) {
+        monthVacs.forEach(v => {
+          html += `<span class="chip chip-holiday">🏖️ ${v} (${zone})</span>`;
+        });
+      }
+      monthFeries.forEach(f => {
+        html += `<span class="chip chip-ferie">🎉 Férié : ${f}</span>`;
+      });
+      if (!html) {
+        html = `<span class="chip chip-ok">✓ ${isGarde ? `Aucune vacance scolaire (${zone}) ni jour férié ce mois-ci` : "Aucun jour férié ce mois-ci"}</span>`;
+      }
+      chipsEl.innerHTML = html;
+    }
+
+    function renderActiveEmployeePanel(emp) {
+      const theme = getRoleTheme(emp.role);
+      const mData = getEmployeeMonthData(emp);
+      const isGarde = emp.role === "Garde d'enfant";
+      const rate = Number(emp.rate) || 0;
+      const zone = emp.vacationZone || "Zone C";
+
+      // Titre : "Prestations du mois de/d' <Nom du mois> — <Nom> (<Fonction>)"
+      document.getElementById("emp-panel-title").textContent = formatPrestationsMonthTitle(currentMonth, emp.name, emp.role);
+      document.getElementById("emp-panel-desc").textContent = isGarde
+        ? `Tarif horaire : ${formatEuro(rate)}/h • Les prestations habituelles tombant pendant les vacances scolaires (${zone}) ou un jour férié sont mises à 0 h automatiquement.`
+        : `Tarif horaire : ${formatEuro(rate)}/h • Les prestations en pointillés sont proposées automatiquement jusqu'à votre clic sur « Enregistrer ».`;
+
+      renderChipsForEmployee(emp);
+
+      // Tri chronologique des prestations habituelles, les extras restent dans leur ordre d'ajout dans la liste des extras
+      const habitualSessions = mData.sessions.filter(s => !s.isExtra).sort((a, b) => a.date.localeCompare(b.date));
+      const extraSessions = mData.sessions.filter(s => s.isExtra);
+      mData.sessions = [...habitualSessions, ...extraSessions];
+
+      const rowsContainer = document.getElementById("emp-rows");
+      const extraRowsContainer = document.getElementById("emp-extra-rows");
+      rowsContainer.innerHTML = "";
+      extraRowsContainer.innerHTML = "";
+      let totalHours = 0;
+      const isSaved = Boolean(mData.saved && mData.savedAt);
+      let extraCount = 0;
+
+      mData.sessions.forEach((s, idx) => {
+        const hrs = Number(s.hours) || 0;
+        const defHrs = Number(s.defaultHours) || 0;
+        totalHours += hrs;
+        const amount = hrs * rate;
+
+        if (s.isExtra) {
+          extraCount++;
+          const extraRow = document.createElement("div");
+          extraRow.className = `form-row ${hrs === 0 ? "row-zero" : ""}`;
+          extraRow.innerHTML = `
+            <div class="cell-date">
+              <span class="date-main">${formatDateFr(s.date)}</span>
+              <span class="date-sub">✨ Extra #${extraCount}</span>
+            </div>
+
+            <div class="stepper-box">
+              <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="-0.5">−</button>
+              <input type="number" class="stepper-input emp-hours" data-idx="${idx}" step="0.5" min="0" value="${hrs}" />
+              <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="0.5">+</button>
+            </div>
+
+            <div class="cell-amount">${formatEuro(amount)}</div>
+
+            <div>
+              <input type="text" class="input-lg emp-note" data-idx="${idx}" value="${s.note || ""}" placeholder="Commentaire de l'extra..." />
+            </div>
+
+            <div>
+              <button type="button" class="btn-row-action emp-del-extra" data-idx="${idx}" style="color:var(--danger);">Supprimer</button>
+            </div>
+          `;
+          extraRowsContainer.appendChild(extraRow);
+          return;
+        }
+
+        let sub = isSaved ? "Prestation validée" : "Proposition auto";
+        if (s.isFerie) sub = "🎉 Jour férié";
+        else if (s.isVacation) sub = `🏖️ Vacances ${zone}`;
+
+        const row = document.createElement("div");
+        row.className = `form-row ${hrs === 0 ? "row-zero" : ""} ${s.isVacation && hrs === 0 ? "row-holiday" : ""} ${s.isFerie && hrs === 0 ? "row-ferie" : ""}`;
+
+        row.innerHTML = `
+          <div class="cell-date">
+            <span class="date-main">${formatDateFr(s.date)}</span>
+            <span class="date-sub">${sub}</span>
+          </div>
+
+          <div class="stepper-box">
+            <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="-0.5">−</button>
+            <input type="number" class="stepper-input emp-hours" data-idx="${idx}" step="0.5" min="0" value="${hrs}" />
+            <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="0.5">+</button>
+          </div>
+
+          <div class="cell-amount">${formatEuro(amount)}</div>
+
+          <div>
+            <input type="text" class="input-lg emp-note" data-idx="${idx}" value="${s.note || ""}" placeholder="Motif, congés ou commentaire..." />
+          </div>
+
+          <div>
+            <button type="button" class="btn-row-action emp-toggle-hours" data-idx="${idx}">${hrs > 0 ? "Mettre à 0 h" : `Remettre ${formatHours(defHrs)}`}</button>
+          </div>
+        `;
+        rowsContainer.appendChild(row);
+      });
+
+      // Bloc d'ajout et liste d'extras affiché uniquement si "Garde d'enfant"
+      const extraSection = document.getElementById("emp-extra-section");
+      if (isGarde) {
+        extraSection.classList.remove("hidden");
+        document.getElementById("extra-section-title").textContent = extraCount > 0
+          ? `✨ Extras ponctuels (${extraCount})`
+          : "✨ Ajouter un extra ponctuel (Garde d'enfant)";
+        const defaultExtraDate = `${currentYear}-${String(currentMonth).padStart(2, "0")}-15`;
+        if (!document.getElementById("extra-date").value) {
+          document.getElementById("extra-date").value = defaultExtraDate;
+        }
+        updateExtraPreview(rate);
+      } else {
+        extraSection.classList.add("hidden");
+      }
+
+      // Récapitulatif mensuel :
+      // 1. Heures à payer = total réel
+      // 2. Heures à déclarer = arrondi à l'heure entière inférieure (Math.floor)
+      // 3. Net à payer = Heures à payer × Tarif
+      const hoursToPay = totalHours;
+      const hoursToDeclare = Math.floor(totalHours);
+      const totalNet = hoursToPay * rate;
+
+      const payEl = document.getElementById("emp-hours-to-pay");
+      const decEl = document.getElementById("emp-hours-to-declare");
+      payEl.textContent = formatHours(hoursToPay);
+      payEl.style.color = theme.color;
+      decEl.textContent = formatHours(hoursToDeclare);
+      decEl.style.color = theme.color;
+
+      document.getElementById("emp-total-net").textContent = formatEuro(totalNet);
+      document.getElementById("emp-net-sub").textContent = `${formatHours(hoursToPay)} × ${formatEuro(rate)}/h`;
+
+      const saveBtn = document.getElementById("emp-save-btn");
+      saveBtn.className = `btn-save btn-theme-${theme.key}`;
+
+      const statusEl = document.getElementById("emp-save-status");
+      if (isSaved) {
+        statusEl.textContent = `✓ Enregistré le ${mData.savedAt}`;
+        statusEl.className = "save-status saved";
+        rowsContainer.classList.remove("is-proposed");
+        rowsContainer.classList.add("is-saved");
+      } else {
+        statusEl.textContent = "Non enregistré";
+        statusEl.className = "save-status unsaved";
+        rowsContainer.classList.remove("is-saved");
+        rowsContainer.classList.add("is-proposed");
+      }
+
+      document.getElementById("emp-declared-check").checked = Boolean(mData.declared);
+      document.getElementById("emp-paid-check").checked = Boolean(mData.paid);
+      document.getElementById("emp-paid-label").textContent = `Payé à ${emp.name} ce mois-ci`;
+    }
+
+    function updateExtraPreview(rateOverride) {
+      const emp = appState.employees.find(e => e.id === appState.activeTab);
+      const rate = rateOverride !== undefined ? rateOverride : (Number(emp?.rate) || 0);
+      const h = roundHalf(document.getElementById("extra-hours").value);
+      document.getElementById("extra-preview-amount").textContent = formatEuro(h * rate);
+    }
+
+    async function refreshView() {
+      await ensureCalendarData(currentYear);
+      const defaultExtraDate = `${currentYear}-${String(currentMonth).padStart(2, "0")}-15`;
+      document.getElementById("extra-date").value = defaultExtraDate;
+
+      if (appState.employees.length === 0) {
+        openOnboardingView(true);
+      } else {
+        renderDashboard();
+      }
+    }
+
+    /**********************************************************************
+     * 5. ÉVÉNEMENTS & INTERACTIONS
+     **********************************************************************/
+    function setupEvents() {
+      buildOnboardingDaysGrid();
+
+      const mSelect = document.getElementById("month-select");
+      const ySelect = document.getElementById("year-select");
+
+      MONTHS_FR.forEach((m, i) => {
+        const opt = document.createElement("option");
+        opt.value = i + 1;
+        opt.textContent = m;
+        mSelect.appendChild(opt);
+      });
+
+      for (let y = 2024; y <= 2028; y++) {
+        const opt = document.createElement("option");
+        opt.value = y;
+        opt.textContent = y;
+        ySelect.appendChild(opt);
+      }
+
+      mSelect.value = currentMonth;
+      ySelect.value = currentYear;
+
+      mSelect.addEventListener("change", () => {
+        currentMonth = parseInt(mSelect.value, 10);
+        refreshView();
+      });
+
+      ySelect.addEventListener("change", () => {
+        currentYear = parseInt(ySelect.value, 10);
+        refreshView();
+      });
+
+      document.getElementById("prev-month-btn").addEventListener("click", () => {
+        currentMonth--;
+        if (currentMonth < 1) {
+          currentMonth = 12;
+          currentYear--;
+        }
+        mSelect.value = currentMonth;
+        ySelect.value = currentYear;
+        refreshView();
+      });
+
+      document.getElementById("next-month-btn").addEventListener("click", () => {
+        currentMonth++;
+        if (currentMonth > 12) {
+          currentMonth = 1;
+          currentYear++;
+        }
+        mSelect.value = currentMonth;
+        ySelect.value = currentYear;
+        refreshView();
+      });
+
+      // Ouverture de la gestion des salariés
+      document.getElementById("open-onboarding-btn").addEventListener("click", () => {
+        openOnboardingView(false);
+      });
+
+      document.getElementById("ob-role").addEventListener("change", () => {
+        updateOnboardingRoleHint();
+      });
+
+      // Synchronisation case à cocher <-> compteur d'heures (0 par défaut) sur les jours de la semaine
+      document.getElementById("ob-days-grid").addEventListener("change", (e) => {
+        const dow = e.target.getAttribute("data-dow");
+        if (dow === null) return;
+        const row = document.querySelector(`.ob-day-row[data-dow="${dow}"]`);
+        const cb = row.querySelector(".ob-day-toggle");
+        const inp = row.querySelector(".ob-day-hours");
+
+        if (e.target.classList.contains("ob-day-toggle")) {
+          if (cb.checked) {
+            row.classList.add("active");
+          } else {
+            row.classList.remove("active");
+            inp.value = "0";
+          }
+        } else if (e.target.classList.contains("ob-day-hours")) {
+          const val = Math.max(0, roundHalf(inp.value));
+          inp.value = val;
+          cb.checked = val > 0;
+          row.classList.toggle("active", val > 0);
+        }
+      });
+
+      document.getElementById("ob-days-grid").addEventListener("click", (e) => {
+        if (!e.target.classList.contains("ob-day-step")) return;
+        const dow = e.target.getAttribute("data-dow");
+        const delta = parseFloat(e.target.getAttribute("data-delta"));
+        const row = document.querySelector(`.ob-day-row[data-dow="${dow}"]`);
+        const cb = row.querySelector(".ob-day-toggle");
+        const inp = row.querySelector(".ob-day-hours");
+        if (inp) {
+          const nextVal = Math.max(0, roundHalf((Number(inp.value) || 0) + delta));
+          inp.value = nextVal;
+          cb.checked = nextVal > 0;
+          row.classList.toggle("active", nextVal > 0);
+        }
+      });
+
+      // Bouton 1 sous le formulaire : "Enregistrer le salarié"
+      document.getElementById("ob-save-emp-btn").addEventListener("click", async () => {
+        const emp = readEmployeeFromOnboardingForm(false);
+        if (!emp) return;
+        const wasEdit = emp._isEdit;
+        upsertEmployeeInState(emp);
+        await persistToDisk();
+        resetOnboardingForm();
+        document.getElementById("onboarding-title").textContent = "Gérer les salariés";
+        renderOnboardingEmployeeList();
+        showToast(wasEdit ? `Salarié « ${emp.name} » modifié ✓` : `Salarié « ${emp.name} » enregistré ✓`);
+      });
+
+      // Bouton 2 sous le formulaire : "Accéder à la déclaration" (retour au tableau)
+      document.getElementById("ob-go-declaration-btn").addEventListener("click", async () => {
+        const pendingEmp = readEmployeeFromOnboardingForm(true);
+        if (pendingEmp === false) return; // Champs partiellement remplis invalides
+        if (pendingEmp) {
+          upsertEmployeeInState(pendingEmp);
+          await persistToDisk();
+        }
+        closeOnboardingView();
+      });
+
+      // Clic sur "Modifier" ou "Retirer" dans la liste des salariés enregistrés
+      document.getElementById("ob-emp-list").addEventListener("click", async (e) => {
+        const id = e.target.getAttribute("data-id");
+        if (!id) return;
+        const emp = appState.employees.find(x => x.id === id);
+        if (!emp) return;
+
+        if (e.target.classList.contains("ob-edit-emp")) {
+          loadEmployeeIntoOnboardingForm(emp);
+        } else if (e.target.classList.contains("ob-remove-emp")) {
+          if (!confirm(`Voulez-vous vraiment retirer le salarié « ${emp.name} » ?`)) return;
+          appState.employees = appState.employees.filter(x => x.id !== id);
+          if (appState.activeTab === id) {
+            appState.activeTab = appState.employees[0] ? appState.employees[0].id : null;
+          }
+          if (editingEmployeeId === id) {
+            resetOnboardingForm();
+          }
+          await persistToDisk();
+          renderOnboardingEmployeeList();
+        }
+      });
+
+      // Clic et modification sur les prestations habituelles (#emp-rows) ET la liste des extras (#emp-extra-rows)
+      function handleSessionClick(e) {
+        const idx = e.target.getAttribute("data-idx");
+        if (idx === null) return;
+        const emp = appState.employees.find(x => x.id === appState.activeTab);
+        if (!emp) return;
+        const mData = getEmployeeMonthData(emp);
+        const s = mData.sessions[idx];
+        if (!s) return;
+
+        if (e.target.classList.contains("emp-step")) {
+          const delta = parseFloat(e.target.getAttribute("data-delta"));
+          s.hours = Math.max(0, roundHalf((Number(s.hours) || 0) + delta));
+          mData.saved = false;
+          mData.savedAt = null;
+          renderDashboard();
+        } else if (e.target.classList.contains("emp-toggle-hours")) {
+          const defHrs = Number(s.defaultHours) || 0;
+          if (s.hours > 0) {
+            s.hours = 0;
+            if (!s.note) s.note = "Absente / Congés";
+          } else {
+            s.hours = defHrs;
+            if (s.note === "Absente / Congés") s.note = "";
+          }
+          mData.saved = false;
+          mData.savedAt = null;
+          renderDashboard();
+        } else if (e.target.classList.contains("emp-del-extra")) {
+          mData.sessions.splice(idx, 1);
+          mData.saved = false;
+          mData.savedAt = null;
+          renderDashboard();
+        }
+      }
+
+      function handleSessionChange(e) {
+        const idx = e.target.getAttribute("data-idx");
+        if (idx === null) return;
+        const emp = appState.employees.find(x => x.id === appState.activeTab);
+        if (!emp) return;
+        const mData = getEmployeeMonthData(emp);
+        const s = mData.sessions[idx];
+        if (!s) return;
+
+        if (e.target.classList.contains("emp-hours")) {
+          s.hours = roundHalf(e.target.value);
+        } else if (e.target.classList.contains("emp-note")) {
+          s.note = e.target.value;
+        }
+        mData.saved = false;
+        mData.savedAt = null;
+        renderDashboard();
+      }
+
+      document.getElementById("emp-rows").addEventListener("click", handleSessionClick);
+      document.getElementById("emp-rows").addEventListener("change", handleSessionChange);
+      document.getElementById("emp-extra-rows").addEventListener("click", handleSessionClick);
+      document.getElementById("emp-extra-rows").addEventListener("change", handleSessionChange);
+
+      // Stepper - / + et ajout d'un extra (Garde d'enfant)
+      document.getElementById("extra-hours").addEventListener("input", () => updateExtraPreview());
+
+      document.getElementById("extra-step-minus").addEventListener("click", () => {
+        const inp = document.getElementById("extra-hours");
+        inp.value = Math.max(0, roundHalf((Number(inp.value) || 0) - 0.5));
+        updateExtraPreview();
+      });
+
+      document.getElementById("extra-step-plus").addEventListener("click", () => {
+        const inp = document.getElementById("extra-hours");
+        inp.value = Math.max(0, roundHalf((Number(inp.value) || 0) + 0.5));
+        updateExtraPreview();
+      });
+
+      document.getElementById("extra-add-btn").addEventListener("click", () => {
+        const emp = appState.employees.find(x => x.id === appState.activeTab);
+        if (!emp) return;
+        const date = document.getElementById("extra-date").value;
+        if (!date) return alert("Veuillez choisir une date pour l'extra.");
+        const hours = roundHalf(document.getElementById("extra-hours").value);
+        if (hours <= 0) return alert("Veuillez saisir un nombre d'heures supérieur à 0 pour l'extra.");
+        const note = document.getElementById("extra-note").value.trim() || "Extra";
+
+        const mData = getEmployeeMonthData(emp);
+        mData.sessions.push({
+          date,
+          hours,
+          defaultHours: hours,
+          note,
+          isFerie: false,
+          isVacation: false,
+          isExtra: true
+        });
+        mData.saved = false;
+        mData.savedAt = null;
+        document.getElementById("extra-hours").value = "0";
+        document.getElementById("extra-note").value = "";
+        renderDashboard();
+        showToast("Extra ajouté à la liste (cliquez sur Enregistrer pour valider)");
+      });
+
+      // Bouton ENREGISTRER : valide la saisie et écrit la date d'enregistrement dans salaires.json
+      document.getElementById("emp-save-btn").addEventListener("click", async () => {
+        const emp = appState.employees.find(x => x.id === appState.activeTab);
+        if (!emp) return;
+        const mData = getEmployeeMonthData(emp);
+        mData.saved = true;
+        mData.savedAt = getTodayFr();
+        await persistToDisk();
+        renderDashboard();
+        showToast(`Enregistré dans salaires.json le ${mData.savedAt} ✓`);
+      });
+
+      // Cases à cocher Déclaré CESU & Payé
+      document.getElementById("emp-declared-check").addEventListener("change", async (e) => {
+        const emp = appState.employees.find(x => x.id === appState.activeTab);
+        if (!emp) return;
+        getEmployeeMonthData(emp).declared = e.target.checked;
+        await persistToDisk();
+      });
+
+      document.getElementById("emp-paid-check").addEventListener("change", async (e) => {
+        const emp = appState.employees.find(x => x.id === appState.activeTab);
+        if (!emp) return;
+        getEmployeeMonthData(emp).paid = e.target.checked;
+        await persistToDisk();
+      });
+    }
+
+    (async function init() {
+      setupEvents();
+      await loadState();
+      await refreshView();
+    })();
+  </script>
+</body>
+</html>
