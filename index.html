@@ -65,26 +65,50 @@
       display: none !important;
     }
 
-    /* EN-TÊTE & SÉLECTEUR DE MOIS */
+    /* EN-TÊTE & NAVIGATION UNIFIÉE */
     .header-bar {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 24px;
+      flex-direction: column;
+      gap: 16px;
       margin-bottom: 24px;
+    }
+
+    .header-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
       flex-wrap: wrap;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
     }
 
     .title-block h1 {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--text);
+      line-height: 1.2;
+    }
+
+    .brand-title-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+      transition: color 0.15s;
+    }
+
+    .brand-title-btn:hover {
+      color: var(--menage);
     }
 
     .title-block p.sync-status {
-      font-size: 0.88rem;
-      margin-top: 4px;
+      font-size: 0.82rem;
+      margin-top: 3px;
     }
 
     .title-block p.sync-status.has-data {
@@ -96,37 +120,170 @@
       color: var(--muted);
     }
 
-    .header-right {
-      display: contents;
-    }
-
-    .header-actions-group {
-      flex: 0 0 100%;
-      width: 100%;
+    .header-nav-actions {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
-    .header-actions-group > button {
-      width: 210px;
-      height: var(--input-height);
-      margin-top: 0;
-      padding: 0 12px;
-      font-size: 0.86rem;
+    .btn-nav {
+      height: 38px;
+      min-width: 116px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+
+    .btn-nav:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .btn-nav.is-active {
+      background: var(--menage-soft);
+      border-color: var(--menage);
+      color: var(--menage);
+    }
+
+    .btn-nav .nav-badge {
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-nav.is-active .nav-badge {
+      background: var(--menage);
+      color: #fff;
+    }
+
+    /* MENU COMPACT DONNÉES & AIDE */
+    .menu-dropdown-wrap {
+      position: relative;
+    }
+
+    .btn-more .caret {
+      font-size: 0.75rem;
+      color: var(--muted);
+      transition: transform 0.15s;
+    }
+
+    .btn-more[aria-expanded="true"] .caret {
+      transform: rotate(180deg);
+    }
+
+    .more-backup-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #d97706;
+      flex-shrink: 0;
+    }
+
+    .dropdown-item-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+    }
+
+    .dropdown-sub {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .dropdown-sub.is-warn {
+      color: #b45309;
+      font-weight: 600;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 245px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 6px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+      z-index: 1000;
+    }
+
+    .dropdown-item {
+      width: 100%;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      transition: background 0.12s;
+    }
+
+    .dropdown-item:hover:not(:disabled) {
+      background: #f1f5f9;
+    }
+
+    .dropdown-item:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .dropdown-icon {
+      width: 18px;
       text-align: center;
-      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 6px 4px;
+    }
+
+    /* BARRE SÉLECTEUR DE MOIS (VUE DÉCLARATION) */
+    .period-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .period-bar-label {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--muted);
     }
 
     .period-controls {
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
+      align-items: center;
+      gap: 8px;
       margin-left: auto;
     }
 
@@ -147,8 +304,8 @@
       white-space: nowrap;
     }
 
-    .input-sm { width: 110px; }
-    .input-md { width: 160px; }
+    .input-sm { width: 100px; }
+    .input-md { width: 155px; }
     .input-lg { width: 100%; }
 
     select,
@@ -175,14 +332,16 @@
 
     .btn-icon {
       height: var(--input-height);
-      width: 40px;
+      width: 38px;
       border: 1px solid var(--border);
       background: var(--surface);
       border-radius: 8px;
       cursor: pointer;
       font-weight: 700;
       color: var(--text);
-      margin-top: 21px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       transition: background 0.15s;
     }
 
@@ -192,17 +351,21 @@
 
     .btn-outline {
       height: var(--input-height);
-      padding: 0 14px;
+      padding: 0 16px;
       border: 1px solid var(--border);
       background: var(--surface);
       border-radius: 8px;
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
-      margin-top: 21px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       transition: all 0.15s;
       white-space: nowrap;
+      font-family: inherit;
     }
 
     .btn-outline:hover {
@@ -211,13 +374,138 @@
     }
 
     /* =================================================================
-       ÉCRAN D'ONBOARDING (CRÉATION DES SALARIÉS) & MODE D'EMPLOI
+       ÉCRAN D'ACCUEIL (PREMIER LANCEMENT)
+       ================================================================= */
+    .welcome-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px 32px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+      text-align: center;
+      max-width: 680px;
+      margin: 12px auto 28px;
+    }
+
+    .welcome-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--menage-soft);
+      color: var(--menage);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      margin-bottom: 16px;
+    }
+
+    .welcome-card h2 {
+      font-size: 1.48rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .welcome-lead {
+      font-size: 0.96rem;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 24px;
+      line-height: 1.55;
+    }
+
+    .welcome-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .welcome-privacy-callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      text-align: left;
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-left: 4px solid #d97706;
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+    }
+
+    .welcome-privacy-icon {
+      font-size: 1.35rem;
+      line-height: 1.2;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .welcome-privacy-content > strong {
+      display: block;
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 4px;
+    }
+
+    .welcome-privacy-content p {
+      font-size: 0.87rem;
+      color: #78350f;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .welcome-help-banner {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      text-align: left;
+      background: var(--menage-soft);
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 15px 18px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .welcome-help-banner:hover {
+      background: #dbeafe;
+      border-color: var(--menage);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    }
+
+    .welcome-help-banner strong {
+      display: block;
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      line-height: 1.4;
+    }
+
+    .welcome-help-banner-arrow {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--menage);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* =================================================================
+       ÉCRAN DE GESTION DES SALARIÉS & MODE D'EMPLOI
        ================================================================= */
     .onboarding-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 32px;
+      padding: 28px 32px;
       box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
       margin-bottom: 28px;
     }
@@ -225,29 +513,29 @@
     .onboarding-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       gap: 16px;
       flex-wrap: wrap;
-      padding-bottom: 20px;
-      margin-bottom: 24px;
+      padding-bottom: 18px;
+      margin-bottom: 22px;
       border-bottom: 1px solid var(--border);
     }
 
     .onboarding-header-info {
       flex: 1;
-      min-width: 240px;
+      min-width: 220px;
     }
 
     .onboarding-header h2 {
-      font-size: 1.3rem;
+      font-size: 1.28rem;
       font-weight: 700;
       color: var(--text);
     }
 
     .onboarding-header p {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: var(--muted);
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     .onboarding-header-actions {
@@ -262,12 +550,52 @@
     .onboarding-header-actions .btn-outline,
     .onboarding-header-actions .btn-save {
       height: var(--input-height);
-      margin-top: 0;
       padding: 0 16px;
       font-size: 0.88rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+    }
+
+    /* Panneau dédié pour le formulaire création / édition */
+    .ob-form-panel {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 24px;
+    }
+
+    .ob-form-panel.is-editing {
+      border-color: var(--menage);
+      background: #f8fbff;
+    }
+
+    .ob-form-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ob-form-panel-header h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .ob-form-error {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 16px;
     }
 
     /* Styles de la page Mode d'emploi / Aide */
@@ -316,7 +644,7 @@
       border: 1px solid #fde68a;
       border-radius: 12px;
       padding: 20px 22px;
-      margin-bottom: 24px;
+      margin-bottom: 8px;
     }
 
     .help-local-box h3 {
@@ -345,54 +673,71 @@
       margin-bottom: 4px;
     }
 
-    /* Grille UX alignée en haut : Nom raccourci (200px), Fonction (190px), Salaire horaire net sur 1 ligne (200px), Zone de vacances (170px) */
+    /* Grille fluide du formulaire salarié (3 ou 4 champs selon Prestation) */
     .ob-main-grid {
       display: grid;
-      grid-template-columns: 200px 190px 200px 170px;
-      gap: var(--grid-gap);
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 16px;
       align-items: start;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .ob-role-hint {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--muted);
-      margin-top: 6px;
+      margin-top: 5px;
       line-height: 1.3;
     }
 
     .ob-days-section {
-      background: #f8fafc;
+      background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 24px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+    }
+
+    .ob-days-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
     }
 
     .ob-days-title {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: var(--muted);
-      margin-bottom: 14px;
     }
 
-    /* Jours affichés en ligne de façon compacte */
+    .ob-weekly-total {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--menage);
+      background: var(--menage-soft);
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    /* Jours travaillés : grille compacte, stepper affiché uniquement si le jour est coché */
     .ob-days-list {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
       gap: 8px;
-      max-width: 300px;
     }
 
     .ob-day-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 8px 12px;
-      background: #fff;
+      gap: 10px;
+      min-height: 52px;
+      padding: 6px 12px;
+      background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 10px;
       transition: border-color 0.15s, background 0.15s;
@@ -400,7 +745,7 @@
 
     .ob-day-row.active {
       border-color: var(--menage);
-      background: #f8fbff;
+      background: #ffffff;
     }
 
     .ob-day-check {
@@ -411,40 +756,67 @@
       font-size: 0.92rem;
       cursor: pointer;
       user-select: none;
+      flex: 1;
     }
 
     .ob-day-check input[type="checkbox"] {
       width: 18px;
       height: 18px;
       cursor: pointer;
+      accent-color: var(--menage);
     }
 
-    .ob-day-row .stepper-box {
-      width: 136px;
+    .ob-day-off-label {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .ob-day-row.active .ob-day-off-label {
+      display: none;
+    }
+
+    .ob-day-stepper-wrap {
+      display: none;
+      align-items: center;
+      gap: 6px;
       flex-shrink: 0;
     }
 
-    .ob-day-row:not(.active) .stepper-box {
-      opacity: 0.55;
+    .ob-day-row.active .ob-day-stepper-wrap {
+      display: inline-flex;
+    }
+
+    .ob-day-stepper-wrap .stepper-box {
+      width: 122px;
+      height: 36px;
+    }
+
+    .ob-day-unit {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
     }
 
     .ob-actions-bar {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
-      gap: 16px;
+      gap: 10px;
       flex-wrap: wrap;
       padding-top: 4px;
     }
 
     .ob-list-section {
-      margin-top: 28px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+
+    .ob-list-section:last-child {
+      margin-bottom: 0;
     }
 
     .ob-list-title {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
@@ -466,19 +838,55 @@
       padding: 14px 18px;
       background: #f8fafc;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       flex-wrap: wrap;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .ob-emp-item.is-editing {
+      border-color: var(--menage);
+      background: var(--menage-soft);
+    }
+
+    .ob-emp-item.is-archived {
+      opacity: 0.78;
+      background: #f1f5f9;
+      border-style: dashed;
+    }
+
+    .ob-archived-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 1px 8px;
+      border-radius: 999px;
     }
 
     .ob-emp-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .ob-emp-info strong {
       font-size: 1rem;
       color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ob-editing-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--menage);
+      background: #ffffff;
+      border: 1px solid var(--menage);
+      padding: 1px 8px;
+      border-radius: 999px;
     }
 
     .ob-emp-info span {
@@ -488,6 +896,136 @@
       margin-top: 2px;
     }
 
+    .ob-empty-state {
+      text-align: center;
+      padding: 28px 16px;
+      background: #f8fafc;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* VUE BILAN ANNUEL */
+    .annual-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .annual-emp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .annual-emp-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .annual-emp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .annual-emp-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .annual-emp-totals {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--success);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .annual-emp-totals .annual-emp-hours {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .annual-table-wrap {
+      overflow-x: auto;
+    }
+
+    .annual-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .annual-table th {
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+
+    .annual-table th.num,
+    .annual-table td.num {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .annual-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--text);
+    }
+
+    .annual-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .annual-table tbody tr.annual-month-row {
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .annual-table tbody tr.annual-month-row:hover {
+      background: #f8fafc;
+    }
+
+    .annual-table td.net-cell {
+      font-weight: 700;
+      color: var(--success);
+    }
+
+    .annual-table .annual-status-badges {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    /* =================================================================
+       ONGLETS DYNAMIQUES DES SALARIÉS
+       ================================================================= */
     /* =================================================================
        ONGLETS DYNAMIQUES DES SALARIÉS
        ================================================================= */
@@ -502,7 +1040,7 @@
       background: var(--surface);
       border: 2px solid var(--border);
       border-radius: 12px;
-      padding: 16px 20px;
+      padding: 14px 18px;
       text-align: left;
       cursor: pointer;
       transition: all 0.15s;
@@ -535,27 +1073,84 @@
     }
 
     .tab-title {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--text);
       display: block;
     }
 
     .tab-sub {
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       color: var(--muted);
       margin-top: 4px;
       display: block;
     }
 
+    .tab-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
     .tab-total-pill {
-      font-size: 1.02rem;
+      font-size: 0.98rem;
       font-weight: 800;
-      padding: 4px 12px;
+      padding: 4px 11px;
       border-radius: 8px;
       background: #fff;
       border: 1px solid var(--border);
       white-space: nowrap;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-hours-val {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .tab-hours-sep {
+      color: #cbd5e1;
+      font-weight: 400;
+    }
+
+    .tab-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
+    .tab-badge.badge-todo {
+      background: #fffbeb;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .tab-badge.badge-validated {
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid #a7f3d0;
+    }
+
+    .tab-badge.badge-cesu {
+      background: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #93c5fd;
+    }
+
+    .tab-badge.badge-paid {
+      background: #d1fae5;
+      color: #047857;
+      border: 1px solid #6ee7b7;
     }
 
     /* PANNEAU D'ONGLET */
@@ -623,10 +1218,10 @@
       border: 1px solid #a7f3d0;
     }
 
-    /* GRILLE DES LIGNES DE FORMULAIRE (4 colonnes : Date, Heures, Net séance, Action rapide) */
+    /* GRILLE DES LIGNES DE FORMULAIRE (3 colonnes : Date, Heures, Action rapide) */
     .form-grid-header {
       display: grid;
-      grid-template-columns: 1fr var(--col-hours) var(--col-amount) var(--col-action);
+      grid-template-columns: 1fr var(--col-hours) var(--col-action);
       gap: var(--grid-gap);
       align-items: start;
       padding: 0 16px 10px;
@@ -643,7 +1238,7 @@
 
     .form-row {
       display: grid;
-      grid-template-columns: 1fr var(--col-hours) var(--col-amount) var(--col-action);
+      grid-template-columns: 1fr var(--col-hours) var(--col-action);
       gap: var(--grid-gap);
       align-items: start;
       padding: 16px;
@@ -654,9 +1249,9 @@
     }
 
     .form-rows.is-proposed .form-row {
-      border-style: dashed;
-      border-color: #94a3b8;
-      background: #fcfdff;
+      border-style: solid;
+      border-color: var(--border);
+      background: #ffffff;
     }
 
     .form-rows.is-saved .form-row {
@@ -678,6 +1273,16 @@
     .form-row.row-ferie {
       background: var(--ferie-bg) !important;
       border-color: var(--ferie-border) !important;
+    }
+
+    .form-row.row-extra {
+      background: #faf5ff !important;
+      border-color: #c4b5fd !important;
+    }
+
+    .form-row.row-extra .date-sub {
+      color: var(--garde);
+      font-weight: 600;
     }
 
     .cell-date {
@@ -727,8 +1332,14 @@
       justify-content: center;
     }
 
-    .stepper-btn:hover {
+    .stepper-btn:hover:not(:disabled) {
       background: #e2e8f0;
+    }
+
+    .stepper-btn:disabled {
+      color: #94a3b8;
+      background: #f1f5f9;
+      cursor: not-allowed;
     }
 
     .stepper-input {
@@ -742,6 +1353,17 @@
       font-size: 0.95rem;
       padding: 0 4px !important;
       -moz-appearance: textfield;
+    }
+
+    .stepper-input:disabled {
+      background: #f8fafc;
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    .stepper-box.is-locked {
+      background: #f8fafc;
+      border-color: #e2e8f0;
     }
 
     .stepper-input::-webkit-outer-spin-button,
@@ -779,12 +1401,19 @@
       white-space: nowrap;
     }
 
-    .btn-row-action:hover {
+    .btn-row-action:hover:not(:disabled) {
       background: #f1f5f9;
       border-color: #cbd5e1;
     }
 
-    /* BLOC LISTE & AJOUT D'EXTRAS (Garde d'enfant) */
+    .btn-row-action:disabled {
+      background: #f8fafc;
+      color: #94a3b8 !important;
+      border-color: #e2e8f0;
+      cursor: not-allowed;
+    }
+
+    /* BLOC AJOUT D'EXTRAS PONCTUELS */
     .extra-adder {
       background: #faf5ff;
       border: 1px dashed #c4b5fd;
@@ -802,25 +1431,9 @@
       margin-bottom: 12px;
     }
 
-    .extra-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .extra-list:empty {
-      display: none;
-    }
-
-    .extra-list .form-row {
-      background: #ffffff;
-      border: 1px solid #ddd6fe;
-    }
-
     .extra-grid {
       display: grid;
-      grid-template-columns: 1fr var(--col-hours) var(--col-amount) var(--col-action);
+      grid-template-columns: 1fr var(--col-hours) var(--col-action);
       gap: var(--grid-gap);
       align-items: start;
     }
@@ -849,6 +1462,45 @@
       font-weight: 800;
       margin-top: 4px;
       line-height: 1.1;
+    }
+
+    .summary-stat .stat-val-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .summary-stat .stat-val-row .stat-val {
+      margin-top: 0;
+    }
+
+    .btn-copy-icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: 6px;
+      color: #94a3b8;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+
+    .btn-copy-icon:hover {
+      background: #f1f5f9;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-copy-icon.is-copied {
+      background: var(--success-bg);
+      border-color: #a7f3d0;
+      color: var(--success);
     }
 
     .summary-stat .stat-sub {
@@ -898,6 +1550,30 @@
       filter: none;
     }
 
+    #emp-save-btn {
+      width: 156px;
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #emp-save-btn.is-validated-btn:disabled {
+      flex-direction: column;
+      line-height: 1.15;
+      padding: 2px 12px;
+      font-size: 0.78rem;
+      background: var(--success-bg) !important;
+      color: var(--success) !important;
+      border: 1px solid #a7f3d0 !important;
+      cursor: default;
+    }
+
+    .btn-save.is-validated-btn .btn-save-date {
+      font-size: 0.74rem;
+      font-weight: 600;
+    }
+
     .btn-theme-menage { background: var(--menage); }
     .btn-theme-garde { background: var(--garde); }
     .btn-theme-autre { background: var(--autre); }
@@ -914,15 +1590,22 @@
     }
 
     .save-status.unsaved {
-      color: var(--danger);
-      background: var(--danger-bg);
-      border: 1px solid #fecaca;
+      color: #b45309;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
     }
 
     .save-status.saved {
       color: var(--success);
       background: var(--success-bg);
       border: 1px solid #a7f3d0;
+    }
+
+    .save-hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-top: -6px;
     }
 
     .check-line {
@@ -965,9 +1648,47 @@
         gap: 12px;
         margin-bottom: 16px;
       }
+      .header-top-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding-bottom: 12px;
+      }
       .title-block {
-        width: 100%;
         text-align: center;
+      }
+      .brand-title-btn {
+        text-align: center;
+      }
+      .header-nav-actions {
+        width: 100%;
+        flex-wrap: nowrap;
+        justify-content: center;
+        gap: 6px;
+      }
+      .header-nav-actions > .btn-nav,
+      .header-nav-actions > .menu-dropdown-wrap {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+      .header-nav-actions > .menu-dropdown-wrap > .btn-nav {
+        width: 100%;
+      }
+      .btn-nav {
+        min-width: 0;
+        padding: 0 8px;
+        font-size: 0.84rem;
+      }
+      .dropdown-menu {
+        right: 0;
+        left: auto;
+        transform: none;
+      }
+      .period-bar {
+        justify-content: center;
+      }
+      .period-bar-label {
+        display: none;
       }
       .period-controls {
         width: 100%;
@@ -979,22 +1700,34 @@
         width: 36px;
         flex-shrink: 0;
       }
-      .period-controls .field-group:first-of-type {
+      .period-controls select#month-select {
         flex: 1;
         min-width: 0;
-        max-width: 145px;
+        max-width: 150px;
+        padding: 0 8px;
       }
-      .period-controls .field-group:last-of-type {
+      .period-controls select#year-select {
         width: 84px;
         flex-shrink: 0;
-      }
-      .period-controls select {
-        width: 100%;
         padding: 0 8px;
+      }
+      .welcome-card {
+        padding: 24px 16px;
+      }
+      .welcome-help-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .welcome-help-banner-arrow {
+        align-self: flex-end;
       }
       .onboarding-card,
       .tab-panel {
         padding: 18px 14px;
+      }
+      .ob-form-panel {
+        padding: 16px 14px;
       }
       .onboarding-header,
       .panel-top-grid {
@@ -1005,56 +1738,49 @@
       .form-grid-header {
         display: none;
       }
-      .form-row,
-      .extra-grid,
       .summary-footer,
+      .annual-summary-grid,
       .ob-main-grid {
         grid-template-columns: 1fr;
         gap: 10px;
       }
+      .extra-grid {
+        grid-template-columns: 132px 1fr;
+        gap: 10px;
+        align-items: end;
+      }
+      .extra-grid .extra-date-group {
+        grid-column: 1 / -1;
+      }
+      .annual-table th,
+      .annual-table td {
+        padding: 9px 10px;
+        font-size: 0.82rem;
+      }
       .form-row {
+        grid-template-columns: 132px 1fr;
+        gap: 10px;
         padding: 12px;
+        align-items: center;
+      }
+      .form-row .cell-date {
+        grid-column: 1 / -1;
+        padding-top: 0;
       }
       .summary-footer {
         padding: 16px;
       }
-      /* Affichage compact des jours en mobile : grille 2 colonnes, espace minimal (4px) entre le nom du jour et les heures dessous */
       .ob-days-list {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-        max-width: 100%;
-      }
-      .ob-day-row {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 4px;
-        padding: 8px 10px;
-      }
-      .ob-day-row .stepper-box {
-        width: 100%;
-        height: 36px;
-      }
-      .header-actions-group {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-      .header-actions-group > button {
-        width: 100%;
-        max-width: 260px;
+        grid-template-columns: 1fr;
       }
       .ob-actions-bar {
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
+        align-items: stretch;
+        gap: 10px;
       }
-      .ob-actions-bar .btn-save {
+      .ob-actions-bar .btn-save,
+      .ob-actions-bar .btn-outline {
         width: 100%;
-        max-width: 280px;
         text-align: center;
       }
     }
@@ -1120,62 +1846,127 @@
 </head>
 <body>
   <div class="container">
-    <!-- BARRE SUPÉRIEURE : TITRE & PÉRIODE / ACTIONS -->
+    <!-- BARRE SUPÉRIEURE : TITRE, NAVIGATION UNIFIÉE & PÉRIODE -->
     <header class="header-bar">
-      <div class="title-block">
-        <h1>Salaires à domicile</h1>
-        <p id="sync-status" class="sync-status no-data">Pas de fichiers de données (salaires.json)</p>
-      </div>
-
-      <div class="header-right" id="header-controls">
-        <div class="period-controls">
-          <button class="btn-icon" id="prev-month-btn" title="Mois précédent">◀</button>
-          <div class="field-group">
-            <label class="field-label" for="month-select">Mois</label>
-            <select id="month-select" class="input-md"></select>
-          </div>
-          <div class="field-group">
-            <label class="field-label" for="year-select">Année</label>
-            <select id="year-select" class="input-sm"></select>
-          </div>
-          <button class="btn-icon" id="next-month-btn" title="Mois suivant">▶</button>
+      <div class="header-top-row">
+        <div class="title-block">
+          <h1>
+            <button type="button" id="brand-home-btn" class="brand-title-btn">Salaires à domicile</button>
+          </h1>
+          <p id="sync-status" class="sync-status no-data">Sauvegarde automatique sur cet appareil</p>
         </div>
 
-        <div class="header-actions-group">
-          <button type="button" class="btn-outline" id="export-csv-btn">
-            Exporter sous Excel (.csv)
+        <nav class="header-nav-actions" aria-label="Navigation principale">
+          <button type="button" class="btn-nav hidden" id="nav-declaration-btn">
+            Déclaration
           </button>
 
-          <button type="button" class="btn-outline" id="download-json-btn">
-            Exporter les données (.json)
+          <button type="button" class="btn-nav" id="open-onboarding-btn">
+            <span>Salariés</span>
+            <span class="nav-badge hidden" id="nav-emp-count">0</span>
           </button>
 
-          <button type="button" class="btn-outline" id="open-help-btn">
-            Aide
-          </button>
+          <div class="menu-dropdown-wrap" id="more-menu-wrap">
+            <button type="button" class="btn-nav btn-more" id="more-menu-btn" aria-haspopup="true" aria-expanded="false" title="Bilan, export, sauvegarde et aide">
+              <span>Plus</span>
+              <span class="more-backup-dot hidden" id="more-backup-dot" aria-hidden="true"></span>
+              <span class="caret" aria-hidden="true">▾</span>
+            </button>
+            <div class="dropdown-menu hidden" id="more-menu-panel" role="menu">
+              <button type="button" class="dropdown-item" id="open-annual-btn" role="menuitem">
+                <span class="dropdown-icon">📅</span>
+                <span>Bilan annuel</span>
+              </button>
+              <button type="button" class="dropdown-item" id="export-csv-btn" role="menuitem">
+                <span class="dropdown-icon">📊</span>
+                <span>Exporter sous Excel (.csv)</span>
+              </button>
+              <div class="dropdown-divider"></div>
+              <button type="button" class="dropdown-item" id="download-json-btn" role="menuitem">
+                <span class="dropdown-icon">💾</span>
+                <span class="dropdown-item-text">
+                  <span>Exporter les données (.json)</span>
+                  <small class="dropdown-sub" id="backup-status-sub">Jamais sauvegardé</small>
+                </span>
+              </button>
+              <button type="button" class="dropdown-item" id="import-json-btn" role="menuitem">
+                <span class="dropdown-icon">📂</span>
+                <span>Importer les données (.json)</span>
+              </button>
+              <div class="dropdown-divider"></div>
+              <button type="button" class="dropdown-item" id="open-help-btn" role="menuitem">
+                <span class="dropdown-icon">❓</span>
+                <span>Mode d'emploi / Aide</span>
+              </button>
+            </div>
+            <input type="file" id="import-json-input" accept=".json,application/json" class="hidden" />
+          </div>
+        </nav>
+      </div>
 
-          <button type="button" class="btn-save btn-theme-menage" id="open-onboarding-btn">
-            Gérer les salariés
-          </button>
+      <!-- Sélecteur de mois affiché uniquement dans la vue Déclaration -->
+      <div class="period-bar hidden" id="period-bar">
+        <span class="period-bar-label">Période de déclaration</span>
+        <div class="period-controls">
+          <button type="button" class="btn-icon" id="prev-month-btn" title="Mois précédent" aria-label="Mois précédent">◀</button>
+          <select id="month-select" class="input-md" aria-label="Mois"></select>
+          <select id="year-select" class="input-sm" aria-label="Année"></select>
+          <button type="button" class="btn-icon" id="next-month-btn" title="Mois suivant" aria-label="Mois suivant">▶</button>
         </div>
       </div>
     </header>
 
     <!-- =================================================================
-         VUE 0 : MODE D'EMPLOI / AIDE (AFFICHÉE EN PREMIER S'IL N'Y A PAS DE JSON)
+         VUE 0 : ACCUEIL PREMIER LANCEMENT (S'IL N'Y A PAS ENCORE DE SALARIÉ)
+         ================================================================= -->
+    <section id="welcome-view" class="welcome-card hidden">
+      <div class="welcome-icon" aria-hidden="true">🏠</div>
+      <h2>Bienvenue dans Salaires à domicile</h2>
+      <p class="welcome-lead">
+        Calculez chaque mois les heures effectuées et le salaire net CESU de vos salariés à domicile, en quelques clics.
+      </p>
+
+      <div class="welcome-actions">
+        <button type="button" class="btn-save btn-theme-menage" id="welcome-add-emp-btn">
+          + Ajouter mon premier salarié
+        </button>
+        <button type="button" class="btn-outline" id="welcome-import-json-btn">
+          📂 Importer une sauvegarde (.json)
+        </button>
+      </div>
+
+      <div class="welcome-privacy-callout">
+        <span class="welcome-privacy-icon" aria-hidden="true">🔒</span>
+        <div class="welcome-privacy-content">
+          <strong>100 % privé : vos données ne quittent jamais cet appareil</strong>
+          <p>
+            Rien n'est envoyé sur Internet ni synchronisé dans le cloud. Vos salariés et vos mois enregistrés restent stockés uniquement sur votre appareil — pensez à exporter une copie (<code>.json</code>) depuis "Plus" si vous changez d'appareil.
+          </p>
+        </div>
+      </div>
+
+      <button type="button" class="welcome-help-banner" id="welcome-open-help-btn">
+        <strong>Première visite ? Prenez quelques secondes pour découvrir le mode d'emploi.</strong>
+        <span class="welcome-help-banner-arrow">Accéder à l'Aide →</span>
+      </button>
+    </section>
+
+    <!-- =================================================================
+         VUE AIDE : MODE D'EMPLOI
          ================================================================= -->
     <section id="help-view" class="onboarding-card hidden">
       <div class="onboarding-header">
         <div class="onboarding-header-info">
           <h2>Mode d'emploi</h2>
+          <p>Les 3 étapes pour suivre et payer vos salariés à domicile chaque mois.</p>
         </div>
 
         <div class="onboarding-header-actions">
-          <button type="button" class="btn-save btn-theme-menage" id="help-go-onboarding-btn">
-            Gérer les salariés
+          <button type="button" class="btn-outline" id="help-back-btn">
+            Retour
           </button>
-          <button type="button" class="btn-save btn-theme-success" id="help-go-declaration-btn" disabled>
-            Accéder à la déclaration
+          <button type="button" class="btn-save btn-theme-menage hidden" id="help-go-onboarding-btn">
+            + Ajouter un salarié
           </button>
         </div>
       </div>
@@ -1186,8 +1977,8 @@
           <p>Commencez par enregistrer les personnes qui travaillent chez vous :</p>
           <ul>
             <li>Indiquez leur <strong>Prestation</strong> (<em>Ménage</em>, <em>Garde d'enfant</em> ou <em>Autre</em>) et leur <strong>tarif horaire net</strong>.</li>
-            <li>Choisissez votre <strong>Zone de vacances scolaires</strong> (ou <em>Pas de zone</em>).</li>
-            <li>Cochez leurs jours et heures habituels dans la semaine.</li>
+            <li>Pour une garde d'enfant, choisissez votre <strong>Zone de vacances scolaires</strong> (ou <em>Pas de zone</em>).</li>
+            <li>Cochez leurs jours travaillés et ajustez le nombre d'heures habituelles.</li>
           </ul>
         </div>
 
@@ -1197,8 +1988,8 @@
           <ul>
             <li>Les jours habituels sont pré-remplis pour vous éviter de tout ressaisir.</li>
             <li>Les <strong>jours fériés</strong> (et les <strong>vacances scolaires</strong> pour la garde d'enfant) passent tout seuls à <code>0 h</code>.</li>
-            <li>Un créneau en plus ? Ajoutez un <strong>extra ponctuel</strong> en bas de page (pour <em>Garde d'enfant</em> ou <em>Autre</em>).</li>
-            <li>Cliquez sur <strong>« Enregistrer »</strong> une fois le mois vérifié.</li>
+            <li>Un créneau en plus ? Ajoutez un <strong>extra ponctuel</strong> en bas de page.</li>
+            <li>Vos modifications sont <strong>sauvegardées automatiquement</strong>. Cliquez sur <strong>« Valider le mois »</strong> une fois le pointage vérifié pour le figer et l'inclure dans l'export Excel.</li>
           </ul>
         </div>
 
@@ -1217,87 +2008,147 @@
       <div class="help-local-box">
         <h3>🔒 Vos données restent sur cet appareil</h3>
         <p>
-          Rien n'est envoyé sur Internet : <strong>tout est enregistré directement sur l'appareil que vous utilisez</strong> (dans le fichier <code>salaires.json</code>). En contrepartie, <strong>vous ne retrouverez pas automatiquement vos saisies si vous ouvrez l'outil sur un autre ordinateur ou sur votre téléphone</strong>.
+          Rien n'est envoyé sur Internet : <strong>tout est sauvegardé automatiquement et directement sur l'appareil que vous utilisez</strong>. En contrepartie, <strong>vous ne retrouverez pas automatiquement vos saisies si vous ouvrez l'outil sur un autre ordinateur ou sur votre téléphone</strong>.
         </p>
         <ul>
-          <li><strong>Pour passer d'un appareil à un autre (ou garder une copie) :</strong> cliquez sur <strong>« Exporter les données (.json) »</strong> pour enregistrer votre fichier <code>salaires.json</code>, puis sur l'autre appareil, cliquez sur <strong>« Importer les données (.json) »</strong> dans <em>Gérer les salariés</em>.</li>
-          <li><strong>Pour ouvrir vos comptes dans Excel :</strong> cliquez sur <strong>« Exporter sous Excel (.csv) »</strong> pour télécharger le tableau de vos mois enregistrés.</li>
+          <li><strong>Pour passer d'un appareil à un autre (ou garder une copie) :</strong> ouvrez le menu <strong>« Plus »</strong> en haut à droite, cliquez sur <strong>« Exporter les données (.json) »</strong>, puis sur l'autre appareil cliquez sur <strong>« Importer les données (.json) »</strong> au même endroit.</li>
+          <li><strong>Pour ouvrir vos comptes dans Excel :</strong> cliquez sur <strong>« Exporter sous Excel (.csv) »</strong> dans le menu <strong>« Plus »</strong>.</li>
         </ul>
       </div>
     </section>
 
     <!-- =================================================================
-         VUE 1 : GESTION DES SALARIÉS / ONBOARDING
+         VUE BILAN ANNUEL (IMPÔTS / RÉCAPITULATIF DES MOIS VALIDÉS)
+         ================================================================= -->
+    <section id="annual-view" class="onboarding-card hidden">
+      <div class="onboarding-header">
+        <div class="onboarding-header-info">
+          <h2>Bilan annuel</h2>
+          <p>Récapitulatif des mois validés par salarié (pratique pour la déclaration d'impôts).</p>
+        </div>
+
+        <div class="onboarding-header-actions">
+          <select id="annual-year-select" class="input-sm" aria-label="Année du bilan"></select>
+          <button type="button" class="btn-outline" id="annual-back-btn">
+            ← Retour à la déclaration
+          </button>
+        </div>
+      </div>
+
+      <div class="annual-summary-grid" id="annual-summary-grid">
+        <div class="summary-stat">
+          <div class="field-label">Heures payées</div>
+          <div class="stat-val" id="annual-total-hours" style="color:var(--menage);">0 h</div>
+          <span class="stat-sub" id="annual-total-months-sub">0 mois validé</span>
+        </div>
+
+        <div class="summary-stat">
+          <div class="field-label">Heures déclarées CESU</div>
+          <div class="stat-val" id="annual-total-declare" style="color:var(--menage);">0 h</div>
+          <span class="stat-sub">Cumul des heures déclarées</span>
+        </div>
+
+        <div class="summary-stat">
+          <div class="field-label">Total net versé</div>
+          <div class="stat-val" id="annual-total-net" style="color:var(--success);">0,00 €</div>
+          <span class="stat-sub" id="annual-year-sub">Année en cours</span>
+        </div>
+      </div>
+
+      <div class="ob-empty-state hidden" id="annual-empty-state"></div>
+      <div class="annual-emp-list" id="annual-employees-list"></div>
+    </section>
+
+    <!-- =================================================================
+         VUE 1 : GESTION DES SALARIÉS (LISTE EN PREMIER + FORMULAIRE DÉDIÉ)
          ================================================================= -->
     <section id="onboarding-view" class="onboarding-card hidden">
       <div class="onboarding-header">
         <div class="onboarding-header-info">
-          <h2 id="onboarding-title">Gérer les salariés</h2>
-          <p id="onboarding-subtitle">Ajoutez un salarié, modifiez un salarié existant, puis cliquez sur « Accéder à la déclaration » pour déclarer les heures.</p>
+          <h2 id="onboarding-title">Vos salariés</h2>
+          <p id="onboarding-subtitle">Ajoutez ou modifiez vos salariés et leurs horaires habituels.</p>
         </div>
 
         <div class="onboarding-header-actions">
-          <input type="file" id="import-json-input" accept=".json,application/json" class="hidden" />
-          <button type="button" class="btn-outline" id="import-json-btn">
-            Importer les données (.json)
+          <button type="button" class="btn-save btn-theme-menage" id="ob-new-emp-btn">
+            + Ajouter un salarié
           </button>
-          <button type="button" class="btn-save btn-theme-success" id="ob-go-declaration-btn" disabled>
-            Accéder à la déclaration
+          <button type="button" class="btn-save btn-theme-success hidden" id="ob-go-declaration-btn">
+            Accéder à la déclaration →
           </button>
         </div>
       </div>
 
-      <!-- Champs principaux alignés en haut sur la grille UX :
-           Nom raccourci (200px), Prestation (190px), Salaire horaire net sur 1 ligne (200px), Zone de vacances (170px) -->
-      <div class="ob-main-grid">
-        <div class="field-group">
-          <label class="field-label" for="ob-name">Nom du salarié</label>
-          <input type="text" id="ob-name" class="input-lg" placeholder="Ex : Marie, Thomas..." />
-        </div>
-
-        <div class="field-group">
-          <label class="field-label" for="ob-role">Prestation</label>
-          <select id="ob-role" class="input-lg">
-            <option value="Ménage">🧹 Ménage</option>
-            <option value="Garde d'enfant">🧸 Garde d'enfant</option>
-            <option value="Autre">💼 Autre</option>
-          </select>
-          <span class="ob-role-hint" id="ob-role-hint">Jours fériés exclus automatiquement</span>
-        </div>
-
-        <div class="field-group">
-          <label class="field-label" for="ob-rate">Salaire horaire net (€/h)</label>
-          <input type="number" id="ob-rate" class="input-sm" step="0.5" min="0" value="0" />
-        </div>
-
-        <div class="field-group">
-          <label class="field-label" for="ob-zone">Zone de vacances</label>
-          <select id="ob-zone" class="input-lg">
-            <option value="Zone A">Zone A</option>
-            <option value="Zone B">Zone B</option>
-            <option value="Zone C" selected>Zone C</option>
-            <option value="Pas de zone">Pas de zone</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Jours travaillés affichés en ligne avec compteur 0 par défaut -->
-      <div class="ob-days-section">
-        <div class="ob-days-title">Jours travaillés dans la semaine &amp; nombre d'heures par séance</div>
-        <div class="ob-days-list" id="ob-days-grid"></div>
-      </div>
-
-      <!-- Bouton sous le formulaire : "Enregistrer le salarié" -->
-      <div class="ob-actions-bar">
-        <button type="button" class="btn-save btn-theme-menage" id="ob-save-emp-btn">
-          Enregistrer le salarié
-        </button>
-      </div>
-
-      <!-- Liste des salariés déjà enregistrés -->
+      <!-- 1. Liste des salariés enregistrés (affichée en premier) -->
       <div class="ob-list-section hidden" id="ob-list-section">
-        <div class="ob-list-title">Salariés enregistrés</div>
+        <div class="ob-list-title" id="ob-list-title">Salariés enregistrés</div>
         <div class="ob-emp-list" id="ob-emp-list"></div>
+      </div>
+
+      <div class="ob-empty-state hidden" id="ob-empty-state">
+        Aucun salarié enregistré pour le moment. Cliquez sur <strong>« + Ajouter un salarié »</strong> pour commencer.
+      </div>
+
+      <!-- 2. Panneau dédié pour ajouter ou modifier un salarié -->
+      <div class="ob-form-panel hidden" id="ob-form-panel">
+        <div class="ob-form-panel-header">
+          <h3 id="ob-form-title">Nouveau salarié</h3>
+          <button type="button" class="btn-outline" id="ob-cancel-form-top-btn" style="height:34px;padding:0 12px;font-size:0.82rem;">
+            Annuler
+          </button>
+        </div>
+
+        <div class="ob-form-error hidden" id="ob-form-error" role="alert"></div>
+
+        <div class="ob-main-grid">
+          <div class="field-group">
+            <label class="field-label" for="ob-name">Nom du salarié</label>
+            <input type="text" id="ob-name" class="input-lg" placeholder="Ex : Marie, Thomas..." />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="ob-role">Prestation</label>
+            <select id="ob-role" class="input-lg">
+              <option value="Ménage">🧹 Ménage</option>
+              <option value="Garde d'enfant">🧸 Garde d'enfant</option>
+              <option value="Autre">💼 Autre</option>
+            </select>
+            <span class="ob-role-hint" id="ob-role-hint">Jours fériés exclus automatiquement</span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="ob-rate">Salaire horaire net (€/h)</label>
+            <input type="number" id="ob-rate" class="input-lg" step="0.01" min="0" value="0" />
+          </div>
+
+          <div class="field-group hidden" id="ob-zone-group">
+            <label class="field-label" for="ob-zone">Zone de vacances</label>
+            <select id="ob-zone" class="input-lg">
+              <option value="Zone A">Zone A</option>
+              <option value="Zone B">Zone B</option>
+              <option value="Zone C" selected>Zone C</option>
+              <option value="Pas de zone">Pas de zone</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Jours travaillés : cocher un jour affiche le compteur d'heures -->
+        <div class="ob-days-section">
+          <div class="ob-days-header">
+            <div class="ob-days-title">Jours travaillés dans la semaine &amp; heures habituelles</div>
+            <span class="ob-weekly-total" id="ob-weekly-total">0 h / semaine</span>
+          </div>
+          <div class="ob-days-list" id="ob-days-grid"></div>
+        </div>
+
+        <div class="ob-actions-bar">
+          <button type="button" class="btn-save btn-theme-menage" id="ob-save-emp-btn">
+            Ajouter le salarié
+          </button>
+          <button type="button" class="btn-outline" id="ob-cancel-form-btn">
+            Annuler
+          </button>
+        </div>
       </div>
     </section>
 
@@ -1306,6 +2157,10 @@
          ================================================================= -->
     <main id="dashboard-view" class="hidden">
       <nav class="tabs-nav" id="tabs-nav"></nav>
+
+      <div class="ob-empty-state hidden" id="dashboard-empty-month">
+        Aucun salarié actif sur ce mois. Naviguez vers un mois précédent pour consulter l'historique, ou réactivez / ajoutez un salarié dans <strong>Salariés</strong>.
+      </div>
 
       <section class="tab-panel" id="active-emp-panel">
         <div class="panel-top-grid">
@@ -1319,22 +2174,18 @@
         <div class="form-grid-header">
           <div class="field-label">Date</div>
           <div class="field-label">Heures</div>
-          <div class="field-label" style="text-align:right;">Net séance</div>
           <div class="field-label">Action rapide</div>
         </div>
 
         <div class="form-rows is-proposed" id="emp-rows"></div>
 
-        <!-- Bloc Extras affiché uniquement si la fonction est "Garde d'enfant" -->
+        <!-- Bloc d'ajout d'extra ponctuel (disponible pour toutes les prestations) -->
         <div class="extra-adder hidden" id="emp-extra-section">
-          <div class="extra-adder-title" id="extra-section-title">✨ Extras ponctuels (Garde d'enfant)</div>
-
-          <!-- Liste des extras saisis qui s'incrémente à chaque nouvel extra -->
-          <div class="extra-list" id="emp-extra-rows"></div>
+          <div class="extra-adder-title" id="extra-section-title">✨ Ajouter un extra ponctuel</div>
 
           <!-- Ligne de saisie d'un nouvel extra -->
-          <div class="extra-grid">
-            <div class="field-group">
+          <div class="extra-grid" id="emp-extra-grid">
+            <div class="field-group extra-date-group">
               <label class="field-label" for="extra-date">Date de l'extra</label>
               <input type="date" id="extra-date" class="input-lg" />
             </div>
@@ -1346,11 +2197,6 @@
                 <input type="number" id="extra-hours" class="stepper-input" step="0.5" min="0" value="0" />
                 <button type="button" class="stepper-btn" id="extra-step-plus">+</button>
               </div>
-            </div>
-
-            <div class="field-group">
-              <span class="field-label">Montant estimé</span>
-              <div class="cell-amount" id="extra-preview-amount" style="width:100%;">0,00 €</div>
             </div>
 
             <div class="field-group">
@@ -1372,7 +2218,15 @@
 
           <div class="summary-stat">
             <div class="field-label">Heures à déclarer</div>
-            <div class="stat-val" id="emp-hours-to-declare">0 h</div>
+            <div class="stat-val-row">
+              <div class="stat-val" id="emp-hours-to-declare">0 h</div>
+              <button type="button" class="btn-copy-icon" id="copy-hours-declare-btn" title="Copier les heures à déclarer pour le CESU" aria-label="Copier les heures à déclarer pour le CESU">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
             <span class="stat-sub">Arrondi à l'heure inférieure</span>
           </div>
 
@@ -1385,10 +2239,14 @@
           <div class="summary-actions">
             <div class="save-row">
               <button type="button" class="btn-save btn-theme-menage" id="emp-save-btn">
-                Enregistrer
+                Valider le mois
               </button>
-              <span class="save-status unsaved" id="emp-save-status">Non enregistré</span>
+              <button type="button" class="btn-outline hidden" id="emp-edit-btn">
+                Modifier
+              </button>
+              <span class="save-status unsaved" id="emp-save-status">À vérifier</span>
             </div>
+            <p class="save-hint" id="emp-save-hint">Sauvegarde automatique active • Valider le mois le fige pour l'export Excel.</p>
 
             <div class="check-line">
               <label>
@@ -1554,7 +2412,55 @@
       return `${y}-${m}-${day}`;
     }
 
+    function computeFrenchFeriesForYear(year) {
+      // Algorithme grégorien de calcul de Pâques (Butcher-Meeus)
+      const a = year % 19;
+      const b = Math.floor(year / 100);
+      const c = year % 100;
+      const d = Math.floor(b / 4);
+      const e = b % 4;
+      const f = Math.floor((b + 8) / 25);
+      const g = Math.floor((b - f + 1) / 3);
+      const h = (19 * a + b - d - g + 15) % 30;
+      const i = Math.floor(c / 4);
+      const k = c % 4;
+      const l = (32 + 2 * e + 2 * i - h - k) % 7;
+      const m = Math.floor((a + 11 * h + 22 * l) / 451);
+      const easterMonth = Math.floor((h + l - 7 * m + 114) / 31);
+      const easterDay = ((h + l - 7 * m + 114) % 31) + 1;
+
+      const fmt = (dt) =>
+        `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`;
+      const addDays = (dt, days) => {
+        const copy = new Date(dt.getTime());
+        copy.setDate(copy.getDate() + days);
+        return copy;
+      };
+      const easter = new Date(year, easterMonth - 1, easterDay);
+
+      return {
+        [`${year}-01-01`]: "Jour de l'An",
+        [fmt(addDays(easter, 1))]: "Lundi de Pâques",
+        [`${year}-05-01`]: "Fête du Travail",
+        [`${year}-05-08`]: "Victoire 1945",
+        [fmt(addDays(easter, 39))]: "Ascension",
+        [fmt(addDays(easter, 50))]: "Lundi de Pentecôte",
+        [`${year}-07-14`]: "Fête Nationale",
+        [`${year}-08-15`]: "Assomption",
+        [`${year}-11-01`]: "Toussaint",
+        [`${year}-11-11`]: "Armistice",
+        [`${year}-12-25`]: "Noël"
+      };
+    }
+
+    function ensureFeriesFallbackForYear(year) {
+      if (!feriesMap[`${year}-01-01`]) {
+        Object.assign(feriesMap, computeFrenchFeriesForYear(year));
+      }
+    }
+
     async function ensureCalendarData(year) {
+      ensureFeriesFallbackForYear(year);
       if (apiLoadedYears.has(year)) return;
       try {
         const fRes = await fetch(`https://calendrier.api.gouv.fr/jours-feries/metropole/${year}.json`);
@@ -1616,22 +2522,112 @@
     let appState = {
       activeTab: null,
       employees: [],
-      months: {}
+      months: {},
+      lastBackupAt: null
     };
+
+    let currentView = "welcome"; // "welcome" | "dashboard" | "onboarding" | "help" | "annual"
+
+    function updateBackupReminderUI() {
+      const dotEl = document.getElementById("more-backup-dot");
+      const subEl = document.getElementById("backup-status-sub");
+      if (!dotEl || !subEl) return;
+
+      const hasValidatedMonth = Object.values(appState.months || {}).some(mObj =>
+        Object.values(mObj || {}).some(m => m && m.saved)
+      );
+
+      if (!appState.lastBackupAt) {
+        subEl.textContent = "Jamais sauvegardé";
+        subEl.classList.toggle("is-warn", hasValidatedMonth);
+        dotEl.classList.toggle("hidden", !hasValidatedMonth);
+        return;
+      }
+
+      const backupDt = new Date(appState.lastBackupAt);
+      if (isNaN(backupDt.getTime())) {
+        subEl.textContent = "Jamais sauvegardé";
+        subEl.classList.toggle("is-warn", hasValidatedMonth);
+        dotEl.classList.toggle("hidden", !hasValidatedMonth);
+        return;
+      }
+
+      const daysAgo = Math.max(0, Math.floor((Date.now() - backupDt.getTime()) / 86400000));
+      let label = "Dernière copie : aujourd'hui";
+      if (daysAgo === 1) {
+        label = "Dernière copie : hier";
+      } else if (daysAgo > 1 && daysAgo < 30) {
+        label = `Dernière copie : il y a ${daysAgo} j`;
+      } else if (daysAgo >= 30) {
+        const dStr = `${String(backupDt.getDate()).padStart(2, "0")}/${String(backupDt.getMonth() + 1).padStart(2, "0")}/${backupDt.getFullYear()}`;
+        label = `Dernière copie : ${dStr} (${daysAgo} j)`;
+      }
+
+      const needsReminder = hasValidatedMonth && daysAgo >= 30;
+      subEl.textContent = label;
+      subEl.classList.toggle("is-warn", needsReminder);
+      dotEl.classList.toggle("hidden", !needsReminder);
+    }
+
+    function updateHeaderNavState() {
+      const totalEmpCount = appState.employees ? appState.employees.length : 0;
+      const activeEmpCount = appState.employees ? appState.employees.filter(e => !e.archived).length : 0;
+      const hasEmployees = totalEmpCount > 0;
+
+      const navDeclBtn = document.getElementById("nav-declaration-btn");
+      const navEmpBtn = document.getElementById("open-onboarding-btn");
+      const navEmpCount = document.getElementById("nav-emp-count");
+      const periodBar = document.getElementById("period-bar");
+      const openAnnualBtn = document.getElementById("open-annual-btn");
+      const exportCsvBtn = document.getElementById("export-csv-btn");
+      const downloadJsonBtn = document.getElementById("download-json-btn");
+
+      if (navDeclBtn) {
+        navDeclBtn.classList.toggle("hidden", !hasEmployees);
+        navDeclBtn.classList.toggle("is-active", currentView === "dashboard");
+      }
+      if (navEmpBtn) {
+        navEmpBtn.classList.toggle("is-active", currentView === "onboarding");
+      }
+      if (navEmpCount) {
+        navEmpCount.textContent = String(activeEmpCount);
+        navEmpCount.classList.toggle("hidden", activeEmpCount === 0);
+      }
+      if (periodBar) {
+        periodBar.classList.toggle("hidden", currentView !== "dashboard" || !hasEmployees);
+      }
+      if (openAnnualBtn) openAnnualBtn.disabled = !hasEmployees;
+      if (exportCsvBtn) exportCsvBtn.disabled = !hasEmployees;
+      if (downloadJsonBtn) downloadJsonBtn.disabled = !hasEmployees;
+      updateBackupReminderUI();
+    }
+
+    // N'interroge le serveur local PowerShell que si la page tourne elle-même sur localhost / 127.0.0.1.
+    // Cela évite la popup de sécurité Chrome ("Accéder à d'autres applis et services sur cet appareil") sur GitHub Pages.
+    const IS_LOCAL_SERVER =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
 
     function updateSyncStatus(hasData) {
       const statusEl = document.getElementById("sync-status");
-      if (hasData) {
-        statusEl.textContent = "Fichier de données (salaires.json)";
-        statusEl.className = "sync-status has-data";
+      if (IS_LOCAL_SERVER) {
+        if (hasData) {
+          statusEl.textContent = "✓ Sauvegarde auto (salaires.json)";
+          statusEl.className = "sync-status has-data";
+        } else {
+          statusEl.textContent = "Aucune donnée (salaires.json)";
+          statusEl.className = "sync-status no-data";
+        }
       } else {
-        statusEl.textContent = "Pas de fichiers de données (salaires.json)";
-        statusEl.className = "sync-status no-data";
+        if (hasData) {
+          statusEl.textContent = "✓ Sauvegarde automatique sur cet appareil";
+          statusEl.className = "sync-status has-data";
+        } else {
+          statusEl.textContent = "Aucune donnée sur cet appareil";
+          statusEl.className = "sync-status no-data";
+        }
       }
-      const obGoBtn = document.getElementById("ob-go-declaration-btn");
-      if (obGoBtn) obGoBtn.disabled = !hasData;
-      const helpGoBtn = document.getElementById("help-go-declaration-btn");
-      if (helpGoBtn) helpGoBtn.disabled = !hasData;
+      updateHeaderNavState();
     }
 
     // Supprime de l'historique mensuel (months) toute entrée appartenant à un salarié qui n'existe plus
@@ -1665,7 +2661,8 @@
         const stateObj = {
           activeTab: data.activeTab || (data.employees[0] ? data.employees[0].id : null),
           employees: data.employees,
-          months: data.months || {}
+          months: data.months || {},
+          lastBackupAt: data.lastBackupAt || null
         };
         purgeDeletedEmployeesFromMonths(stateObj);
         return stateObj;
@@ -1673,12 +2670,6 @@
 
       return null;
     }
-
-    // N'interroge le serveur local PowerShell que si la page tourne elle-même sur localhost / 127.0.0.1.
-    // Cela évite la popup de sécurité Chrome ("Accéder à d'autres applis et services sur cet appareil") sur GitHub Pages.
-    const IS_LOCAL_SERVER =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1";
 
     async function loadState() {
       if (IS_LOCAL_SERVER) {
@@ -1725,6 +2716,8 @@
       updateSyncStatus(false);
     }
 
+    let _diskWriteChain = Promise.resolve();
+
     async function persistToDisk() {
       purgeDeletedEmployeesFromMonths(appState);
       const serialized = JSON.stringify(appState, null, 2);
@@ -1732,15 +2725,18 @@
       updateSyncStatus(appState.employees && appState.employees.length > 0);
 
       if (IS_LOCAL_SERVER) {
-        try {
-          await fetch("/api/salaires", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: serialized
-          });
-        } catch {
-          // Silencieux si hors serveur
-        }
+        _diskWriteChain = _diskWriteChain.then(async () => {
+          try {
+            await fetch("/api/salaires", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: serialized
+            });
+          } catch {
+            // Silencieux si hors serveur
+          }
+        });
+        await _diskWriteChain;
       }
     }
 
@@ -1755,10 +2751,69 @@
       return `${d}/${m}/${y}`;
     }
 
+    function formatShortDateFr(dateFr) {
+      if (!dateFr) return "";
+      const parts = String(dateFr).split("/");
+      if (parts.length === 3 && parts[2].length === 4) {
+        return `${parts[0]}/${parts[1]}/${parts[2].slice(-2)}`;
+      }
+      return dateFr;
+    }
+
     function roundHalf(val) {
       const n = parseFloat(val);
       if (isNaN(n) || n < 0) return 0;
       return Math.round(n * 2) / 2;
+    }
+
+    function roundCents(val) {
+      const n = parseFloat(val);
+      if (isNaN(n) || n < 0) return 0;
+      return Math.round(n * 100) / 100;
+    }
+
+    function getTodayMonthKey() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    }
+
+    function getMonthDateBounds(year, month) {
+      const prefix = `${year}-${String(month).padStart(2, "0")}`;
+      const lastDay = new Date(year, month, 0).getDate();
+      const min = `${prefix}-01`;
+      const max = `${prefix}-${String(lastDay).padStart(2, "0")}`;
+      const now = new Date();
+      let defaultDay = Math.min(15, lastDay);
+      if (now.getFullYear() === year && now.getMonth() + 1 === month) {
+        defaultDay = now.getDate();
+      }
+      const defaultDate = `${prefix}-${String(defaultDay).padStart(2, "0")}`;
+      return { min, max, defaultDate };
+    }
+
+    function getMonthRate(emp, mData) {
+      if (mData && typeof mData.rate === "number" && !isNaN(mData.rate)) {
+        return mData.rate;
+      }
+      return Number(emp?.rate) || 0;
+    }
+
+    function getEmployeesForMonth(monthKey) {
+      const monthObj = appState.months?.[monthKey] || {};
+      return (appState.employees || []).filter(emp => !emp.archived || Boolean(monthObj[emp.id]));
+    }
+
+    function countEmployeeHistoryMonths(empId) {
+      let total = 0;
+      let validated = 0;
+      for (const mAll of Object.values(appState.months || {})) {
+        const mEmp = mAll?.[empId];
+        if (mEmp) {
+          total++;
+          if (mEmp.saved) validated++;
+        }
+      }
+      return { total, validated };
     }
 
     function formatDateFr(dateStr) {
@@ -1861,7 +2916,7 @@
       setTimeout(() => t.classList.remove("show"), 2600);
     }
 
-    // Construit les 7 jours de la semaine en ligne avec 0 heure par défaut
+    // Construit les 7 jours de la semaine : stepper affiché uniquement quand le jour est coché
     function buildOnboardingDaysGrid() {
       const grid = document.getElementById("ob-days-grid");
       grid.innerHTML = "";
@@ -1870,6 +2925,7 @@
         const row = document.createElement("div");
         row.className = "ob-day-row";
         row.setAttribute("data-dow", dow);
+        row.dataset.lastHours = "2";
 
         row.innerHTML = `
           <label class="ob-day-check">
@@ -1877,10 +2933,15 @@
             <span>${label}</span>
           </label>
 
-          <div class="stepper-box">
-            <button type="button" class="stepper-btn ob-day-step" data-dow="${dow}" data-delta="-0.5">−</button>
-            <input type="number" class="stepper-input ob-day-hours" data-dow="${dow}" step="0.5" min="0" value="0" />
-            <button type="button" class="stepper-btn ob-day-step" data-dow="${dow}" data-delta="0.5">+</button>
+          <span class="ob-day-off-label">Non travaillé</span>
+
+          <div class="ob-day-stepper-wrap">
+            <div class="stepper-box">
+              <button type="button" class="stepper-btn ob-day-step" data-dow="${dow}" data-delta="-0.5" aria-label="Retirer 30 minutes">−</button>
+              <input type="number" class="stepper-input ob-day-hours" data-dow="${dow}" step="0.5" min="0" value="0" aria-label="Heures pour ${label}" />
+              <button type="button" class="stepper-btn ob-day-step" data-dow="${dow}" data-delta="0.5" aria-label="Ajouter 30 minutes">+</button>
+            </div>
+            <span class="ob-day-unit">h</span>
           </div>
         `;
         grid.appendChild(row);
@@ -1888,126 +2949,257 @@
     }
 
     let editingEmployeeId = null;
+    let initialFormSnapshot = "";
+    let pendingConfirmAction = null;
+
+    function updateOnboardingWeeklyTotal() {
+      let total = 0;
+      document.querySelectorAll(".ob-day-row").forEach(row => {
+        const cb = row.querySelector(".ob-day-toggle");
+        const inp = row.querySelector(".ob-day-hours");
+        if (cb && cb.checked && inp) {
+          total += roundHalf(inp.value);
+        }
+      });
+      const el = document.getElementById("ob-weekly-total");
+      if (el) {
+        el.textContent = `${formatHours(total)} / semaine`;
+      }
+    }
+
+    function getOnboardingFormSnapshot() {
+      const days = {};
+      document.querySelectorAll(".ob-day-row").forEach(row => {
+        const dow = row.getAttribute("data-dow");
+        const cb = row.querySelector(".ob-day-toggle");
+        const inp = row.querySelector(".ob-day-hours");
+        days[dow] = cb && cb.checked ? roundHalf(inp ? inp.value : 0) : 0;
+      });
+      return {
+        name: document.getElementById("ob-name").value.trim(),
+        role: document.getElementById("ob-role").value,
+        rate: roundCents(document.getElementById("ob-rate").value),
+        zone: document.getElementById("ob-zone").value,
+        days
+      };
+    }
+
+    function clearOnboardingFormError() {
+      const errEl = document.getElementById("ob-form-error");
+      if (errEl) {
+        errEl.textContent = "";
+        errEl.classList.add("hidden");
+      }
+    }
+
+    function showOnboardingFormError(msg) {
+      const errEl = document.getElementById("ob-form-error");
+      if (errEl) {
+        errEl.textContent = msg;
+        errEl.classList.remove("hidden");
+        errEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    }
+
+    function updateOnboardingRoleFields() {
+      const role = document.getElementById("ob-role").value;
+      const hint = document.getElementById("ob-role-hint");
+      const zoneGroup = document.getElementById("ob-zone-group");
+      const isGarde = role === "Garde d'enfant";
+
+      if (zoneGroup) {
+        zoneGroup.classList.toggle("hidden", !isGarde);
+      }
+
+      if (isGarde) {
+        hint.textContent = "Vacances scolaires + fériés exclus • Extras possibles";
+      } else {
+        hint.textContent = "Jours fériés exclus automatiquement • Extras possibles";
+      }
+    }
 
     function resetOnboardingForm() {
       editingEmployeeId = null;
+      clearOnboardingFormError();
       document.getElementById("ob-name").value = "";
       document.getElementById("ob-role").value = "Ménage";
       document.getElementById("ob-rate").value = "0";
       document.getElementById("ob-zone").value = "Zone C";
-      updateOnboardingRoleHint();
+      updateOnboardingRoleFields();
 
       document.querySelectorAll(".ob-day-row").forEach(row => {
         row.classList.remove("active");
+        row.dataset.lastHours = "2";
         const cb = row.querySelector(".ob-day-toggle");
         const inp = row.querySelector(".ob-day-hours");
         if (cb) cb.checked = false;
         if (inp) inp.value = "0";
       });
+      updateOnboardingWeeklyTotal();
     }
 
-    function loadEmployeeIntoOnboardingForm(emp) {
-      editingEmployeeId = emp.id;
-      document.getElementById("ob-name").value = emp.name || "";
-      document.getElementById("ob-role").value = emp.role || "Ménage";
-      document.getElementById("ob-rate").value = Number(emp.rate) || 0;
-      document.getElementById("ob-zone").value = emp.vacationZone || "Zone C";
-      updateOnboardingRoleHint();
+    function openOnboardingForm(emp = null) {
+      const panel = document.getElementById("ob-form-panel");
+      const titleEl = document.getElementById("ob-form-title");
+      const saveBtn = document.getElementById("ob-save-emp-btn");
+      const newBtn = document.getElementById("ob-new-emp-btn");
 
-      document.querySelectorAll(".ob-day-row").forEach(row => {
-        const dow = row.getAttribute("data-dow");
-        const h = Number(emp.schedule?.[dow]) || 0;
-        const cb = row.querySelector(".ob-day-toggle");
-        const inp = row.querySelector(".ob-day-hours");
-        if (cb) cb.checked = h > 0;
-        if (inp) inp.value = h;
-        row.classList.toggle("active", h > 0);
-      });
+      clearOnboardingFormError();
 
-      document.getElementById("onboarding-title").textContent = `Modification du salarié — ${emp.name}`;
-      document.getElementById("onboarding-view").scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+      if (emp) {
+        editingEmployeeId = emp.id;
+        document.getElementById("ob-name").value = emp.name || "";
+        document.getElementById("ob-role").value = emp.role || "Ménage";
+        document.getElementById("ob-rate").value = Number(emp.rate) || 0;
+        document.getElementById("ob-zone").value = emp.vacationZone || "Zone C";
+        updateOnboardingRoleFields();
 
-    // Détecte si des données/modifications ont été saisies dans le formulaire salarié sans avoir cliqué sur "Enregistrer le salarié"
-    function hasUnsavedOnboardingFormData() {
-      if (editingEmployeeId !== null) return true;
-      const name = document.getElementById("ob-name").value.trim();
-      const rate = roundHalf(document.getElementById("ob-rate").value);
-      let hasDay = false;
-      document.querySelectorAll(".ob-day-row").forEach(row => {
-        const cb = row.querySelector(".ob-day-toggle");
-        const hInput = row.querySelector(".ob-day-hours");
-        const h = roundHalf(hInput ? hInput.value : 0);
-        if ((cb && cb.checked) || h > 0) {
-          hasDay = true;
-        }
-      });
-      return Boolean(name !== "" || rate > 0 || hasDay);
-    }
+        document.querySelectorAll(".ob-day-row").forEach(row => {
+          const dow = row.getAttribute("data-dow");
+          const h = Number(emp.schedule?.[dow]) || 0;
+          const cb = row.querySelector(".ob-day-toggle");
+          const inp = row.querySelector(".ob-day-hours");
+          if (cb) cb.checked = h > 0;
+          if (inp) inp.value = h;
+          if (h > 0) row.dataset.lastHours = String(h);
+          row.classList.toggle("active", h > 0);
+        });
 
-    function updateOnboardingRoleHint() {
-      const role = document.getElementById("ob-role").value;
-      const hint = document.getElementById("ob-role-hint");
-      if (role === "Garde d'enfant") {
-        hint.textContent = "Vacances scolaires + fériés exclus • Extras possibles";
-      } else if (role === "Autre") {
-        hint.textContent = "Jours fériés exclus automatiquement • Extras possibles";
+        titleEl.textContent = `Modifier — ${emp.name}`;
+        saveBtn.textContent = "Enregistrer les modifications";
+        panel.classList.add("is-editing");
       } else {
-        hint.textContent = "Jours fériés exclus automatiquement";
+        resetOnboardingForm();
+        titleEl.textContent = "Nouveau salarié";
+        saveBtn.textContent = "Ajouter le salarié";
+        panel.classList.remove("is-editing");
       }
+
+      updateOnboardingWeeklyTotal();
+      panel.classList.remove("hidden");
+      if (newBtn) newBtn.classList.add("hidden");
+
+      const emptyEl = document.getElementById("ob-empty-state");
+      if (emptyEl) emptyEl.classList.add("hidden");
+
+      initialFormSnapshot = JSON.stringify(getOnboardingFormSnapshot());
+      renderOnboardingEmployeeList();
+      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
-    let hasSeenInitialHelp = false;
+    function closeOnboardingForm() {
+      const panel = document.getElementById("ob-form-panel");
+      const newBtn = document.getElementById("ob-new-emp-btn");
+      resetOnboardingForm();
+      panel.classList.add("hidden");
+      panel.classList.remove("is-editing");
+      if (newBtn) newBtn.classList.remove("hidden");
+      initialFormSnapshot = "";
+      renderOnboardingEmployeeList();
+    }
+
+    // Détecte uniquement les vraies modifications non enregistrées lorsque le formulaire est ouvert
+    function hasUnsavedOnboardingFormData() {
+      if (currentView !== "onboarding") return false;
+      const panel = document.getElementById("ob-form-panel");
+      if (!panel || panel.classList.contains("hidden")) return false;
+      return JSON.stringify(getOnboardingFormSnapshot()) !== initialFormSnapshot;
+    }
+
+    function runWithUnsavedCheck(action) {
+      if (hasUnsavedOnboardingFormData()) {
+        pendingConfirmAction = action;
+        document.getElementById("confirm-modal").classList.remove("hidden");
+        return;
+      }
+      action();
+    }
 
     function renderOnboardingEmployeeList() {
       const section = document.getElementById("ob-list-section");
       const list = document.getElementById("ob-emp-list");
-      const hasEmployees = appState.employees.length > 0;
+      const emptyEl = document.getElementById("ob-empty-state");
+      const formPanel = document.getElementById("ob-form-panel");
       const goBtn = document.getElementById("ob-go-declaration-btn");
+      const hasEmployees = appState.employees.length > 0;
+      const isFormOpen = formPanel && !formPanel.classList.contains("hidden");
+
       if (goBtn) {
-        goBtn.disabled = !hasEmployees;
-      }
-      const helpGoBtn = document.getElementById("help-go-declaration-btn");
-      if (helpGoBtn) {
-        helpGoBtn.disabled = !hasEmployees;
+        goBtn.classList.toggle("hidden", !hasEmployees);
       }
 
       if (!hasEmployees) {
         section.classList.add("hidden");
+        if (emptyEl) emptyEl.classList.toggle("hidden", isFormOpen);
         return;
       }
 
       section.classList.remove("hidden");
+      if (emptyEl) emptyEl.classList.add("hidden");
       list.innerHTML = "";
 
-      appState.employees.forEach(emp => {
+      const listTitle = document.getElementById("ob-list-title");
+      const activeEmps = appState.employees.filter(e => !e.archived);
+      const archivedEmps = appState.employees.filter(e => e.archived);
+      if (listTitle) {
+        const activeLabel = activeEmps.length > 1
+          ? `Salariés actifs (${activeEmps.length})`
+          : activeEmps.length === 1
+            ? "Salarié actif (1)"
+            : "Aucun salarié actif";
+        const archivedSuffix = archivedEmps.length > 0
+          ? ` • ${archivedEmps.length} fin${archivedEmps.length > 1 ? "s" : ""} de contrat`
+          : "";
+        listTitle.textContent = `${activeLabel}${archivedSuffix}`;
+      }
+
+      const orderedEmps = [...activeEmps, ...archivedEmps];
+      orderedEmps.forEach(emp => {
         const theme = getRoleTheme(emp.role);
         const zoneInfo = emp.role === "Garde d'enfant" ? ` • ${emp.vacationZone || "Zone C"}` : "";
+        const isBeingEdited = isFormOpen && editingEmployeeId === emp.id;
+        const isArchived = Boolean(emp.archived);
         const item = document.createElement("div");
-        item.className = "ob-emp-item";
+        item.className = `ob-emp-item ${isBeingEdited ? "is-editing" : ""} ${isArchived ? "is-archived" : ""}`;
         item.innerHTML = `
           <div class="ob-emp-info">
-            <strong>${theme.icon} ${emp.name} — ${emp.role}</strong>
+            <strong>
+              ${theme.icon} ${emp.name} — ${emp.role}
+              ${isBeingEdited ? `<span class="ob-editing-pill">En cours de modification</span>` : ""}
+              ${isArchived ? `<span class="ob-archived-pill">Fin de contrat (historique conservé)</span>` : ""}
+            </strong>
             <span>${formatScheduleSummary(emp.schedule)}${zoneInfo} • Tarif : ${formatEuro(emp.rate)}/h</span>
           </div>
           <div class="ob-emp-actions">
-            <button type="button" class="btn-row-action ob-edit-emp" data-id="${emp.id}" style="width:auto;padding:0 14px;">
-              Modifier
-            </button>
-            <button type="button" class="btn-row-action ob-remove-emp" data-id="${emp.id}" style="width:auto;padding:0 14px;color:var(--danger);">
-              Retirer
-            </button>
+            ${isArchived ? `
+              <button type="button" class="btn-row-action ob-reactivate-emp" data-id="${emp.id}" style="width:auto;padding:0 14px;">
+                Réactiver
+              </button>
+              <button type="button" class="btn-row-action ob-delete-emp" data-id="${emp.id}" style="width:auto;padding:0 14px;color:var(--danger);">
+                Supprimer
+              </button>
+            ` : `
+              <button type="button" class="btn-row-action ob-edit-emp" data-id="${emp.id}" style="width:auto;padding:0 14px;">
+                Modifier
+              </button>
+              <button type="button" class="btn-row-action ob-archive-emp" data-id="${emp.id}" style="width:auto;padding:0 14px;color:var(--muted);">
+                Fin de contrat
+              </button>
+            `}
           </div>
         `;
         list.appendChild(item);
       });
     }
 
-    function readEmployeeFromOnboardingForm(silentIfEmpty = false) {
+    function readEmployeeFromOnboardingForm() {
+      clearOnboardingFormError();
       const name = document.getElementById("ob-name").value.trim();
       const role = document.getElementById("ob-role").value;
-      const rate = roundHalf(document.getElementById("ob-rate").value);
-      const vacationZone = document.getElementById("ob-zone").value || "Zone C";
+      const rate = roundCents(document.getElementById("ob-rate").value);
+      const vacationZone = role === "Garde d'enfant"
+        ? (document.getElementById("ob-zone").value || "Zone C")
+        : "Pas de zone";
 
       const schedule = {};
       let hasDay = false;
@@ -2016,25 +3208,24 @@
         const cb = row.querySelector(".ob-day-toggle");
         const hInput = row.querySelector(".ob-day-hours");
         const h = roundHalf(hInput ? hInput.value : 0);
-        if ((cb && cb.checked && h > 0) || h > 0) {
+        if (cb && cb.checked && h > 0) {
           schedule[dow] = h;
           hasDay = true;
         }
       });
 
-      if (!name && !hasDay && silentIfEmpty) {
-        return null;
-      }
       if (!name) {
-        alert("Veuillez saisir le nom du salarié.");
-        return false;
-      }
-      if (!hasDay) {
-        alert("Veuillez définir un nombre d'heures supérieur à 0 pour au moins un jour travaillé dans la semaine.");
+        showOnboardingFormError("Veuillez saisir le nom du salarié.");
+        document.getElementById("ob-name").focus();
         return false;
       }
       if (rate <= 0) {
-        alert("Veuillez saisir un salaire horaire net supérieur à 0 €/h.");
+        showOnboardingFormError("Veuillez saisir un salaire horaire net supérieur à 0 €/h.");
+        document.getElementById("ob-rate").focus();
+        return false;
+      }
+      if (!hasDay) {
+        showOnboardingFormError("Veuillez cocher au moins un jour travaillé dans la semaine (avec plus de 0 h).");
         return false;
       }
 
@@ -2056,15 +3247,25 @@
       const { _isEdit, ...cleanEmp } = empObj;
       if (_isEdit) {
         const idx = appState.employees.findIndex(e => e.id === cleanEmp.id);
-        if (idx !== -1) {
-          appState.employees[idx] = cleanEmp;
-        } else {
-          appState.employees.push(cleanEmp);
+        const prevEmp = idx !== -1 ? appState.employees[idx] : null;
+        if (prevEmp && prevEmp.archived) {
+          cleanEmp.archived = true;
         }
-        // Mettre à jour les mois non enregistrés de ce salarié avec ses nouveaux horaires / zone
+        const prevRate = prevEmp ? (Number(prevEmp.rate) || 0) : cleanEmp.rate;
+        const todayMonthKey = getTodayMonthKey();
+
+        // Ne jamais modifier les données du passé ni les mois validés :
+        // on fige le tarif historique sur les mois passés / validés et on ne régénère
+        // que les mois en cours ou futurs non encore validés.
         for (const [mKey, mAll] of Object.entries(appState.months)) {
           const mEmp = mAll?.[cleanEmp.id];
-          if (mEmp && !mEmp.saved) {
+          if (!mEmp) continue;
+          const isPastMonth = mKey < todayMonthKey;
+          if (isPastMonth || mEmp.saved) {
+            if (typeof mEmp.rate !== "number") {
+              mEmp.rate = prevRate;
+            }
+          } else {
             const [yStr, mStr] = mKey.split("-");
             const y = parseInt(yStr, 10);
             const m = parseInt(mStr, 10);
@@ -2076,84 +3277,295 @@
             mAll[cleanEmp.id] = regen;
           }
         }
+
+        if (idx !== -1) {
+          appState.employees[idx] = cleanEmp;
+        } else {
+          appState.employees.push(cleanEmp);
+        }
       } else {
         appState.employees.push(cleanEmp);
       }
       appState.activeTab = cleanEmp.id;
     }
 
-    function openHelpView() {
-      document.getElementById("help-view").classList.remove("hidden");
-      document.getElementById("onboarding-view").classList.add("hidden");
-      document.getElementById("dashboard-view").classList.add("hidden");
-      document.getElementById("header-controls").classList.add("hidden");
+    function closeMoreMenu() {
+      const panel = document.getElementById("more-menu-panel");
+      const btn = document.getElementById("more-menu-btn");
+      if (panel) panel.classList.add("hidden");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
 
-      const helpGoBtn = document.getElementById("help-go-declaration-btn");
-      if (helpGoBtn) {
-        helpGoBtn.disabled = appState.employees.length === 0;
+    async function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch {
+          // Fallback ci-dessous
+        }
+      }
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return ok;
+      } catch {
+        return false;
       }
     }
 
-    function openOnboardingView() {
-      hasSeenInitialHelp = true;
-      document.getElementById("help-view").classList.add("hidden");
-      document.getElementById("onboarding-view").classList.remove("hidden");
-      document.getElementById("dashboard-view").classList.add("hidden");
-      document.getElementById("header-controls").classList.add("hidden");
+    function showOnlyView(viewName) {
+      currentView = viewName;
+      closeMoreMenu();
+      document.getElementById("welcome-view").classList.toggle("hidden", viewName !== "welcome");
+      document.getElementById("help-view").classList.toggle("hidden", viewName !== "help");
+      document.getElementById("annual-view").classList.toggle("hidden", viewName !== "annual");
+      document.getElementById("onboarding-view").classList.toggle("hidden", viewName !== "onboarding");
+      document.getElementById("dashboard-view").classList.toggle("hidden", viewName !== "dashboard");
+      updateHeaderNavState();
+    }
 
-      const title = document.getElementById("onboarding-title");
-      const sub = document.getElementById("onboarding-subtitle");
-      title.textContent = "Gérer les salariés";
-      sub.textContent = "Ajoutez un salarié, modifiez un salarié existant, puis cliquez sur « Accéder à la déclaration » pour déclarer les heures.";
+    function openAnnualView(yearOverride) {
+      showOnlyView("annual");
+      const yearSelect = document.getElementById("annual-year-select");
+      const yearsSet = new Set([currentYear, new Date().getFullYear()]);
+      Object.keys(appState.months || {}).forEach(mKey => {
+        const y = parseInt(mKey.split("-")[0], 10);
+        if (!isNaN(y)) yearsSet.add(y);
+      });
+      const sortedYears = Array.from(yearsSet).sort((a, b) => b - a);
+      const selectedYear = yearOverride && yearsSet.has(yearOverride)
+        ? yearOverride
+        : (yearsSet.has(currentYear) ? currentYear : sortedYears[0]);
 
-      resetOnboardingForm();
-      renderOnboardingEmployeeList();
+      if (yearSelect) {
+        yearSelect.innerHTML = "";
+        sortedYears.forEach(y => {
+          const opt = document.createElement("option");
+          opt.value = String(y);
+          opt.textContent = String(y);
+          yearSelect.appendChild(opt);
+        });
+        yearSelect.value = String(selectedYear);
+      }
+
+      renderAnnualView(selectedYear);
+    }
+
+    function renderAnnualView(year) {
+      const yNum = parseInt(year, 10) || currentYear;
+      let grandHours = 0;
+      let grandDeclare = 0;
+      let grandNet = 0;
+      let totalValidatedCount = 0;
+
+      const empCardsData = [];
+
+      (appState.employees || []).forEach(emp => {
+        const rows = [];
+        let empHours = 0;
+        let empDeclare = 0;
+        let empNet = 0;
+
+        for (let m = 1; m <= 12; m++) {
+          const mKey = `${yNum}-${String(m).padStart(2, "0")}`;
+          const mEmp = appState.months?.[mKey]?.[emp.id];
+          if (!mEmp || !mEmp.saved) continue;
+
+          const hours = (mEmp.sessions || []).reduce((acc, s) => acc + (Number(s.hours) || 0), 0);
+          const declaredHours = Math.floor(hours);
+          const rate = getMonthRate(emp, mEmp);
+          const net = roundCents(hours * rate);
+
+          empHours += hours;
+          empDeclare += declaredHours;
+          empNet = roundCents(empNet + net);
+          totalValidatedCount++;
+
+          rows.push({
+            month: m,
+            monthName: MONTHS_FR[m - 1],
+            hours,
+            declaredHours,
+            net,
+            declared: Boolean(mEmp.declared),
+            paid: Boolean(mEmp.paid)
+          });
+        }
+
+        if (rows.length > 0) {
+          grandHours += empHours;
+          grandDeclare += empDeclare;
+          grandNet = roundCents(grandNet + empNet);
+          empCardsData.push({ emp, rows, empHours, empDeclare, empNet });
+        }
+      });
+
+      document.getElementById("annual-total-hours").textContent = formatHours(grandHours);
+      document.getElementById("annual-total-declare").textContent = formatHours(grandDeclare);
+      document.getElementById("annual-total-net").textContent = formatEuro(grandNet);
+      document.getElementById("annual-total-months-sub").textContent =
+        `${totalValidatedCount} déclaration${totalValidatedCount > 1 ? "s" : ""} validée${totalValidatedCount > 1 ? "s" : ""}`;
+      document.getElementById("annual-year-sub").textContent = `Cumul net validé en ${yNum}`;
+
+      const emptyEl = document.getElementById("annual-empty-state");
+      const listEl = document.getElementById("annual-employees-list");
+      listEl.innerHTML = "";
+
+      if (empCardsData.length === 0) {
+        emptyEl.innerHTML = `Aucun mois validé pour <strong>${yNum}</strong>. Validez vos déclarations mensuelles dans l'onglet <strong>Déclaration</strong> pour les retrouver ici.`;
+        emptyEl.classList.remove("hidden");
+        return;
+      }
+
+      emptyEl.classList.add("hidden");
+
+      empCardsData.forEach(({ emp, rows, empHours, empDeclare, empNet }) => {
+        const theme = getRoleTheme(emp.role);
+        const archivedTag = emp.archived ? `<span class="ob-archived-pill">Fin de contrat</span>` : "";
+        const card = document.createElement("div");
+        card.className = "annual-emp-card";
+        card.innerHTML = `
+          <div class="annual-emp-header">
+            <div class="annual-emp-title">
+              ${theme.icon} ${emp.name} — ${emp.role} ${archivedTag}
+            </div>
+            <div class="annual-emp-totals">
+              <span class="annual-emp-hours">${formatHours(empHours)} (CESU : ${formatHours(empDeclare)})</span>
+              <span>•</span>
+              <span>${formatEuro(empNet)}</span>
+            </div>
+          </div>
+          <div class="annual-table-wrap">
+            <table class="annual-table">
+              <thead>
+                <tr>
+                  <th>Mois</th>
+                  <th class="num">Heures</th>
+                  <th class="num">CESU</th>
+                  <th class="num">Net payé</th>
+                  <th>Suivi</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.map(r => `
+                  <tr class="annual-month-row" data-emp-id="${emp.id}" data-year="${yNum}" data-month="${r.month}" title="Ouvrir ${r.monthName} ${yNum}">
+                    <td><strong>${r.monthName}</strong></td>
+                    <td class="num">${formatHours(r.hours)}</td>
+                    <td class="num">${formatHours(r.declaredHours)}</td>
+                    <td class="num net-cell">${formatEuro(r.net)}</td>
+                    <td>
+                      <span class="annual-status-badges">
+                        ${r.declared ? `<span class="tab-badge badge-cesu">CESU ✓</span>` : ""}
+                        ${r.paid ? `<span class="tab-badge badge-paid">Payé ✓</span>` : ""}
+                        ${!r.declared && !r.paid ? `<span class="tab-badge badge-validated">✓ Validé</span>` : ""}
+                      </span>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+        listEl.appendChild(card);
+      });
+    }
+
+    function openWelcomeView() {
+      showOnlyView("welcome");
+    }
+
+    function openHelpView() {
+      showOnlyView("help");
+      const hasEmployees = appState.employees.length > 0;
+      const backBtn = document.getElementById("help-back-btn");
+      const addBtn = document.getElementById("help-go-onboarding-btn");
+      if (backBtn) {
+        backBtn.textContent = hasEmployees ? "← Retour à la déclaration" : "← Retour à l'accueil";
+      }
+      if (addBtn) {
+        addBtn.classList.toggle("hidden", hasEmployees);
+      }
+    }
+
+    function openOnboardingView(openFormImmediately = false) {
+      showOnlyView("onboarding");
+      if (openFormImmediately || appState.employees.length === 0) {
+        openOnboardingForm(null);
+      } else {
+        closeOnboardingForm();
+      }
     }
 
     function closeOnboardingView() {
       if (appState.employees.length === 0) {
+        openWelcomeView();
         return;
       }
-      document.getElementById("help-view").classList.add("hidden");
-      document.getElementById("onboarding-view").classList.add("hidden");
-      document.getElementById("dashboard-view").classList.remove("hidden");
-      document.getElementById("header-controls").classList.remove("hidden");
       renderDashboard();
     }
 
     function renderDashboard() {
       if (appState.employees.length === 0) {
-        if (!hasSeenInitialHelp) {
-          openHelpView();
-        } else {
-          openOnboardingView();
-        }
+        openWelcomeView();
         return;
       }
 
-      document.getElementById("help-view").classList.add("hidden");
-      document.getElementById("onboarding-view").classList.add("hidden");
-      document.getElementById("dashboard-view").classList.remove("hidden");
-      document.getElementById("header-controls").classList.remove("hidden");
+      showOnlyView("dashboard");
 
-      if (!appState.activeTab || !appState.employees.some(e => e.id === appState.activeTab)) {
-        appState.activeTab = appState.employees[0].id;
+      const visibleEmployees = getEmployeesForMonth(getMonthKey());
+      const emptyMonthEl = document.getElementById("dashboard-empty-month");
+      const activePanelEl = document.getElementById("active-emp-panel");
+
+      if (visibleEmployees.length === 0) {
+        document.getElementById("tabs-nav").innerHTML = "";
+        if (emptyMonthEl) emptyMonthEl.classList.remove("hidden");
+        if (activePanelEl) activePanelEl.classList.add("hidden");
+        return;
       }
 
-      renderTabsNav();
-      const activeEmp = appState.employees.find(e => e.id === appState.activeTab) || appState.employees[0];
+      if (emptyMonthEl) emptyMonthEl.classList.add("hidden");
+      if (activePanelEl) activePanelEl.classList.remove("hidden");
+
+      if (!appState.activeTab || !visibleEmployees.some(e => e.id === appState.activeTab)) {
+        appState.activeTab = visibleEmployees[0].id;
+      }
+
+      renderTabsNav(visibleEmployees);
+      const activeEmp = visibleEmployees.find(e => e.id === appState.activeTab) || visibleEmployees[0];
       renderActiveEmployeePanel(activeEmp);
     }
 
-    function renderTabsNav() {
+    function buildMonthStatusBadgesHtml(mData) {
+      const isValidated = Boolean(mData.saved && mData.savedAt);
+      const isDeclared = Boolean(mData.declared);
+      const isPaid = Boolean(mData.paid);
+      return `
+        ${isValidated
+          ? `<span class="tab-badge badge-validated">✓ Validé</span>`
+          : `<span class="tab-badge badge-todo">À vérifier</span>`}
+        ${isDeclared ? `<span class="tab-badge badge-cesu">CESU ✓</span>` : ""}
+        ${isPaid ? `<span class="tab-badge badge-paid">Payé ✓</span>` : ""}
+      `;
+    }
+
+    function renderTabsNav(employeesList) {
       const nav = document.getElementById("tabs-nav");
       nav.innerHTML = "";
+      const list = employeesList || getEmployeesForMonth(getMonthKey());
 
-      appState.employees.forEach(emp => {
+      list.forEach(emp => {
         const theme = getRoleTheme(emp.role);
         const mData = getEmployeeMonthData(emp);
+        const monthRate = getMonthRate(emp, mData);
         const totalHours = mData.sessions.reduce((acc, s) => acc + (Number(s.hours) || 0), 0);
-        const totalNet = totalHours * (Number(emp.rate) || 0);
+        const totalNet = totalHours * monthRate;
         const isActive = emp.id === appState.activeTab;
 
         const btn = document.createElement("button");
@@ -2167,14 +3579,15 @@
 
         const zone = emp.vacationZone || "Zone C";
         const zoneLabel = emp.role === "Garde d'enfant" && zone !== "Pas de zone" ? ` • ${zone}` : "";
-        const canHaveExtras = emp.role === "Garde d'enfant" || emp.role === "Autre";
-        const extraSuffix = canHaveExtras ? `${zoneLabel} + Extras` : "";
+        const archivedTag = emp.archived ? ` <span class="ob-archived-pill">Fin de contrat</span>` : "";
+        const badgesHtml = `<div class="tab-badges">${buildMonthStatusBadgesHtml(mData)}</div>`;
         btn.innerHTML = `
           <div>
-            <span class="tab-title">${theme.icon} ${emp.name} — ${emp.role}</span>
-            <span class="tab-sub">${formatScheduleSummary(emp.schedule)}${extraSuffix} • ${formatEuro(emp.rate)}/h</span>
+            <span class="tab-title">${theme.icon} ${emp.name} — ${emp.role}${archivedTag}</span>
+            <span class="tab-sub">${formatScheduleSummary(emp.schedule)}${zoneLabel} • ${formatEuro(monthRate)}/h</span>
+            ${badgesHtml}
           </div>
-          <span class="tab-total-pill">${formatEuro(totalNet)}</span>
+          <span class="tab-total-pill"><span class="tab-hours-val">${formatHours(totalHours)}</span><span class="tab-hours-sep">•</span><span>${formatEuro(totalNet)}</span></span>
         `;
         nav.appendChild(btn);
       });
@@ -2216,65 +3629,60 @@
       const theme = getRoleTheme(emp.role);
       const mData = getEmployeeMonthData(emp);
       const isGarde = emp.role === "Garde d'enfant";
-      const canHaveExtras = emp.role === "Garde d'enfant" || emp.role === "Autre";
-      const rate = Number(emp.rate) || 0;
+      const rate = getMonthRate(emp, mData);
       const zone = emp.vacationZone || "Zone C";
       const hasZone = isGarde && zone !== "Pas de zone";
 
       // Titre : "Prestations du mois de/d' <Nom du mois> — <Nom> (<Prestation>)"
       document.getElementById("emp-panel-title").textContent = formatPrestationsMonthTitle(currentMonth, emp.name, emp.role);
       document.getElementById("emp-panel-desc").textContent = hasZone
-        ? `Tarif horaire : ${formatEuro(rate)}/h • Les prestations habituelles tombant pendant les vacances scolaires (${zone}) ou un jour férié sont mises à 0 h automatiquement.`
-        : `Tarif horaire : ${formatEuro(rate)}/h • Les prestations en pointillés sont proposées automatiquement jusqu'à votre clic sur « Enregistrer ».`;
+        ? `Tarif horaire : ${formatEuro(rate)}/h • Vacances (${zone}) et jours fériés mis à 0 h automatiquement • Sauvegarde auto active.`
+        : `Tarif horaire : ${formatEuro(rate)}/h • Jours fériés mis à 0 h automatiquement • Sauvegarde auto active.`;
 
       renderChipsForEmployee(emp);
 
-      // Tri chronologique des prestations habituelles, les extras restent dans leur ordre d'ajout dans la liste des extras
-      const habitualSessions = mData.sessions.filter(s => !s.isExtra).sort((a, b) => a.date.localeCompare(b.date));
-      const extraSessions = mData.sessions.filter(s => s.isExtra);
-      mData.sessions = [...habitualSessions, ...extraSessions];
+      // Tri chronologique unifié : prestations habituelles et extras ensemble par date
+      mData.sessions.sort((a, b) => a.date.localeCompare(b.date) || (a.isExtra ? 1 : 0) - (b.isExtra ? 1 : 0));
 
       const rowsContainer = document.getElementById("emp-rows");
-      const extraRowsContainer = document.getElementById("emp-extra-rows");
       rowsContainer.innerHTML = "";
-      extraRowsContainer.innerHTML = "";
       let totalHours = 0;
       const isSaved = Boolean(mData.saved && mData.savedAt);
-      let extraCount = 0;
+
+      const disabledAttr = isSaved ? "disabled" : "";
+      const lockedBoxClass = isSaved ? " is-locked" : "";
 
       mData.sessions.forEach((s, idx) => {
         const hrs = Number(s.hours) || 0;
         const defHrs = Number(s.defaultHours) || 0;
         totalHours += hrs;
-        const amount = hrs * rate;
 
         if (s.isExtra) {
-          extraCount++;
           const extraRow = document.createElement("div");
-          extraRow.className = `form-row ${hrs === 0 ? "row-zero" : ""}`;
+          extraRow.className = `form-row row-extra ${hrs === 0 ? "row-zero" : ""}`;
           extraRow.innerHTML = `
             <div class="cell-date">
               <span class="date-main">${formatDateFr(s.date)}</span>
-              <span class="date-sub">✨ Extra #${extraCount}</span>
+              <span class="date-sub">${isSaved ? "✨ Extra validé" : "✨ Extra ponctuel"}</span>
             </div>
 
-            <div class="stepper-box">
-              <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="-0.5">−</button>
-              <input type="number" class="stepper-input emp-hours" data-idx="${idx}" step="0.5" min="0" value="${hrs}" />
-              <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="0.5">+</button>
+            <div class="stepper-box${lockedBoxClass}">
+              <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="-0.5" ${disabledAttr}>−</button>
+              <input type="number" class="stepper-input emp-hours" data-idx="${idx}" step="0.5" min="0" value="${hrs}" ${disabledAttr} />
+              <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="0.5" ${disabledAttr}>+</button>
             </div>
-
-            <div class="cell-amount">${formatEuro(amount)}</div>
 
             <div>
-              <button type="button" class="btn-row-action emp-del-extra" data-idx="${idx}" style="color:var(--danger);">Supprimer</button>
+              <button type="button" class="btn-row-action emp-del-extra" data-idx="${idx}" style="color:var(--danger);" ${disabledAttr}>Supprimer</button>
             </div>
           `;
-          extraRowsContainer.appendChild(extraRow);
+          rowsContainer.appendChild(extraRow);
           return;
         }
 
-        let sub = isSaved ? "Prestation validée" : "Proposition auto";
+        let sub = isSaved
+          ? "✓ Validée"
+          : (hrs !== defHrs ? "Modifié" : "Horaire habituel");
         if (s.isFerie) sub = "🎉 Jour férié";
         else if (s.isVacation && hasZone) sub = `🏖️ Vacances ${zone}`;
 
@@ -2287,34 +3695,37 @@
             <span class="date-sub">${sub}</span>
           </div>
 
-          <div class="stepper-box">
-            <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="-0.5">−</button>
-            <input type="number" class="stepper-input emp-hours" data-idx="${idx}" step="0.5" min="0" value="${hrs}" />
-            <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="0.5">+</button>
+          <div class="stepper-box${lockedBoxClass}">
+            <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="-0.5" ${disabledAttr}>−</button>
+            <input type="number" class="stepper-input emp-hours" data-idx="${idx}" step="0.5" min="0" value="${hrs}" ${disabledAttr} />
+            <button type="button" class="stepper-btn emp-step" data-idx="${idx}" data-delta="0.5" ${disabledAttr}>+</button>
           </div>
 
-          <div class="cell-amount">${formatEuro(amount)}</div>
-
           <div>
-            <button type="button" class="btn-row-action emp-toggle-hours" data-idx="${idx}">${hrs > 0 ? "Mettre à 0 h" : `Remettre ${formatHours(defHrs)}`}</button>
+            <button type="button" class="btn-row-action emp-toggle-hours" data-idx="${idx}" ${disabledAttr}>${hrs > 0 ? "Mettre à 0 h" : `Remettre ${formatHours(defHrs)}`}</button>
           </div>
         `;
         rowsContainer.appendChild(row);
       });
 
-      // Bloc d'ajout et liste d'extras affiché si la prestation est "Garde d'enfant" ou "Autre"
+      // Bloc d'ajout d'extra ponctuel (masqué quand le mois est validé)
       const extraSection = document.getElementById("emp-extra-section");
-      if (canHaveExtras) {
+      if (!isSaved) {
         extraSection.classList.remove("hidden");
-        document.getElementById("extra-section-title").textContent = extraCount > 0
-          ? `✨ Extras ponctuels (${extraCount})`
-          : `✨ Ajouter un extra ponctuel (${emp.role})`;
+        document.getElementById("extra-section-title").textContent = `✨ Ajouter un extra ponctuel (${emp.role})`;
         document.getElementById("extra-add-btn").className = `btn-save btn-theme-${theme.key}`;
-        const defaultExtraDate = `${currentYear}-${String(currentMonth).padStart(2, "0")}-15`;
-        if (!document.getElementById("extra-date").value) {
-          document.getElementById("extra-date").value = defaultExtraDate;
+        const extraDateEl = document.getElementById("extra-date");
+        const bounds = getMonthDateBounds(currentYear, currentMonth);
+        extraDateEl.min = bounds.min;
+        extraDateEl.max = bounds.max;
+        if (!extraDateEl.value || extraDateEl.value < bounds.min || extraDateEl.value > bounds.max) {
+          extraDateEl.value = bounds.defaultDate;
         }
-        updateExtraPreview(rate);
+        extraDateEl.disabled = false;
+        document.getElementById("extra-step-minus").disabled = false;
+        document.getElementById("extra-hours").disabled = false;
+        document.getElementById("extra-step-plus").disabled = false;
+        document.getElementById("extra-add-btn").disabled = false;
       } else {
         extraSection.classList.add("hidden");
       }
@@ -2337,18 +3748,34 @@
       document.getElementById("emp-total-net").textContent = formatEuro(totalNet);
       document.getElementById("emp-net-sub").textContent = `${formatHours(hoursToPay)} × ${formatEuro(rate)}/h`;
 
-      const saveBtn = document.getElementById("emp-save-btn");
-      saveBtn.className = `btn-save btn-theme-${theme.key}`;
+      const copyHoursBtn = document.getElementById("copy-hours-declare-btn");
+      if (copyHoursBtn) copyHoursBtn.dataset.copyValue = String(hoursToDeclare);
 
+      const saveBtn = document.getElementById("emp-save-btn");
+      const editBtn = document.getElementById("emp-edit-btn");
       const statusEl = document.getElementById("emp-save-status");
+      const hintEl = document.getElementById("emp-save-hint");
       if (isSaved) {
-        statusEl.textContent = `✓ Enregistré le ${mData.savedAt}`;
-        statusEl.className = "save-status saved";
+        saveBtn.className = "btn-save is-validated-btn";
+        saveBtn.innerHTML = `<span>✓ Validé le</span><span class="btn-save-date">${formatShortDateFr(mData.savedAt)}</span>`;
+        saveBtn.disabled = true;
+        if (editBtn) editBtn.classList.remove("hidden");
+        statusEl.className = "save-status saved hidden";
+        if (hintEl) {
+          hintEl.textContent = "Mois figé pour l'export Excel • Cliquez sur « Modifier » pour rouvrir la saisie.";
+        }
         rowsContainer.classList.remove("is-proposed");
         rowsContainer.classList.add("is-saved");
       } else {
-        statusEl.textContent = "Non enregistré";
+        saveBtn.className = `btn-save btn-theme-${theme.key}`;
+        saveBtn.textContent = "Valider le mois";
+        saveBtn.disabled = false;
+        if (editBtn) editBtn.classList.add("hidden");
+        statusEl.textContent = "À vérifier";
         statusEl.className = "save-status unsaved";
+        if (hintEl) {
+          hintEl.textContent = "Sauvegarde automatique active • Valider le mois le fige pour l'export Excel.";
+        }
         rowsContainer.classList.remove("is-saved");
         rowsContainer.classList.add("is-proposed");
       }
@@ -2359,23 +3786,28 @@
     }
 
     function updateExtraPreview(rateOverride) {
+      const previewEl = document.getElementById("extra-preview-amount");
+      if (!previewEl) return;
       const emp = appState.employees.find(e => e.id === appState.activeTab);
-      const rate = rateOverride !== undefined ? rateOverride : (Number(emp?.rate) || 0);
+      const rate = rateOverride !== undefined
+        ? rateOverride
+        : (emp ? getMonthRate(emp, getEmployeeMonthData(emp)) : 0);
       const h = roundHalf(document.getElementById("extra-hours").value);
-      document.getElementById("extra-preview-amount").textContent = formatEuro(h * rate);
+      previewEl.textContent = formatEuro(h * rate);
     }
 
     async function refreshView() {
       await ensureCalendarData(currentYear);
-      const defaultExtraDate = `${currentYear}-${String(currentMonth).padStart(2, "0")}-15`;
-      document.getElementById("extra-date").value = defaultExtraDate;
+      const bounds = getMonthDateBounds(currentYear, currentMonth);
+      const extraDateEl = document.getElementById("extra-date");
+      if (extraDateEl) {
+        extraDateEl.min = bounds.min;
+        extraDateEl.max = bounds.max;
+        extraDateEl.value = bounds.defaultDate;
+      }
 
       if (appState.employees.length === 0) {
-        if (!hasSeenInitialHelp) {
-          openHelpView();
-        } else {
-          openOnboardingView();
-        }
+        openWelcomeView();
       } else {
         renderDashboard();
       }
@@ -2397,14 +3829,32 @@
         mSelect.appendChild(opt);
       });
 
-      for (let y = 2024; y <= 2028; y++) {
+      const todayYear = new Date().getFullYear();
+      const initialMinYear = Math.min(2024, todayYear - 2);
+      const initialMaxYear = Math.max(todayYear + 5, currentYear + 2);
+
+      function ensureYearOption(yearVal) {
+        const y = parseInt(yearVal, 10);
+        if (isNaN(y)) return;
+        const existing = Array.from(ySelect.options).map(o => parseInt(o.value, 10));
+        if (existing.includes(y)) return;
         const opt = document.createElement("option");
-        opt.value = y;
-        opt.textContent = y;
-        ySelect.appendChild(opt);
+        opt.value = String(y);
+        opt.textContent = String(y);
+        const insertBeforeOpt = Array.from(ySelect.options).find(o => parseInt(o.value, 10) > y);
+        if (insertBeforeOpt) {
+          ySelect.insertBefore(opt, insertBeforeOpt);
+        } else {
+          ySelect.appendChild(opt);
+        }
+      }
+
+      for (let y = initialMinYear; y <= initialMaxYear; y++) {
+        ensureYearOption(y);
       }
 
       mSelect.value = currentMonth;
+      ensureYearOption(currentYear);
       ySelect.value = currentYear;
 
       mSelect.addEventListener("change", () => {
@@ -2424,6 +3874,7 @@
           currentYear--;
         }
         mSelect.value = currentMonth;
+        ensureYearOption(currentYear);
         ySelect.value = currentYear;
         refreshView();
       });
@@ -2435,26 +3886,119 @@
           currentYear++;
         }
         mSelect.value = currentMonth;
+        ensureYearOption(currentYear);
         ySelect.value = currentYear;
         refreshView();
       });
 
-      // Ouverture de la gestion des salariés
-      document.getElementById("open-onboarding-btn").addEventListener("click", () => {
-        openOnboardingView();
+      // Titre cliquable -> revient à la déclaration (ou accueil si 0 salarié)
+      document.getElementById("brand-home-btn").addEventListener("click", () => {
+        runWithUnsavedCheck(() => {
+          if (appState.employees.length > 0) {
+            renderDashboard();
+          } else {
+            openWelcomeView();
+          }
+        });
       });
 
-      // Ouverture de la page Mode d'emploi / Aide
-      document.getElementById("open-help-btn").addEventListener("click", () => {
+      // Navigation permanente : Déclaration & Salariés
+      document.getElementById("nav-declaration-btn").addEventListener("click", () => {
+        runWithUnsavedCheck(() => closeOnboardingView());
+      });
+
+      document.getElementById("open-onboarding-btn").addEventListener("click", () => {
+        if (currentView === "onboarding") return;
+        openOnboardingView(false);
+      });
+
+      // Menu déroulant compact "Données & Aide"
+      const moreMenuBtn = document.getElementById("more-menu-btn");
+      const moreMenuPanel = document.getElementById("more-menu-panel");
+      const moreMenuWrap = document.getElementById("more-menu-wrap");
+
+      moreMenuBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const willOpen = moreMenuPanel.classList.contains("hidden");
+        moreMenuPanel.classList.toggle("hidden", !willOpen);
+        moreMenuBtn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!moreMenuWrap.contains(e.target)) {
+          closeMoreMenu();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeMoreMenu();
+        }
+      });
+
+      // Écran d'accueil (premier lancement)
+      document.getElementById("welcome-add-emp-btn").addEventListener("click", () => {
+        openOnboardingView(true);
+      });
+
+      document.getElementById("welcome-import-json-btn").addEventListener("click", () => {
+        document.getElementById("import-json-input").click();
+      });
+
+      document.getElementById("welcome-open-help-btn").addEventListener("click", () => {
         openHelpView();
       });
 
-      document.getElementById("help-go-onboarding-btn").addEventListener("click", () => {
-        openOnboardingView();
+      // Page Bilan annuel
+      document.getElementById("open-annual-btn").addEventListener("click", () => {
+        closeMoreMenu();
+        runWithUnsavedCheck(() => openAnnualView(currentYear));
       });
 
-      document.getElementById("help-go-declaration-btn").addEventListener("click", () => {
-        closeOnboardingView();
+      document.getElementById("annual-back-btn").addEventListener("click", () => {
+        if (appState.employees.length > 0) {
+          renderDashboard();
+        } else {
+          openWelcomeView();
+        }
+      });
+
+      document.getElementById("annual-year-select").addEventListener("change", (e) => {
+        renderAnnualView(parseInt(e.target.value, 10));
+      });
+
+      document.getElementById("annual-employees-list").addEventListener("click", (e) => {
+        const tr = e.target.closest(".annual-month-row");
+        if (!tr) return;
+        const empId = tr.getAttribute("data-emp-id");
+        const y = parseInt(tr.getAttribute("data-year"), 10);
+        const m = parseInt(tr.getAttribute("data-month"), 10);
+        if (!empId || isNaN(y) || isNaN(m)) return;
+        currentYear = y;
+        currentMonth = m;
+        appState.activeTab = empId;
+        mSelect.value = currentMonth;
+        ensureYearOption(currentYear);
+        ySelect.value = currentYear;
+        refreshView();
+      });
+
+      // Page Mode d'emploi / Aide
+      document.getElementById("open-help-btn").addEventListener("click", () => {
+        closeMoreMenu();
+        runWithUnsavedCheck(() => openHelpView());
+      });
+
+      document.getElementById("help-back-btn").addEventListener("click", () => {
+        if (appState.employees.length > 0) {
+          renderDashboard();
+        } else {
+          openWelcomeView();
+        }
+      });
+
+      document.getElementById("help-go-onboarding-btn").addEventListener("click", () => {
+        openOnboardingView(true);
       });
 
       // Bouton "Exporter sous Excel (.csv)" :
@@ -2462,6 +4006,7 @@
       // Ligne 2 : Date;Heures;Salaire net;Heures;Salaire net...
       // Lignes suivantes : chaque jour du calendrier des mois enregistrés (y compris les jours non remplis)
       document.getElementById("export-csv-btn").addEventListener("click", () => {
+        closeMoreMenu();
         const employees = appState.employees || [];
         if (employees.length === 0) {
           alert("Aucun salarié enregistré.");
@@ -2477,7 +4022,7 @@
           .sort();
 
         if (savedMonthKeys.length === 0) {
-          alert("Aucune déclaration enregistrée à exporter. Veuillez d'abord cliquer sur « Enregistrer » sur au moins un mois.");
+          alert("Aucun mois validé à exporter. Veuillez d'abord cliquer sur « Valider le mois » sur au moins un mois.");
           return;
         }
 
@@ -2522,7 +4067,8 @@
                 const daySessions = (mEmp.sessions || []).filter(s => s.date === dateIso && Number(s.hours) > 0);
                 if (daySessions.length > 0) {
                   const totalDayHours = daySessions.reduce((acc, s) => acc + (Number(s.hours) || 0), 0);
-                  const totalDayNet = totalDayHours * (Number(emp.rate) || 0);
+                  const monthRate = getMonthRate(emp, mEmp);
+                  const totalDayNet = roundCents(totalDayHours * monthRate);
 
                   rowCols.push(
                     String(Number(totalDayHours)).replace(".", ","),
@@ -2555,8 +4101,11 @@
       });
 
       // Bouton "Exporter les données (.json)"
-      document.getElementById("download-json-btn").addEventListener("click", () => {
+      document.getElementById("download-json-btn").addEventListener("click", async () => {
+        closeMoreMenu();
         purgeDeletedEmployeesFromMonths(appState);
+        appState.lastBackupAt = new Date().toISOString();
+        await persistToDisk();
         const serialized = JSON.stringify(appState, null, 2);
         const blob = new Blob([serialized], { type: "application/json;charset=utf-8" });
         const url = URL.createObjectURL(blob);
@@ -2570,8 +4119,9 @@
         showToast("Fichier salaires.json exporté ✓");
       });
 
-      // Bouton "Importer les données (.json)" dans Gérer les salariés
+      // Bouton "Importer les données (.json)" dans le menu Données & Aide
       document.getElementById("import-json-btn").addEventListener("click", () => {
+        closeMoreMenu();
         document.getElementById("import-json-input").click();
       });
 
@@ -2583,14 +4133,18 @@
           const parsed = JSON.parse(text);
           const migrated = migrateIfLegacy(parsed);
           if (!migrated || !Array.isArray(migrated.employees)) {
-            alert("Le fichier JSON sélectionné n'est pas un fichier salaires.json valide.");
+            alert("Le fichier JSON sélectionné n'est pas une sauvegarde valide.");
             e.target.value = "";
             return;
           }
           appState = migrated;
           await persistToDisk();
-          resetOnboardingForm();
-          renderOnboardingEmployeeList();
+          closeOnboardingForm();
+          if (appState.employees.length > 0) {
+            renderDashboard();
+          } else {
+            openWelcomeView();
+          }
           showToast("Données importées avec succès ✓");
         } catch (err) {
           alert("Impossible de lire le fichier JSON sélectionné.");
@@ -2600,10 +4154,10 @@
       });
 
       document.getElementById("ob-role").addEventListener("change", () => {
-        updateOnboardingRoleHint();
+        updateOnboardingRoleFields();
       });
 
-      // Synchronisation case à cocher <-> compteur d'heures (0 par défaut) sur les jours de la semaine
+      // Synchronisation simplifiée case à cocher <-> heures par jour
       document.getElementById("ob-days-grid").addEventListener("change", (e) => {
         const dow = e.target.getAttribute("data-dow");
         if (dow === null) return;
@@ -2613,16 +4167,28 @@
 
         if (e.target.classList.contains("ob-day-toggle")) {
           if (cb.checked) {
+            const defaultH = Math.max(0.5, roundHalf(row.dataset.lastHours || 2));
+            inp.value = defaultH;
             row.classList.add("active");
           } else {
+            const prev = roundHalf(inp.value);
+            if (prev > 0) row.dataset.lastHours = String(prev);
             row.classList.remove("active");
             inp.value = "0";
           }
+          updateOnboardingWeeklyTotal();
         } else if (e.target.classList.contains("ob-day-hours")) {
           const val = Math.max(0, roundHalf(inp.value));
           inp.value = val;
-          cb.checked = val > 0;
-          row.classList.toggle("active", val > 0);
+          if (val > 0) {
+            row.dataset.lastHours = String(val);
+            cb.checked = true;
+            row.classList.add("active");
+          } else {
+            cb.checked = false;
+            row.classList.remove("active");
+          }
+          updateOnboardingWeeklyTotal();
         }
       });
 
@@ -2636,45 +4202,68 @@
         if (inp) {
           const nextVal = Math.max(0, roundHalf((Number(inp.value) || 0) + delta));
           inp.value = nextVal;
-          cb.checked = nextVal > 0;
-          row.classList.toggle("active", nextVal > 0);
+          if (nextVal > 0) {
+            row.dataset.lastHours = String(nextVal);
+            cb.checked = true;
+            row.classList.add("active");
+          } else {
+            cb.checked = false;
+            row.classList.remove("active");
+          }
+          updateOnboardingWeeklyTotal();
         }
       });
 
-      // Bouton 1 sous le formulaire : "Enregistrer le salarié"
+      // Ouvrir le formulaire pour un nouveau salarié
+      document.getElementById("ob-new-emp-btn").addEventListener("click", () => {
+        openOnboardingForm(null);
+      });
+
+      // Annuler la création / modification en cours
+      function handleCancelOnboardingForm() {
+        runWithUnsavedCheck(() => {
+          closeOnboardingForm();
+          if (appState.employees.length === 0) {
+            openWelcomeView();
+          }
+        });
+      }
+
+      document.getElementById("ob-cancel-form-btn").addEventListener("click", handleCancelOnboardingForm);
+      document.getElementById("ob-cancel-form-top-btn").addEventListener("click", handleCancelOnboardingForm);
+
+      // Enregistrer le salarié (création ou modification)
       document.getElementById("ob-save-emp-btn").addEventListener("click", async () => {
-        const emp = readEmployeeFromOnboardingForm(false);
+        const emp = readEmployeeFromOnboardingForm();
         if (!emp) return;
         const wasEdit = emp._isEdit;
         upsertEmployeeInState(emp);
         await persistToDisk();
-        resetOnboardingForm();
-        document.getElementById("onboarding-title").textContent = "Gérer les salariés";
-        renderOnboardingEmployeeList();
-        showToast(wasEdit ? `Salarié « ${emp.name} » modifié ✓` : `Salarié « ${emp.name} » enregistré ✓`);
+        closeOnboardingForm();
+        showToast(wasEdit ? `Salarié « ${emp.name} » modifié ✓` : `Salarié « ${emp.name} » ajouté ✓`);
       });
 
-      // Bouton 2 sous le formulaire : "Accéder à la déclaration"
-      // Si des données non enregistrées sont présentes dans le formulaire, affiche la modale Annuler / Confirmer
+      // Bouton "Accéder à la déclaration →"
       document.getElementById("ob-go-declaration-btn").addEventListener("click", () => {
-        if (hasUnsavedOnboardingFormData()) {
-          document.getElementById("confirm-modal").classList.remove("hidden");
-          return;
-        }
-        closeOnboardingView();
+        runWithUnsavedCheck(() => closeOnboardingView());
       });
 
       document.getElementById("confirm-modal-cancel").addEventListener("click", () => {
+        pendingConfirmAction = null;
         document.getElementById("confirm-modal").classList.add("hidden");
       });
 
       document.getElementById("confirm-modal-ok").addEventListener("click", () => {
         document.getElementById("confirm-modal").classList.add("hidden");
-        resetOnboardingForm();
-        closeOnboardingView();
+        const nextAction = pendingConfirmAction;
+        pendingConfirmAction = null;
+        closeOnboardingForm();
+        if (typeof nextAction === "function") {
+          nextAction();
+        }
       });
 
-      // Clic sur "Modifier" ou "Retirer" dans la liste des salariés enregistrés
+      // Clic sur "Modifier", "Archiver", "Réactiver" ou "Supprimer" dans la liste des salariés
       document.getElementById("ob-emp-list").addEventListener("click", async (e) => {
         const id = e.target.getAttribute("data-id");
         if (!id) return;
@@ -2682,39 +4271,84 @@
         if (!emp) return;
 
         if (e.target.classList.contains("ob-edit-emp")) {
-          loadEmployeeIntoOnboardingForm(emp);
-        } else if (e.target.classList.contains("ob-remove-emp")) {
-          if (!confirm(`Voulez-vous vraiment retirer le salarié « ${emp.name} » ?`)) return;
-          appState.employees = appState.employees.filter(x => x.id !== id);
-          purgeDeletedEmployeesFromMonths(appState);
-          if (appState.activeTab === id) {
-            appState.activeTab = appState.employees[0] ? appState.employees[0].id : null;
+          if (editingEmployeeId === emp.id && !document.getElementById("ob-form-panel").classList.contains("hidden")) {
+            return;
+          }
+          runWithUnsavedCheck(() => openOnboardingForm(emp));
+        } else if (e.target.classList.contains("ob-archive-emp")) {
+          if (!confirm(`Marquer « ${emp.name} » en fin de contrat ?\n\nIl n'apparaîtra plus dans les nouveaux mois, mais tout son historique passé et ses exports Excel resteront intacts.`)) return;
+          emp.archived = true;
+          const todayKey = getTodayMonthKey();
+          for (const [mKey, mAll] of Object.entries(appState.months || {})) {
+            const mEmp = mAll?.[emp.id];
+            if (!mEmp) continue;
+            if (mKey > todayKey && !mEmp.saved) {
+              delete mAll[emp.id];
+              if (Object.keys(mAll).length === 0) {
+                delete appState.months[mKey];
+              }
+            } else if ((mKey < todayKey || mEmp.saved) && typeof mEmp.rate !== "number") {
+              mEmp.rate = Number(emp.rate) || 0;
+            }
           }
           if (editingEmployeeId === id) {
-            resetOnboardingForm();
+            closeOnboardingForm();
+          }
+          if (appState.activeTab === id) {
+            const nextActive = appState.employees.find(x => !x.archived);
+            appState.activeTab = nextActive ? nextActive.id : null;
           }
           await persistToDisk();
           renderOnboardingEmployeeList();
+          showToast(`« ${emp.name} » passé en fin de contrat (historique conservé) ✓`);
+        } else if (e.target.classList.contains("ob-reactivate-emp")) {
+          emp.archived = false;
+          appState.activeTab = emp.id;
+          await persistToDisk();
+          renderOnboardingEmployeeList();
+          showToast(`Salarié « ${emp.name} » réactivé ✓`);
+        } else if (e.target.classList.contains("ob-delete-emp")) {
+          const hist = countEmployeeHistoryMonths(emp.id);
+          const warnMsg = hist.total > 0
+            ? `Attention : supprimer définitivement « ${emp.name} » effacera également son historique (${hist.total} mois enregistré${hist.total > 1 ? "s" : ""}${hist.validated > 0 ? `, dont ${hist.validated} validé${hist.validated > 1 ? "s" : ""}` : ""}). Cette action est irréversible.\n\nConfirmer la suppression définitive ?`
+            : `Voulez-vous vraiment supprimer définitivement « ${emp.name} » ?`;
+          if (!confirm(warnMsg)) return;
+          appState.employees = appState.employees.filter(x => x.id !== id);
+          purgeDeletedEmployeesFromMonths(appState);
+          if (appState.activeTab === id) {
+            const nextActive = appState.employees.find(x => !x.archived) || appState.employees[0];
+            appState.activeTab = nextActive ? nextActive.id : null;
+          }
+          if (editingEmployeeId === id) {
+            closeOnboardingForm();
+          }
+          await persistToDisk();
+          renderOnboardingEmployeeList();
+          showToast(`Salarié « ${emp.name} » supprimé`);
         }
       });
 
-      // Clic et modification sur les prestations habituelles (#emp-rows) ET la liste des extras (#emp-extra-rows)
+      // Clic et modification sur les prestations habituelles et les extras (#emp-rows)
       function handleSessionClick(e) {
-        const idx = e.target.getAttribute("data-idx");
+        const target = e.target.closest(".emp-step, .emp-toggle-hours, .emp-del-extra");
+        if (!target || target.disabled) return;
+        const idx = target.getAttribute("data-idx");
         if (idx === null) return;
         const emp = appState.employees.find(x => x.id === appState.activeTab);
         if (!emp) return;
         const mData = getEmployeeMonthData(emp);
+        if (mData.saved) return;
         const s = mData.sessions[idx];
         if (!s) return;
 
-        if (e.target.classList.contains("emp-step")) {
-          const delta = parseFloat(e.target.getAttribute("data-delta"));
+        if (target.classList.contains("emp-step")) {
+          const delta = parseFloat(target.getAttribute("data-delta"));
           s.hours = Math.max(0, roundHalf((Number(s.hours) || 0) + delta));
           mData.saved = false;
           mData.savedAt = null;
+          persistToDisk();
           renderDashboard();
-        } else if (e.target.classList.contains("emp-toggle-hours")) {
+        } else if (target.classList.contains("emp-toggle-hours")) {
           const defHrs = Number(s.defaultHours) || 0;
           if (s.hours > 0) {
             s.hours = 0;
@@ -2723,11 +4357,13 @@
           }
           mData.saved = false;
           mData.savedAt = null;
+          persistToDisk();
           renderDashboard();
-        } else if (e.target.classList.contains("emp-del-extra")) {
+        } else if (target.classList.contains("emp-del-extra")) {
           mData.sessions.splice(idx, 1);
           mData.saved = false;
           mData.savedAt = null;
+          persistToDisk();
           renderDashboard();
         }
       }
@@ -2738,6 +4374,7 @@
         const emp = appState.employees.find(x => x.id === appState.activeTab);
         if (!emp) return;
         const mData = getEmployeeMonthData(emp);
+        if (mData.saved) return;
         const s = mData.sessions[idx];
         if (!s) return;
 
@@ -2746,13 +4383,12 @@
         }
         mData.saved = false;
         mData.savedAt = null;
+        persistToDisk();
         renderDashboard();
       }
 
       document.getElementById("emp-rows").addEventListener("click", handleSessionClick);
       document.getElementById("emp-rows").addEventListener("change", handleSessionChange);
-      document.getElementById("emp-extra-rows").addEventListener("click", handleSessionClick);
-      document.getElementById("emp-extra-rows").addEventListener("change", handleSessionChange);
 
       // Stepper - / + et ajout d'un extra (Garde d'enfant)
       document.getElementById("extra-hours").addEventListener("input", () => updateExtraPreview());
@@ -2772,12 +4408,17 @@
       document.getElementById("extra-add-btn").addEventListener("click", () => {
         const emp = appState.employees.find(x => x.id === appState.activeTab);
         if (!emp) return;
+        const mData = getEmployeeMonthData(emp);
+        if (mData.saved) return;
         const date = document.getElementById("extra-date").value;
         if (!date) return alert("Veuillez choisir une date pour l'extra.");
+        const bounds = getMonthDateBounds(currentYear, currentMonth);
+        if (date < bounds.min || date > bounds.max) {
+          return alert(`La date de l'extra doit être comprise dans le mois sélectionné (${MONTHS_FR[currentMonth - 1]} ${currentYear}).`);
+        }
         const hours = roundHalf(document.getElementById("extra-hours").value);
         if (hours <= 0) return alert("Veuillez saisir un nombre d'heures supérieur à 0 pour l'extra.");
 
-        const mData = getEmployeeMonthData(emp);
         mData.sessions.push({
           date,
           hours,
@@ -2789,36 +4430,76 @@
         mData.saved = false;
         mData.savedAt = null;
         document.getElementById("extra-hours").value = "0";
+        persistToDisk();
         renderDashboard();
-        showToast("Extra ajouté à la liste (cliquez sur Enregistrer pour valider)");
+        showToast("Extra ajouté ✓ (pensez à valider le mois)");
       });
 
-      // Bouton ENREGISTRER : valide la saisie et écrit la date d'enregistrement dans salaires.json
+      // Bouton VALIDER LE MOIS : fige le mois (et son taux horaire) pour l'export Excel
       document.getElementById("emp-save-btn").addEventListener("click", async () => {
         const emp = appState.employees.find(x => x.id === appState.activeTab);
         if (!emp) return;
         const mData = getEmployeeMonthData(emp);
+        mData.rate = getMonthRate(emp, mData);
         mData.saved = true;
         mData.savedAt = getTodayFr();
         await persistToDisk();
         renderDashboard();
-        showToast(`Enregistré dans salaires.json le ${mData.savedAt} ✓`);
+        showToast(`Mois validé le ${mData.savedAt} ✓`);
+      });
+
+      // Bouton MODIFIER : rouvre un mois validé pour le rendre de nouveau éditable
+      document.getElementById("emp-edit-btn").addEventListener("click", async () => {
+        const emp = appState.employees.find(x => x.id === appState.activeTab);
+        if (!emp) return;
+        const mData = getEmployeeMonthData(emp);
+        mData.saved = false;
+        mData.savedAt = null;
+        await persistToDisk();
+        renderDashboard();
+        showToast("Déclaration rouverte pour modification");
       });
 
       // Cases à cocher Déclaré CESU & Payé
       document.getElementById("emp-declared-check").addEventListener("change", async (e) => {
         const emp = appState.employees.find(x => x.id === appState.activeTab);
         if (!emp) return;
-        getEmployeeMonthData(emp).declared = e.target.checked;
+        const mData = getEmployeeMonthData(emp);
+        mData.declared = e.target.checked;
         await persistToDisk();
+        renderTabsNav();
       });
 
       document.getElementById("emp-paid-check").addEventListener("change", async (e) => {
         const emp = appState.employees.find(x => x.id === appState.activeTab);
         if (!emp) return;
-        getEmployeeMonthData(emp).paid = e.target.checked;
+        const mData = getEmployeeMonthData(emp);
+        mData.paid = e.target.checked;
         await persistToDisk();
+        renderTabsNav();
       });
+
+      // Picto discret "Copier" sur les heures à déclarer CESU
+      const copyHoursDeclareBtn = document.getElementById("copy-hours-declare-btn");
+      if (copyHoursDeclareBtn) {
+        const defaultCopySvg = copyHoursDeclareBtn.innerHTML;
+        const checkCopySvg = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+        copyHoursDeclareBtn.addEventListener("click", async () => {
+          const val = copyHoursDeclareBtn.dataset.copyValue || "";
+          const ok = await copyToClipboard(val);
+          if (ok) {
+            copyHoursDeclareBtn.classList.add("is-copied");
+            copyHoursDeclareBtn.innerHTML = checkCopySvg;
+            showToast(`Heures à déclarer copiées : ${val} ✓`);
+            setTimeout(() => {
+              copyHoursDeclareBtn.classList.remove("is-copied");
+              copyHoursDeclareBtn.innerHTML = defaultCopySvg;
+            }, 1600);
+          } else {
+            showToast(`Heures à déclarer : ${val}`);
+          }
+        });
+      }
     }
 
     (async function init() {
